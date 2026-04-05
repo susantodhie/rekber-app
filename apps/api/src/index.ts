@@ -1,4 +1,5 @@
 import express from "express";
+import { Request, Response } from "express";
 import cors from "cors";
 import helmet from "helmet";
 import path from "path";
@@ -46,6 +47,11 @@ app.use(
 
 app.use(express.json({ limit: "10mb" }));
 app.use(express.urlencoded({ extended: true, limit: "10mb" }));
+app.get("/api/test-db", async (req, res) => {
+  res.json({
+    db: process.env.DATABASE_URL ? "connected" : "not connected"
+  });
+});
 
 // Serve uploaded files statically
 const uploadDir = process.env.UPLOAD_DIR || "./uploads";
