@@ -5,6 +5,7 @@ import helmet from "helmet";
 import path from "path";
 import { fileURLToPath } from "url";
 import "dotenv/config";
+import { db } from "./db/index.js";
 
 // Route imports
 import authRoutes from "./routes/auth.routes.js";
@@ -47,10 +48,13 @@ app.use(
 
 app.use(express.json({ limit: "10mb" }));
 app.use(express.urlencoded({ extended: true, limit: "10mb" }));
-app.get("/api/test-db", async (req, res) => {
-  res.json({
-    db: process.env.DATABASE_URL ? "connected" : "not connected"
-  });
+app.get("/api/db-check", async (req, res) => {
+  try {
+    const result = await db.execute("SELECT 1");
+    res.json({ success: true, result });
+  } catch (err) {
+    res.json({ success: false, error: err });
+  }
 });
 
 // Serve uploaded files statically
