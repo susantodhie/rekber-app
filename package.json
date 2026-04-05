@@ -1,0 +1,26 @@
+{
+  "name": "rekberinsaja-monorepo",
+  "private": true,
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "dev:api": "npm run dev --workspace=apps/api",
+    "dev:dashboard": "npm run dev --workspace=apps/dashboard",
+    "dev:login": "npm run dev --workspace=apps/login",
+    "dev:create-escrow": "npm run dev --workspace=apps/create-escrow",
+    "db:push": "npm run db:push --workspace=apps/api",
+    "db:studio": "npm run db:studio --workspace=apps/api",
+    "db:generate": "npm run db:generate --workspace=apps/api",
+    "docker:up": "docker compose up -d",
+    "docker:down": "docker compose down"
+  },
+  "dependencies": {
+    "@types/bcrypt": "^6.0.0",
+    "bcrypt": "^6.0.0"
+  },
+  "devDependencies": {
+    "drizzle-kit": "^0.31.10"
+  }
+}
