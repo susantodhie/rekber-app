@@ -55,14 +55,14 @@ app.use("/uploads", express.static(path.resolve(uploadDir)));
 // Health check
 // ============================================================
 
-app.get("/api/health", (_req, res) => {
+app.get("/", (req, res) => {
+  res.send("API REKBER JALAN 🚀");
+});
+
+app.get("/api", (req, res) => {
   res.json({
     success: true,
-    data: {
-      status: "ok",
-      timestamp: new Date().toISOString(),
-      environment: process.env.NODE_ENV || "development",
-    },
+    message: "API READY 🚀"
   });
 });
 
