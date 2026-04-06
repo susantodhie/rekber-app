@@ -17,7 +17,9 @@ export async function createUser(email: string) {
     .returning();
 
   await db.insert(wallets).values({
-    userId: user.id
+    userId: user.id,
+    balance: 0,
+    lockedBalance: 0,
   });
 
   return user;
