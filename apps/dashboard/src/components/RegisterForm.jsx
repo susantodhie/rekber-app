@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import apiClient from '../lib/apiClient';
-import { useSession, signUp } from '../lib/authClient';
+import { useSession } from '../lib/authClient';
 
 const RegisterPage = () => {
   const navigate = useNavigate();
@@ -41,14 +41,14 @@ const RegisterPage = () => {
 
     setLoading(true);
     try {
-      const { error: signUpError } = await signUp.email({
+      const res = await apiClient.post('/auth/register', {
         email: formData.email,
         password: formData.password,
         name: formData.name,
       });
 
-      if (signUpError) {
-        throw new Error(signUpError.message || 'Registrasi gagal.');
+      if (!res.success) {
+        throw new Error(res.message || 'Registrasi gagal.');
       }
 
       setSuccess('Registrasi berhasil! Mengalihkan ke halaman login...');
@@ -56,7 +56,7 @@ const RegisterPage = () => {
         window.location.href = '/login';
       }, 2000);
     } catch (err) {
-      setError(err?.error || err?.message || 'Terjadi kesalahan. Silakan coba lagi.');
+      setError(err?.message || err?.error || err?.response?.data?.message || 'Terjadi kesalahan. Silakan coba lagi.');
     } finally {
       setLoading(false);
     }

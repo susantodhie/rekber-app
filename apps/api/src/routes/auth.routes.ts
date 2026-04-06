@@ -26,7 +26,7 @@ router.post("/api/auth/register", async (req, res) => {
     if (!parsed.success) {
       return res.status(400).json({
         success: false,
-        error: parsed.error.errors.map(e => e.message).join(", "),
+        message: parsed.error.errors.map(e => e.message).join(", "),
       });
     }
 
@@ -40,9 +40,9 @@ router.post("/api/auth/register", async (req, res) => {
       .limit(1);
 
     if (existing.length > 0) {
-      return res.status(409).json({
+      return res.status(400).json({
         success: false,
-        error: "Email sudah terdaftar",
+        message: "Email already exists",
       });
     }
 
@@ -71,17 +71,21 @@ router.post("/api/auth/register", async (req, res) => {
       updatedAt: now,
     });
 
-    res.status(201).json({
+    res.status(200).json({
       success: true,
-      message: "Registrasi berhasil",
-      data: { userId, email },
+      message: "Register berhasil",
+      data: {
+        id: userId,
+        name,
+        email
+      }
     });
 
   } catch (error) {
     console.error(error);
     res.status(500).json({
       success: false,
-      error: "Server error",
+      message: error instanceof Error ? error.message : "Server error",
     });
   }
 });

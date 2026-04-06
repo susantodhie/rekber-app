@@ -30,7 +30,7 @@ function App() {
     setLoading(true);
 
     try {
-      const response = await fetch('/api/auth/sign-up/email', {
+      const response = await fetch('/api/auth/register', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -50,7 +50,7 @@ function App() {
       }
 
       if (!response.ok) {
-        throw new Error(data?.error?.message || data.message || data.error || 'Terjadi kesalahan saat registrasi.');
+        throw new Error(data?.message || data?.error?.message || data?.error || 'Terjadi kesalahan saat registrasi.');
       }
 
       setSuccess('Registrasi berhasil! Mengalihkan ke dashboard...');
@@ -91,7 +91,7 @@ function App() {
       }
 
       if (!response.ok) {
-        throw new Error(data?.error?.message || data.message || data.error || 'Login gagal.');
+        throw new Error(data?.message || data?.error?.message || data?.error || 'Login gagal.');
       }
 
       setSuccess('Login berhasil! Mengalihkan...');
