@@ -66,7 +66,7 @@ app.use("/uploads", express.static(path.resolve(uploadDir)));
 // ============================================================
 
 app.get("/", (req, res) => {
-  res.send("API REKBER JALAN 🚀");
+  res.json({ success: true, message: "API REKBER JALAN 🚀" });
 });
 
 app.get("/api", (req, res) => {

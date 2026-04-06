@@ -40,7 +40,14 @@ function App() {
         })
       });
 
-      const data = await response.json();
+      const text = await response.text();
+      let data;
+      try {
+        data = text ? JSON.parse(text) : {};
+      } catch (parseErr) {
+        console.error('Invalid JSON response:', text);
+        throw new Error('Terjadi kesalahan pada server (Respons tidak valid).');
+      }
 
       if (!response.ok) {
         throw new Error(data.message || data.error || 'Terjadi kesalahan saat registrasi.');
@@ -74,7 +81,14 @@ function App() {
         })
       });
 
-      const data = await response.json();
+      const text = await response.text();
+      let data;
+      try {
+        data = text ? JSON.parse(text) : {};
+      } catch (parseErr) {
+        console.error('Invalid JSON response:', text);
+        throw new Error('Terjadi kesalahan pada server (Respons tidak valid).');
+      }
 
       if (!response.ok) {
         throw new Error(data.message || data.error || 'Login gagal.');
