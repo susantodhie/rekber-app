@@ -37,7 +37,7 @@ const NewEscrow = () => {
     itemName: '',
     category: CATEGORIES[0],
     description: '',
-    counterpartyUsername: '',
+    counterpartyEmail: '',
     role: 'buyer',
     amount: ''
   });
@@ -172,18 +172,19 @@ const NewEscrow = () => {
 
             <form onSubmit={handleSubmit} className="space-y-6">
               
-              {/* Partner Username */}
+              {/* Partner Email */}
               <div className="space-y-2">
-                <label className="text-[10px] font-bold uppercase tracking-widest text-on-surface-variant px-1">Username Pihak Lawan</label>
+                <label className="text-[10px] font-bold uppercase tracking-widest text-on-surface-variant px-1">Email Pihak Lawan</label>
                 <div className="relative">
-                  <span className="absolute left-4 top-1/2 -translate-y-1/2 font-mono font-bold text-primary">@</span>
+                  <span className="absolute left-4 top-1/2 -translate-y-1/2 material-symbols-outlined text-on-surface-variant">mail</span>
                   <input
-                    name="counterpartyUsername"
-                    value={formData.counterpartyUsername}
+                    type="email"
+                    name="counterpartyEmail"
+                    value={formData.counterpartyEmail}
                     onChange={handleChange}
                     required
-                    placeholder="namauser"
-                    className="w-full bg-surface-container-lowest border border-outline-variant/10 rounded-xl pl-10 pr-4 py-4 text-sm font-bold text-on-surface focus:ring-2 focus:ring-primary/50 focus:border-primary outline-none transition-all"
+                    placeholder="email@example.com"
+                    className="w-full bg-surface-container-lowest border border-outline-variant/10 rounded-xl pl-12 pr-4 py-4 text-sm font-bold text-on-surface focus:ring-2 focus:ring-primary/50 focus:border-primary outline-none transition-all"
                   />
                 </div>
               </div>
