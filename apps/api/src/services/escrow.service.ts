@@ -83,17 +83,16 @@ export async function payEscrow(escrowId: string, userId: string) {
 
   if (!wallet) throw new Error("Wallet tidak ditemukan");
 
-  const balance = parseFloat(wallet.balance);
-  const amount = parseFloat(escrow.totalAmount);
+  const amount = Number(escrow.totalAmount);
 
-  if (balance < amount) throw new Error("Saldo tidak cukup");
+  if (wallet.balance < amount) throw new Error("Saldo tidak cukup");
 
   // POTONG + LOCK
   await db
     .update(wallets)
     .set({
-      balance: String(balance - amount),
-      lockedBalance: String(parseFloat(wallet.lockedBalance) + amount),
+      balance: wallet.balance - amount,
+      lockedBalance: wallet.lockedBalance + amount,
     })
     .where(eq(wallets.userId, userId));
 
@@ -121,7 +120,7 @@ export async function confirmEscrow(escrowId: string, userId: string) {
 
   if (!escrow) throw new Error("Escrow tidak ditemukan");
 
-  const amount = parseFloat(escrow.amount);
+  const amount = Number(escrow.amount);
 
   // KURANGIN LOCKED BUYER
   const [buyerWallet] = await db
@@ -133,7 +132,7 @@ export async function confirmEscrow(escrowId: string, userId: string) {
   if (buyerWallet) {
     await db.update(wallets)
       .set({
-        lockedBalance: String(parseFloat(buyerWallet.lockedBalance) - parseFloat(escrow.totalAmount)),
+        lockedBalance: buyerWallet.lockedBalance - Number(escrow.totalAmount),
       })
       .where(eq(wallets.userId, escrow.buyerId));
   }
@@ -148,7 +147,7 @@ export async function confirmEscrow(escrowId: string, userId: string) {
   if (sellerWallet) {
     await db.update(wallets)
       .set({
-        balance: String(parseFloat(sellerWallet.balance) + amount),
+        balance: sellerWallet.balance + amount,
       })
       .where(eq(wallets.userId, escrow.sellerId));
   }

@@ -76,8 +76,8 @@ export async function resolveDispute(
     resolvedAt: new Date(),
   }).where(eq(disputes.id, disputeId));
 
-  const totalAmount = parseFloat(escrow.totalAmount);
-  const amount = parseFloat(escrow.amount);
+  const totalAmount = Number(escrow.totalAmount);
+  const amount = Number(escrow.amount);
 
   if (input.resolution === "resolved_buyer") {
     const [wallet] = await db
@@ -88,8 +88,8 @@ export async function resolveDispute(
 
     if (wallet) {
       await db.update(wallets).set({
-        balance: String(parseFloat(wallet.balance) + totalAmount),
-        lockedBalance: String(parseFloat(wallet.lockedBalance) - totalAmount),
+        balance: wallet.balance + totalAmount,
+        lockedBalance: wallet.lockedBalance - totalAmount,
       }).where(eq(wallets.userId, escrow.buyerId));
     }
 
@@ -105,7 +105,7 @@ export async function resolveDispute(
 
     if (sellerWallet) {
       await db.update(wallets).set({
-        balance: String(parseFloat(sellerWallet.balance) + amount),
+        balance: sellerWallet.balance + amount,
       }).where(eq(wallets.userId, escrow.sellerId));
     }
 
@@ -166,7 +166,6 @@ export async function processWithdrawal(
   if (approve) {
     await db.update(withdrawals).set({
       status: "completed",
-      processedBy: adminUserId,
       processedAt: new Date(),
     }).where(eq(withdrawals.id, withdrawalId));
   } else {
@@ -178,13 +177,12 @@ export async function processWithdrawal(
 
     if (wallet) {
       await db.update(wallets).set({
-        balance: String(parseFloat(wallet.balance) + parseFloat(withdrawal.amount)),
+        balance: wallet.balance + withdrawal.amount,
       }).where(eq(wallets.userId, withdrawal.userId));
     }
 
     await db.update(withdrawals).set({
       status: "rejected",
-      processedBy: adminUserId,
       processedAt: new Date(),
     }).where(eq(withdrawals.id, withdrawalId));
   }
