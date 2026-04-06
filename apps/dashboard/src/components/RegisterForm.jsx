@@ -8,23 +8,27 @@ const RegisterPage = () => {
   const [formData, setFormData] = useState({ name: '', email: '', password: '', confirmPassword: '' });
   const [agreed, setAgreed] = useState(false);
   const [error, setError] = useState('');
+  const [success, setSuccess] = useState('');
   const [loading, setLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   // If already logged in, redirect to dashboard
   const { data: session } = useSession();
   React.useEffect(() => {
-    if (session) {
+    if (session && !success) {
       navigate('/', { replace: true });
     }
-  }, [session, navigate]);
+  }, [session, navigate, success]);
 
   const handleChange = (e) => {
     setFormData(prev => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
-  const handleSubmit = async (e) => {
+  const handleRegister = async (e) => {
     e.preventDefault();
     setError('');
+    setSuccess('');
 
     if (formData.password !== formData.confirmPassword) {
       setError('Password tidak cocok');
@@ -43,14 +47,19 @@ const RegisterPage = () => {
         name: formData.name,
       });
 
-      // Force clean reload to login instead of navigate so state resets predictably
-      window.location.href = '/login';
+      setSuccess('Registrasi berhasil! Mengalihkan ke halaman login...');
+      setTimeout(() => {
+        window.location.href = '/login';
+      }, 2000);
     } catch (err) {
       setError(err?.error || err?.message || 'Terjadi kesalahan. Silakan coba lagi.');
     } finally {
       setLoading(false);
     }
   };
+
+  const togglePassword = () => setShowPassword(!showPassword);
+  const toggleConfirmPassword = () => setShowConfirmPassword(!showConfirmPassword);
 
   return (
     <div className="bg-surface font-body text-on-surface selection:bg-primary selection:text-on-primary min-h-screen flex flex-col overflow-x-hidden bg-mesh">
@@ -91,8 +100,14 @@ const RegisterPage = () => {
                 {error}
               </div>
             )}
+            
+            {success && (
+              <div className="mb-4 p-3 bg-primary/10 border border-primary/20 rounded-lg text-primary text-xs font-medium">
+                {success}
+              </div>
+            )}
 
-            <form className="space-y-5" onSubmit={handleSubmit}>
+            <form className="space-y-4" onSubmit={handleRegister}>
               <div className="space-y-2">
                 <label className="block text-[10px] font-bold uppercase tracking-widest text-on-surface-variant ml-1">Full Name</label>
                 <div className="relative group">
@@ -114,14 +129,20 @@ const RegisterPage = () => {
                   <label className="block text-[10px] font-bold uppercase tracking-widest text-on-surface-variant ml-1">Password</label>
                   <div className="relative group">
                     <span className="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-on-surface-variant group-focus-within:text-secondary transition-colors text-lg pointer-events-none">lock</span>
-                    <input className="w-full bg-surface-container-lowest border-0 ghost-border rounded-xl py-4 pl-12 pr-4 text-sm focus:outline-none focus:ring-2 focus:ring-secondary/20 focus:border-secondary transition-all placeholder:text-slate-600" placeholder="••••••••" type="password" name="password" value={formData.password} onChange={handleChange} required minLength={8} />
+                    <input className="w-full bg-surface-container-lowest border-0 ghost-border rounded-xl py-4 pl-12 pr-12 text-sm focus:outline-none focus:ring-2 focus:ring-secondary/20 focus:border-secondary transition-all placeholder:text-slate-600" placeholder="••••••••" type={showPassword ? 'text' : 'password'} name="password" value={formData.password} onChange={handleChange} required minLength={8} />
+                    <button type="button" onClick={togglePassword} className="absolute inset-y-0 right-0 pr-4 flex items-center cursor-pointer text-on-surface-variant hover:text-on-surface transition-colors">
+                      <span className="material-symbols-outlined">{showPassword ? 'visibility_off' : 'visibility'}</span>
+                    </button>
                   </div>
                 </div>
                 <div className="space-y-2">
                   <label className="block text-[10px] font-bold uppercase tracking-widest text-on-surface-variant ml-1">Confirm</label>
                   <div className="relative group">
                     <span className="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-on-surface-variant group-focus-within:text-secondary transition-colors text-lg pointer-events-none">verified_user</span>
-                    <input className="w-full bg-surface-container-lowest border-0 ghost-border rounded-xl py-4 pl-12 pr-4 text-sm focus:outline-none focus:ring-2 focus:ring-secondary/20 focus:border-secondary transition-all placeholder:text-slate-600" placeholder="••••••••" type="password" name="confirmPassword" value={formData.confirmPassword} onChange={handleChange} required minLength={8} />
+                    <input className="w-full bg-surface-container-lowest border-0 ghost-border rounded-xl py-4 pl-12 pr-12 text-sm focus:outline-none focus:ring-2 focus:ring-secondary/20 focus:border-secondary transition-all placeholder:text-slate-600" placeholder="••••••••" type={showConfirmPassword ? 'text' : 'password'} name="confirmPassword" value={formData.confirmPassword} onChange={handleChange} required minLength={8} />
+                    <button type="button" onClick={toggleConfirmPassword} className="absolute inset-y-0 right-0 pr-4 flex items-center cursor-pointer text-on-surface-variant hover:text-on-surface transition-colors">
+                      <span className="material-symbols-outlined">{showConfirmPassword ? 'visibility_off' : 'visibility'}</span>
+                    </button>
                   </div>
                 </div>
               </div>

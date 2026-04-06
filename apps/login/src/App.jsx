@@ -2,14 +2,99 @@ import React, { useState } from 'react'
 
 function App() {
   const [activeTab, setActiveTab] = useState('masuk');
+  const [formData, setFormData] = useState({ name: '', email: '', password: '' });
+  const [showPassword, setShowPassword] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
+  const [success, setSuccess] = useState('');
 
   const handleTabSwitch = (tab) => {
     setActiveTab(tab);
+    setError('');
+    setSuccess('');
+    setFormData({ name: '', email: '', password: '' });
+  };
+
+  const handleChange = (e) => {
+    setFormData(prev => ({ ...prev, [e.target.name]: e.target.value }));
+  };
+
+  const togglePasswordVisibility = () => {
+    setShowPassword(prev => !prev);
+  };
+
+  const handleRegister = async (e) => {
+    e.preventDefault();
+    setError('');
+    setSuccess('');
+    setLoading(true);
+
+    try {
+      const response = await fetch('/api/auth/register', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: formData.name,
+          email: formData.email,
+          password: formData.password
+        })
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.message || data.error || 'Terjadi kesalahan saat registrasi.');
+      }
+
+      setSuccess('Registrasi berhasil! Silakan masuk dengan akun Anda.');
+      setTimeout(() => {
+        handleTabSwitch('masuk');
+      }, 2000);
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleLogin = async (e) => {
+    e.preventDefault();
+    // Assuming you'd want a similar login stub to ensure it's not totally broken
+    setError('');
+    setSuccess('');
+    setLoading(true);
+
+    try {
+      const response = await fetch('/api/auth/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          email: formData.email,
+          password: formData.password
+        })
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.message || data.error || 'Login gagal.');
+      }
+
+      setSuccess('Login berhasil! Mengalihkan...');
+      // Usually redirect here
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setLoading(false);
+    }
   };
 
   const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log(`Submitting form for ${activeTab}`);
+    if (activeTab === 'daftar') {
+      handleRegister(e);
+    } else {
+      handleLogin(e);
+    }
   };
 
   return (
@@ -50,7 +135,18 @@ function App() {
             </button>
           </div>
 
-          <form className="space-y-6" onSubmit={handleSubmit}>
+          <form className="space-y-5" onSubmit={handleSubmit}>
+            {error && (
+              <div className="p-3 bg-error/10 border border-error/20 rounded-lg text-error text-xs font-medium">
+                {error}
+              </div>
+            )}
+            {success && (
+              <div className="p-3 bg-teal-400/10 border border-teal-400/20 rounded-lg text-teal-400 text-xs font-medium">
+                {success}
+              </div>
+            )}
+
             {activeTab === 'daftar' && (
               <div className="space-y-2">
                 <label className="block text-xs font-semibold tracking-widest text-on-surface-variant uppercase ml-1">Nama Lengkap</label>
@@ -62,6 +158,9 @@ function App() {
                     className="w-full bg-surface-container-lowest border border-outline-variant/10 rounded-lg py-4 pl-12 pr-4 text-on-surface focus:outline-none focus:ring-2 focus:ring-secondary/20 focus:border-secondary transition-all placeholder:text-on-surface-variant/30" 
                     placeholder="Nama Lengkap Anda" 
                     type="text" 
+                    name="name"
+                    value={formData.name}
+                    onChange={handleChange}
                     required
                   />
                 </div>
@@ -79,6 +178,9 @@ function App() {
                   className="w-full bg-surface-container-lowest border border-outline-variant/10 rounded-lg py-4 pl-12 pr-4 text-on-surface focus:outline-none focus:ring-2 focus:ring-secondary/20 focus:border-secondary transition-all placeholder:text-on-surface-variant/30" 
                   placeholder="nama@email.com" 
                   type="email" 
+                  name="email"
+                  value={formData.email}
+                  onChange={handleChange}
                   required
                 />
               </div>
@@ -99,19 +201,24 @@ function App() {
                 <input 
                   className="w-full bg-surface-container-lowest border border-outline-variant/10 rounded-lg py-4 pl-12 pr-12 text-on-surface focus:outline-none focus:ring-2 focus:ring-secondary/20 focus:border-secondary transition-all placeholder:text-on-surface-variant/30" 
                   placeholder="••••••••" 
-                  type="password" 
+                  type={showPassword ? 'text' : 'password'} 
+                  name="password"
+                  value={formData.password}
+                  onChange={handleChange}
                   required
                 />
-                <button type="button" className="absolute inset-y-0 right-0 pr-4 flex items-center cursor-pointer">
-                  <span className="material-symbols-outlined text-outline-variant hover:text-on-surface">visibility</span>
+                <button type="button" onClick={togglePasswordVisibility} className="absolute inset-y-0 right-0 pr-4 flex items-center cursor-pointer">
+                  <span className={`material-symbols-outlined transition-colors ${showPassword ? 'text-secondary' : 'text-outline-variant hover:text-on-surface'}`}>
+                    {showPassword ? 'visibility_off' : 'visibility'}
+                  </span>
                 </button>
               </div>
             </div>
 
             {/* Primary CTA */}
-            <button type="submit" className="w-full py-4 bg-gradient-to-r from-primary-container to-secondary-container rounded-lg text-on-primary font-black tracking-[0.2em] text-sm uppercase shadow-[0_0_20px_rgba(68,229,194,0.3)] hover:shadow-[0_0_30px_rgba(68,229,194,0.5)] active:scale-[0.98] transition-all flex items-center justify-center gap-2">
-              {activeTab === 'masuk' ? 'MASUK' : 'DAFTAR SEKARANG'}
-              <span className="material-symbols-outlined text-sm">arrow_forward</span>
+            <button disabled={loading} type="submit" className="w-full py-4 mt-2 bg-gradient-to-r from-primary-container to-secondary-container rounded-lg text-on-primary font-black tracking-[0.2em] text-sm uppercase shadow-[0_0_20px_rgba(68,229,194,0.3)] hover:shadow-[0_0_30px_rgba(68,229,194,0.5)] active:scale-[0.98] transition-all flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed">
+              {loading ? 'MEMPROSES...' : (activeTab === 'masuk' ? 'MASUK' : 'DAFTAR SEKARANG')}
+              {!loading && <span className="material-symbols-outlined text-sm">arrow_forward</span>}
             </button>
 
             {activeTab === 'masuk' && (
