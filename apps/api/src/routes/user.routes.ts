@@ -12,7 +12,7 @@ const router = Router();
  */
 router.get("/me", requireAuth, async (req, res, next) => {
   try {
-    const user = await userService.getusers(req.user!.id);
+    const user = await userService.getUser(req.user!.id);
 
     if (!user) {
       return res.status(404).json({ success: false, error: "User not found" });
@@ -43,7 +43,7 @@ router.put(
   validate(updateSchema),
   async (req, res, next) => {
     try {
-      const updated = await userService.updateusers(req.user!.id, req.body);
+      const updated = await userService.updateUser(req.user!.id, req.body);
 
       res.json({ success: true, data: updated });
     } catch (error) {
