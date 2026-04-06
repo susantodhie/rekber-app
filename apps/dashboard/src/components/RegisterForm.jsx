@@ -96,7 +96,7 @@ const RegisterPage = () => {
               <div className="space-y-2">
                 <label className="block text-[10px] font-bold uppercase tracking-widest text-on-surface-variant ml-1">Full Name</label>
                 <div className="relative group">
-                  <span className="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-on-surface-variant group-focus-within:text-secondary transition-colors text-lg">person</span>
+                  <span className="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-on-surface-variant group-focus-within:text-secondary transition-colors text-lg pointer-events-none">person</span>
                   <input className="w-full bg-surface-container-lowest border-0 ghost-border rounded-xl py-4 pl-12 pr-4 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-secondary/20 focus:border-secondary transition-all placeholder:text-slate-600" placeholder="Nama Lengkap Anda" type="text" name="name" value={formData.name} onChange={handleChange} required />
                 </div>
               </div>
@@ -104,7 +104,7 @@ const RegisterPage = () => {
               <div className="space-y-2">
                 <label className="block text-[10px] font-bold uppercase tracking-widest text-on-surface-variant ml-1">Email Address</label>
                 <div className="relative group">
-                  <span className="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-on-surface-variant group-focus-within:text-secondary transition-colors text-lg">mail</span>
+                  <span className="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-on-surface-variant group-focus-within:text-secondary transition-colors text-lg pointer-events-none">mail</span>
                   <input className="w-full bg-surface-container-lowest border-0 ghost-border rounded-xl py-4 pl-12 pr-4 text-sm font-mono focus:outline-none focus:ring-2 focus:ring-secondary/20 focus:border-secondary transition-all placeholder:text-slate-600" placeholder="nama@email.com" type="email" name="email" value={formData.email} onChange={handleChange} required />
                 </div>
               </div>
@@ -113,14 +113,14 @@ const RegisterPage = () => {
                 <div className="space-y-2">
                   <label className="block text-[10px] font-bold uppercase tracking-widest text-on-surface-variant ml-1">Password</label>
                   <div className="relative group">
-                    <span className="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-on-surface-variant group-focus-within:text-secondary transition-colors text-lg">lock</span>
+                    <span className="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-on-surface-variant group-focus-within:text-secondary transition-colors text-lg pointer-events-none">lock</span>
                     <input className="w-full bg-surface-container-lowest border-0 ghost-border rounded-xl py-4 pl-12 pr-4 text-sm focus:outline-none focus:ring-2 focus:ring-secondary/20 focus:border-secondary transition-all placeholder:text-slate-600" placeholder="••••••••" type="password" name="password" value={formData.password} onChange={handleChange} required minLength={8} />
                   </div>
                 </div>
                 <div className="space-y-2">
                   <label className="block text-[10px] font-bold uppercase tracking-widest text-on-surface-variant ml-1">Confirm</label>
                   <div className="relative group">
-                    <span className="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-on-surface-variant group-focus-within:text-secondary transition-colors text-lg">verified_user</span>
+                    <span className="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-on-surface-variant group-focus-within:text-secondary transition-colors text-lg pointer-events-none">verified_user</span>
                     <input className="w-full bg-surface-container-lowest border-0 ghost-border rounded-xl py-4 pl-12 pr-4 text-sm focus:outline-none focus:ring-2 focus:ring-secondary/20 focus:border-secondary transition-all placeholder:text-slate-600" placeholder="••••••••" type="password" name="confirmPassword" value={formData.confirmPassword} onChange={handleChange} required minLength={8} />
                   </div>
                 </div>

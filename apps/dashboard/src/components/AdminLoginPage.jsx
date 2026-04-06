@@ -75,7 +75,7 @@ export default function AdminLoginPage() {
               <div className="space-y-1">
                 <label className="block text-[10px] font-bold uppercase tracking-widest text-on-surface-variant ml-1">Admin Email</label>
                 <div className="relative group">
-                  <span className="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-on-surface-variant group-focus-within:text-error transition-colors text-lg">mail</span>
+                  <span className="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-on-surface-variant group-focus-within:text-error transition-colors text-lg pointer-events-none">mail</span>
                   <input
                     className="w-full bg-[#0b1325] border border-surface-container rounded-xl py-3.5 pl-12 pr-4 text-sm font-mono focus:outline-none focus:ring-1 focus:ring-error/50 focus:border-error transition-all placeholder:text-slate-700"
                     placeholder="admin@rekber.com"
@@ -90,7 +90,7 @@ export default function AdminLoginPage() {
               <div className="space-y-1">
                 <label className="block text-[10px] font-bold uppercase tracking-widest text-on-surface-variant ml-1">Password</label>
                 <div className="relative group">
-                  <span className="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-on-surface-variant group-focus-within:text-error transition-colors text-lg">lock</span>
+                  <span className="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-on-surface-variant group-focus-within:text-error transition-colors text-lg pointer-events-none">lock</span>
                   <input
                     className="w-full bg-[#0b1325] border border-surface-container rounded-xl py-3.5 pl-12 pr-4 text-sm focus:outline-none focus:ring-1 focus:ring-error/50 focus:border-error transition-all placeholder:text-slate-700"
                     placeholder="••••••••"
