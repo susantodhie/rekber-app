@@ -19,7 +19,7 @@ const BentoSummary = () => {
   return (
     <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
       {/* Total Saldo Card */}
-      <div className="surface-container-high rounded-xl p-6 relative overflow-hidden group glass">
+      <div className="bg-surface-container-high glass rounded-xl p-6 relative overflow-hidden group">
         <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
           <span className="material-symbols-outlined text-6xl">payments</span>
         </div>
@@ -38,7 +38,7 @@ const BentoSummary = () => {
       </div>
 
       {/* Transaksi Aktif Card */}
-      <div className="surface-container-high rounded-xl p-6 relative overflow-hidden group glass pulse-container">
+      <div className="bg-surface-container-high glass pulse-container rounded-xl p-6 relative overflow-hidden group">
         <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
           <span className="material-symbols-outlined text-6xl">sync</span>
         </div>
@@ -57,7 +57,7 @@ const BentoSummary = () => {
       </div>
 
       {/* Total Selesai Card */}
-      <div className="surface-container-high rounded-xl p-6 relative overflow-hidden group glass">
+      <div className="bg-surface-container-high glass rounded-xl p-6 relative overflow-hidden group">
         <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
           <span className="material-symbols-outlined text-6xl">task_alt</span>
         </div>

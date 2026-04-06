@@ -4,4 +4,18 @@ import react from '@vitejs/plugin-react'
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [react()],
+
+  server: {
+    host: true,
+  },
+
+  preview: {
+    host: true,
+    allowedHosts: true,
+  },
+
+  build: {
+    // Ensure assets use relative paths for Railway
+    assetsDir: 'assets',
+  },
 })

@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useKycStatus, useSubmitKyc } from './hooks/useKyc';
+import Sidebar from './components/Sidebar';
+import TopAppBar from './components/TopAppBar';
+import MobileBottomNav from './components/MobileBottomNav';
 
 export default function KYCCenter() {
   const navigate = useNavigate();
@@ -54,7 +57,6 @@ export default function KYCCenter() {
 
     try {
       await submitKycMutation.mutateAsync(data);
-      // Will refetch KYC status and show "pending" state
     } catch (err) {
       setError(err?.error || 'Gagal mengirim data verifikasi');
     }
@@ -70,49 +72,50 @@ export default function KYCCenter() {
   // If already submitted or approved, show status
   if (!statusLoading && kycStatus?.status === 'verified') {
     return (
-      <div className="bg-background text-on-background font-body min-h-screen flex items-center justify-center">
-        <div className="text-center max-w-md mx-auto p-8">
-          <span className="material-symbols-outlined text-primary text-7xl mb-4 block" style={{ fontVariationSettings: "'FILL' 1" }}>verified</span>
-          <h1 className="text-3xl font-bold mb-2">Akun Terverifikasi</h1>
-          <p className="text-on-surface-variant mb-6">Verifikasi KYC Anda telah disetujui. Anda memiliki akses penuh ke semua fitur.</p>
-          <button onClick={() => navigate('/')} className="px-8 py-3 bg-primary text-on-primary rounded-xl font-bold">Kembali ke Dashboard</button>
-        </div>
+      <div className="flex min-h-screen overflow-hidden bg-[#0b1325]">
+        <Sidebar />
+        <main className="flex-1 md:ml-[260px] min-h-screen pb-24 md:pb-12 overflow-y-auto">
+          <TopAppBar />
+          <div className="flex items-center justify-center min-h-[calc(100vh-5rem)]">
+            <div className="text-center max-w-md mx-auto p-8">
+              <span className="material-symbols-outlined text-primary text-7xl mb-4 block" style={{ fontVariationSettings: "'FILL' 1" }}>verified</span>
+              <h1 className="text-3xl font-bold mb-2 text-on-surface">Akun Terverifikasi</h1>
+              <p className="text-on-surface-variant mb-6">Verifikasi KYC Anda telah disetujui. Anda memiliki akses penuh ke semua fitur.</p>
+              <button onClick={() => navigate('/')} className="px-8 py-3 bg-primary text-on-primary rounded-xl font-bold">Kembali ke Dashboard</button>
+            </div>
+          </div>
+        </main>
+        <MobileBottomNav />
       </div>
     );
   }
 
   if (!statusLoading && kycStatus?.status === 'pending') {
     return (
-      <div className="bg-background text-on-background font-body min-h-screen flex items-center justify-center">
-        <div className="text-center max-w-md mx-auto p-8">
-          <span className="material-symbols-outlined text-secondary text-7xl mb-4 block animate-pulse">hourglass_top</span>
-          <h1 className="text-3xl font-bold mb-2">Sedang Diproses</h1>
-          <p className="text-on-surface-variant mb-6">Data verifikasi Anda sedang dalam review oleh tim kami. Proses ini memakan waktu 1-2 hari kerja.</p>
-          <button onClick={() => navigate('/')} className="px-8 py-3 bg-surface-container-high text-on-surface rounded-xl font-bold">Kembali ke Dashboard</button>
-        </div>
+      <div className="flex min-h-screen overflow-hidden bg-[#0b1325]">
+        <Sidebar />
+        <main className="flex-1 md:ml-[260px] min-h-screen pb-24 md:pb-12 overflow-y-auto">
+          <TopAppBar />
+          <div className="flex items-center justify-center min-h-[calc(100vh-5rem)]">
+            <div className="text-center max-w-md mx-auto p-8">
+              <span className="material-symbols-outlined text-secondary text-7xl mb-4 block animate-pulse">hourglass_top</span>
+              <h1 className="text-3xl font-bold mb-2 text-on-surface">Sedang Diproses</h1>
+              <p className="text-on-surface-variant mb-6">Data verifikasi Anda sedang dalam review oleh tim kami. Proses ini memakan waktu 1-2 hari kerja.</p>
+              <button onClick={() => navigate('/')} className="px-8 py-3 bg-surface-container-high text-on-surface rounded-xl font-bold">Kembali ke Dashboard</button>
+            </div>
+          </div>
+        </main>
+        <MobileBottomNav />
       </div>
     );
   }
 
   return (
-    <div className="bg-background text-on-background font-body selection:bg-primary selection:text-on-primary font-['Inter',sans-serif]">
-      {/* TopAppBar Shell */}
-      <header className="bg-[#0b1325]/80 backdrop-blur-xl fixed top-0 w-full z-50 shadow-[0_20px_50px_rgba(56,222,187,0.05)]">
-        <div className="flex justify-between items-center px-6 py-4 w-full">
-          <div className="flex items-center gap-4">
-            <span className="font-['Inter'] font-black text-xl tracking-tighter text-[#00c9a7] cursor-pointer" onClick={() => navigate('/')}>KINETIC TRUST</span>
-          </div>
-          <div className="flex items-center gap-4">
-            <button className="p-2 rounded-full hover:bg-[#2d3448] transition-colors text-on-surface-variant active:scale-95 duration-200">
-              <span className="material-symbols-outlined">notifications</span>
-            </button>
-          </div>
-        </div>
-      </header>
-      
-      <div className="flex min-h-screen pt-[72px]">
-        {/* Main Content Canvas */}
-        <main className="flex-1 p-6 md:p-12 max-w-5xl mx-auto pb-32">
+    <div className="flex min-h-screen overflow-hidden bg-[#0b1325]">
+      <Sidebar />
+      <main className="flex-1 md:ml-[260px] min-h-screen pb-24 md:pb-12 overflow-y-auto">
+        <TopAppBar />
+        <div className="px-6 py-8 max-w-5xl mx-auto pb-32">
           {/* Stepper Container */}
           <div className="mb-12">
             <div className="flex justify-between items-center relative">
@@ -146,7 +149,7 @@ export default function KYCCenter() {
 
           {/* KYC Form Layout */}
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-            <div className="lg:col-span-7 bg-[rgba(45,52,72,0.6)] backdrop-blur-md rounded-3xl p-8 border border-outline-variant/20 shadow-2xl relative overflow-hidden min-h-[400px]">
+            <div className="lg:col-span-7 glass-card rounded-3xl p-8 ghost-border shadow-2xl relative overflow-hidden min-h-[400px]">
               <div className="absolute -top-24 -right-24 w-64 h-64 bg-primary/5 rounded-full blur-3xl"></div>
               
               {currentStep === 1 && (
@@ -289,7 +292,7 @@ export default function KYCCenter() {
           </div>
 
           {/* Footer Action */}
-          <div className="fixed bottom-0 left-0 right-0 p-6 bg-surface/80 backdrop-blur-md flex justify-center items-center gap-6 border-t border-outline-variant/10 z-10">
+          <div className="fixed bottom-0 left-0 md:left-[260px] right-0 p-6 bg-[#0b1325]/80 backdrop-blur-md flex justify-center items-center gap-6 border-t border-outline-variant/10 z-10">
             <button onClick={handlePrev} className={`px-8 py-4 bg-surface-container-high text-outline font-bold text-sm rounded-full active:scale-95 transition-transform flex items-center gap-2 ${currentStep === 1 ? 'opacity-50 cursor-not-allowed' : 'hover:bg-surface-container-highest text-on-surface'}`} disabled={currentStep === 1}>
               <span className="material-symbols-outlined">arrow_back</span>
               KEMBALI
@@ -310,8 +313,9 @@ export default function KYCCenter() {
               </button>
             )}
           </div>
-        </main>
-      </div>
+        </div>
+      </main>
+      <MobileBottomNav />
     </div>
   );
 }
