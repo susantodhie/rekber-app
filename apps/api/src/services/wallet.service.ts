@@ -2,7 +2,7 @@ import { db } from "../db/index.js";
 import { wallets, walletTransactions } from "../db/schema/wallet.js";
 import { withdrawals } from "../db/schema/withdrawals.js";
 import { bankAccounts } from "../db/schema/bank-accounts.js";
-import { userProfiles } from "../db/schema/users.js";
+import { users } from "../db/schema/users.js";
 import { eq, desc, count } from "drizzle-orm";
 import type { CreateWithdrawalInput, WalletFilterParams } from "../types/index.js";
 import { verifyTransactionPin } from "./user.service.js";
@@ -268,4 +268,86 @@ export async function adminRejectWithdrawal(withdrawalId: string, adminId: strin
     .where(eq(withdrawals.id, withdrawalId));
 
   return { success: true };
+}
+
+// ===============================
+// 🔥 ESCROW WALLET LOGIC
+// ===============================
+
+// Potong saldo buyer → masuk ke locked (escrow)
+export async function deductBalance(userId: string, amount: number) {
+  return await db.transaction(async (tx) => {
+    const [wallet] = await tx
+      .select()
+      .from(wallets)
+      .where(eq(wallets.userId, userId))
+      .limit(1);
+
+    if (!wallet) throw new Error("Wallet tidak ditemukan");
+
+    const balance = Number(wallet.balance);
+    const locked = Number(wallet.lockedBalance);
+
+    if (balance < amount) {
+      throw new Error("Saldo tidak cukup");
+    }
+
+    await tx
+      .update(wallets)
+      .set({
+        balance: (balance - amount).toString(),
+        lockedBalance: (locked + amount).toString(),
+      })
+      .where(eq(wallets.userId, userId));
+  });
+}
+
+// Transfer ke seller (transaksi selesai)
+export async function releaseBalance(userId: string, amount: number) {
+  return await db.transaction(async (tx) => {
+    const [wallet] = await tx
+      .select()
+      .from(wallets)
+      .where(eq(wallets.userId, userId))
+      .limit(1);
+
+    if (!wallet) throw new Error("Wallet tidak ditemukan");
+
+    const balance = Number(wallet.balance);
+
+    await tx
+      .update(wallets)
+      .set({
+        balance: (balance + amount).toString(),
+      })
+      .where(eq(wallets.userId, userId));
+  });
+}
+
+// Balikin ke buyer (cancel / dispute)
+export async function refundBalance(userId: string, amount: number) {
+  return await db.transaction(async (tx) => {
+    const [wallet] = await tx
+      .select()
+      .from(wallets)
+      .where(eq(wallets.userId, userId))
+      .limit(1);
+
+    if (!wallet) throw new Error("Wallet tidak ditemukan");
+
+    const balance = Number(wallet.balance);
+    const locked = Number(wallet.lockedBalance);
+
+    if (locked < amount) {
+      throw new Error("Locked balance tidak cukup");
+    }
+
+    await tx
+      .update(wallets)
+      .set({
+        balance: (balance + amount).toString(),
+        lockedBalance: (locked - amount).toString(),
+      })
+      .where(eq(wallets.userId, userId));
+  });
 }

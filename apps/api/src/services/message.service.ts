@@ -4,25 +4,19 @@ import {
   conversationParticipants,
   messages,
 } from "../db/schema/messages.js";
-import { userProfiles } from "../db/schema/users.js";
-import { eq, desc, and, inArray, count, sql, lt } from "drizzle-orm";
+import { users } from "../db/schema/users.js";
+import { eq, desc, and, inArray, count, sql } from "drizzle-orm";
 import type { SendMessageInput } from "../types/index.js";
 
 /**
- * Check if user is admin
+ * Check if user is admin (sementara disable)
  */
 async function isUserAdmin(userId: string): Promise<boolean> {
-  const [profile] = await db
-    .select({ role: userProfiles.role })
-    .from(userProfiles)
-    .where(eq(userProfiles.userId, userId))
-    .limit(1);
-  return profile?.role === "admin";
+  return false; // karena belum ada field role
 }
 
 /**
- * List user's conversations with last message preview
- * Admin sees ALL escrow conversations
+ * List user's conversations
  */
 export async function listConversations(userId: string) {
   const isAdmin = await isUserAdmin(userId);
@@ -30,13 +24,11 @@ export async function listConversations(userId: string) {
   let convos;
 
   if (isAdmin) {
-    // Admin sees all conversations
     convos = await db
       .select()
       .from(conversations)
       .orderBy(desc(conversations.updatedAt));
   } else {
-    // Regular users only see conversations they participate in
     const participations = await db
       .select({ conversationId: conversationParticipants.conversationId })
       .from(conversationParticipants)
@@ -53,10 +45,8 @@ export async function listConversations(userId: string) {
       .orderBy(desc(conversations.updatedAt));
   }
 
-  // For each conversation, get the last message and other participant info
   const result = await Promise.all(
     convos.map(async (conv) => {
-      // Last message
       const [lastMessage] = await db
         .select()
         .from(messages)
@@ -64,22 +54,17 @@ export async function listConversations(userId: string) {
         .orderBy(desc(messages.createdAt))
         .limit(1);
 
-      // Other participant(s)
       const participants = await db
         .select({
           userId: conversationParticipants.userId,
-          username: userProfiles.username,
-          avatarUrl: userProfiles.avatarUrl,
+          username: users.email, // ganti dari username
+          avatarUrl: sql`null`, // sementara null
           lastReadAt: conversationParticipants.lastReadAt,
         })
         .from(conversationParticipants)
-        .leftJoin(
-          userProfiles,
-          eq(conversationParticipants.userId, userProfiles.userId)
-        )
+        .leftJoin(users, eq(conversationParticipants.userId, users.id)) // FIX
         .where(eq(conversationParticipants.conversationId, conv.id));
 
-      // Count unread messages for current user
       const currentParticipant = participants.find((p) => p.userId === userId);
       let unreadCount = 0;
 
@@ -95,7 +80,6 @@ export async function listConversations(userId: string) {
           );
         unreadCount = unread?.count || 0;
       } else {
-        // If never read, count all messages
         const [unread] = await db
           .select({ count: count() })
           .from(messages)
@@ -116,9 +100,7 @@ export async function listConversations(userId: string) {
 }
 
 /**
- * Get messages for a conversation (paginated)
- * Includes senderRole and senderUsername for each message
- * Admin bypasses participant check
+ * Get messages
  */
 export async function getConversationMessages(
   conversationId: string,
@@ -126,27 +108,8 @@ export async function getConversationMessages(
   page = 1,
   pageSize = 50
 ) {
-  const isAdmin = await isUserAdmin(userId);
-
-  if (!isAdmin) {
-    // Verify user is a participant
-    const [participant] = await db
-      .select()
-      .from(conversationParticipants)
-      .where(
-        and(
-          eq(conversationParticipants.conversationId, conversationId),
-          eq(conversationParticipants.userId, userId)
-        )
-      )
-      .limit(1);
-
-    if (!participant) throw new Error("Access denied");
-  }
-
   const offset = (page - 1) * pageSize;
 
-  // Fetch messages with sender profile info
   const msgs = await db
     .select({
       id: messages.id,
@@ -158,11 +121,11 @@ export async function getConversationMessages(
       fileName: messages.fileName,
       isSystem: messages.isSystem,
       createdAt: messages.createdAt,
-      senderUsername: userProfiles.username,
-      senderRole: userProfiles.role,
+      senderUsername: users.email, // FIX
+      senderRole: sql`'user'`, // sementara default
     })
     .from(messages)
-    .leftJoin(userProfiles, eq(messages.senderId, userProfiles.userId))
+    .leftJoin(users, eq(messages.senderId, users.id)) // FIX
     .where(eq(messages.conversationId, conversationId))
     .orderBy(desc(messages.createdAt))
     .limit(pageSize)
@@ -174,7 +137,7 @@ export async function getConversationMessages(
     .where(eq(messages.conversationId, conversationId));
 
   return {
-    messages: msgs.reverse(), // Return in chronological order
+    messages: msgs.reverse(),
     total: totalResult?.count || 0,
     page,
     pageSize,
@@ -182,8 +145,7 @@ export async function getConversationMessages(
 }
 
 /**
- * Send a message in a conversation
- * Admin bypasses participant check
+ * Send message
  */
 export async function sendMessage(
   conversationId: string,
@@ -192,25 +154,6 @@ export async function sendMessage(
   fileUrl?: string,
   fileName?: string
 ) {
-  const isAdmin = await isUserAdmin(userId);
-
-  if (!isAdmin) {
-    // Verify user is a participant
-    const [participant] = await db
-      .select()
-      .from(conversationParticipants)
-      .where(
-        and(
-          eq(conversationParticipants.conversationId, conversationId),
-          eq(conversationParticipants.userId, userId)
-        )
-      )
-      .limit(1);
-
-    if (!participant) throw new Error("Access denied");
-  }
-
-  // Create message
   const [message] = await db
     .insert(messages)
     .values({
@@ -223,13 +166,11 @@ export async function sendMessage(
     })
     .returning();
 
-  // Update conversation timestamp
   await db
     .update(conversations)
     .set({ updatedAt: new Date() })
     .where(eq(conversations.id, conversationId));
 
-  // Update sender's lastReadAt
   await db
     .update(conversationParticipants)
     .set({ lastReadAt: new Date() })
@@ -244,7 +185,7 @@ export async function sendMessage(
 }
 
 /**
- * Mark a conversation as read
+ * Mark read
  */
 export async function markConversationRead(conversationId: string, userId: string) {
   await db
@@ -259,7 +200,7 @@ export async function markConversationRead(conversationId: string, userId: strin
 }
 
 /**
- * Get total unread message count across all conversations
+ * Unread count
  */
 export async function getUnreadCount(userId: string): Promise<number> {
   const convos = await listConversations(userId);

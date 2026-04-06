@@ -15,7 +15,7 @@ import escrowRoutes from "./routes/escrow.routes.js";
 import walletRoutes from "./routes/wallet.routes.js";
 import messageRoutes from "./routes/message.routes.js";
 import notificationRoutes from "./routes/notification.routes.js";
-import adminRoutes from "./routes/admin.routes.js";
+import { adminRoutes } from "./routes/admin.routes.js";
 import paymentRoutes from "./routes/payment.routes.js";
 
 // Middleware imports

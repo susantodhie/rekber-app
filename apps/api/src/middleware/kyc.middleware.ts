@@ -1,6 +1,6 @@
 import type { Request, Response, NextFunction } from "express";
 import { db } from "../db/index.js";
-import { userProfiles } from "../db/schema/users.js";
+import { users } from "../db/schema/users.js";
 import { eq } from "drizzle-orm";
 
 /**
@@ -12,32 +12,36 @@ export async function requireKyc(
   res: Response,
   next: NextFunction
 ) {
+  // cek user login
   if (!req.user) {
-    res.status(401).json({
+    return res.status(401).json({
       success: false,
       error: "Unauthorized",
     });
-    return;
   }
 
   try {
-    const [profile] = await db
-      .select({ kycStatus: userProfiles.kycStatus })
-      .from(userProfiles)
-      .where(eq(userProfiles.userId, req.user.id))
+    // ambil kycStatus dari tabel users
+    const [user] = await db
+      .select({ kycStatus: users.kycStatus })
+      .from(users)
+      .where(eq(users.id, req.user.id))
       .limit(1);
 
-    if (!profile || profile.kycStatus !== "verified") {
-      res.status(403).json({
+    // cek status KYC
+    if (!user || user.kycStatus !== "verified") {
+      return res.status(403).json({
         success: false,
         message: "Akun belum terverifikasi. Selesaikan KYC terlebih dahulu.",
       });
-      return;
     }
 
+    // lanjut ke next middleware
     next();
   } catch (error) {
-    res.status(500).json({
+    console.error("KYC check error:", error);
+
+    return res.status(500).json({
       success: false,
       error: "Failed to check KYC status",
     });

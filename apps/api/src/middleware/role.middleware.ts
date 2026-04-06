@@ -1,6 +1,6 @@
 import type { Request, Response, NextFunction } from "express";
 import { db } from "../db/index.js";
-import { userProfiles } from "../db/schema/users.js";
+import { users } from "../db/schema/users.js";
 import { eq } from "drizzle-orm";
 
 /**
@@ -10,31 +10,31 @@ import { eq } from "drizzle-orm";
 export function requireRole(...roles: string[]) {
   return async (req: Request, res: Response, next: NextFunction) => {
     if (!req.user) {
-      res.status(401).json({
+      return res.status(401).json({
         success: false,
         error: "Unauthorized",
       });
-      return;
     }
 
     try {
-      const [profile] = await db
-        .select({ role: userProfiles.role })
-        .from(userProfiles)
-        .where(eq(userProfiles.userId, req.user.id))
+      const [user] = await db
+        .select({ role: users.role })
+        .from(users)
+        .where(eq(users.id, req.user.id))
         .limit(1);
 
-      if (!profile || !roles.includes(profile.role)) {
-        res.status(403).json({
+      if (!user || !roles.includes(user.role)) {
+        return res.status(403).json({
           success: false,
           error: "Forbidden — insufficient permissions",
         });
-        return;
       }
 
       next();
     } catch (error) {
-      res.status(500).json({
+      console.error("Role check error:", error);
+
+      return res.status(500).json({
         success: false,
         error: "Failed to check permissions",
       });
