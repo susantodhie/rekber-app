@@ -17,10 +17,10 @@
     "docker:down": "docker compose down"
   },
   "dependencies": {
-    "@types/bcrypt": "^6.0.0",
     "bcrypt": "^6.0.0"
   },
   "devDependencies": {
+    "@types/bcrypt": "^6.0.0",
     "drizzle-kit": "^0.31.10"
   }
 }
