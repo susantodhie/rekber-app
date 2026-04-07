@@ -10,7 +10,92 @@ import { v4 as uuidv4 } from "uuid";
 
 const router = Router();
 
-// Custom registration removed in favor of Better Auth's /api/auth/sign-up/email
+/**
+ * REGISTER
+ */
+const registerSchema = z.object({
+  name: z.string().min(1),
+  email: z.string().email(),
+  password: z.string().min(8),
+});
+
+router.post("/api/auth/register", async (req, res) => {
+  res.setHeader("Content-Type", "application/json");
+  try {
+    const parsed = registerSchema.safeParse(req.body);
+
+    if (!parsed.success) {
+      return res.status(400).json({
+        success: false,
+        message: parsed.error.errors.map(e => e.message).join(", "),
+      });
+    }
+
+    const { name, email, password } = parsed.data;
+
+    // check existing
+    const existing = await db
+      .select()
+      .from(user)
+      .where(eq(user.email, email))
+      .limit(1);
+
+    if (existing && existing.length > 0) {
+      return res.status(400).json({
+        success: false,
+        message: "Email already exists",
+      });
+    }
+
+    const userId = uuidv4();
+    const now = new Date();
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    // insert user
+    await db.insert(user).values({
+      id: userId,
+      name,
+      email,
+      emailVerified: false,
+      createdAt: now,
+      updatedAt: now,
+    });
+
+    // insert account
+    await db.insert(account).values({
+      id: uuidv4(),
+      accountId: userId,
+      providerId: "credential",
+      userId,
+      password: hashedPassword,
+      createdAt: now,
+      updatedAt: now,
+    });
+
+    return res.status(200).json({
+      success: true,
+      message: "User created",
+      data: {
+        id: userId,
+        name,
+        email
+      }
+    });
+
+  } catch (error) {
+    if (error && error.code === 'ECONNREFUSED') {
+      return res.status(500).json({
+        success: false,
+        message: "Database connection failed",
+      });
+    }
+    console.error("Register Error:", error);
+    return res.status(500).json({
+      success: false,
+      message: error instanceof Error ? error.message : "Internal server error during registration",
+    });
+  }
+});
 
 /**
  * BETTER AUTH HANDLER

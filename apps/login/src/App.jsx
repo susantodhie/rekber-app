@@ -30,9 +30,7 @@ function App() {
     setLoading(true);
 
     try {
-      const API_BASE = import.meta.env.VITE_API_URL || '';
-      const baseUrl = API_BASE.endsWith('/') ? API_BASE.slice(0, -1) : API_BASE;
-      const response = await fetch(`${baseUrl}/api/auth/sign-up/email`, {
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/api/auth/register`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -73,9 +71,7 @@ function App() {
     setLoading(true);
 
     try {
-      const API_BASE = import.meta.env.VITE_API_URL || '';
-      const baseUrl = API_BASE.endsWith('/') ? API_BASE.slice(0, -1) : API_BASE;
-      const response = await fetch(`${baseUrl}/api/auth/sign-in/email`, {
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/api/auth/sign-in/email`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
