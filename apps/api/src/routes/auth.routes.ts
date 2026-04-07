@@ -21,6 +21,7 @@ const registerSchema = z.object({
 
 router.post("/api/auth/register", async (req, res) => {
   res.setHeader("Content-Type", "application/json");
+
   try {
     const parsed = registerSchema.safeParse(req.body);
 
@@ -33,7 +34,7 @@ router.post("/api/auth/register", async (req, res) => {
 
     const { name, email, password } = parsed.data;
 
-    // check existing
+    // check existing user
     const existing = await db
       .select()
       .from(user)
@@ -78,21 +79,23 @@ router.post("/api/auth/register", async (req, res) => {
       data: {
         id: userId,
         name,
-        email
-      }
+        email,
+      },
     });
 
-  } catch (error) {
-    if (error && error.code === 'ECONNREFUSED') {
+  } catch (error: any) {
+    console.error("Register Error:", error);
+
+    if (error?.code === "ECONNREFUSED") {
       return res.status(500).json({
         success: false,
         message: "Database connection failed",
       });
     }
-    console.error("Register Error:", error);
+
     return res.status(500).json({
       success: false,
-      message: error instanceof Error ? error.message : "Internal server error during registration",
+      message: error?.message || "Internal server error",
     });
   }
 });
