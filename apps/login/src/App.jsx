@@ -31,7 +31,8 @@ function App() {
 
     try {
       const API_BASE = import.meta.env.VITE_API_URL || '';
-      const response = await fetch(`${API_BASE}/api/auth/sign-up/email`, {
+      const baseUrl = API_BASE.endsWith('/') ? API_BASE.slice(0, -1) : API_BASE;
+      const response = await fetch(`${baseUrl}/api/auth/sign-up/email`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -41,17 +42,16 @@ function App() {
         })
       });
 
-      const text = await response.text();
       let data;
       try {
-        data = text ? JSON.parse(text) : {};
+        data = await response.json();
       } catch (parseErr) {
-        console.error('Invalid JSON response:', text);
         throw new Error('Terjadi kesalahan pada server (Respons tidak valid).');
       }
 
       if (!response.ok) {
-        throw new Error(data?.message || data?.error?.message || data?.error || 'Terjadi kesalahan saat registrasi.');
+        const errorMsg = data?.message || data?.error?.message || (typeof data?.error === 'string' ? data.error : 'Terjadi kesalahan saat registrasi.');
+        throw new Error(errorMsg);
       }
 
       setSuccess('Registrasi berhasil! Mengalihkan ke dashboard...');
@@ -74,7 +74,8 @@ function App() {
 
     try {
       const API_BASE = import.meta.env.VITE_API_URL || '';
-      const response = await fetch(`${API_BASE}/api/auth/sign-in/email`, {
+      const baseUrl = API_BASE.endsWith('/') ? API_BASE.slice(0, -1) : API_BASE;
+      const response = await fetch(`${baseUrl}/api/auth/sign-in/email`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -83,17 +84,16 @@ function App() {
         })
       });
 
-      const text = await response.text();
       let data;
       try {
-        data = text ? JSON.parse(text) : {};
+        data = await response.json();
       } catch (parseErr) {
-        console.error('Invalid JSON response:', text);
         throw new Error('Terjadi kesalahan pada server (Respons tidak valid).');
       }
 
       if (!response.ok) {
-        throw new Error(data?.message || data?.error?.message || data?.error || 'Login gagal.');
+        const errorMsg = data?.message || data?.error?.message || (typeof data?.error === 'string' ? data.error : 'Login gagal.');
+        throw new Error(errorMsg);
       }
 
       setSuccess('Login berhasil! Mengalihkan...');
