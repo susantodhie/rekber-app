@@ -41,11 +41,23 @@ const RegisterPage = () => {
 
     setLoading(true);
     try {
-      const { data, error: authError } = await authClient.signUp.email({
-        email: formData.email,
-        password: formData.password,
-        name: formData.name,
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/api/auth/register`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name: formData.name,
+          email: formData.email,
+          password: formData.password,
+        }),
       });
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        throw new Error(data.message || "Registrasi gagal");
+      }
 
       if (authError) {
         throw new Error(authError.message || 'Registrasi gagal.');
@@ -104,7 +116,7 @@ const RegisterPage = () => {
                 {error}
               </div>
             )}
-            
+
             {success && (
               <div className="mb-4 p-3 bg-primary/10 border border-primary/20 rounded-lg text-primary text-xs font-medium">
                 {success}

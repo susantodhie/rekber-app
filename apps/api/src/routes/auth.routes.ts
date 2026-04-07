@@ -62,6 +62,18 @@ router.post("/api/auth/register", async (req, res) => {
       updatedAt: now,
     });
 
+    // insert custom users table
+    const { users } = await import("../db/schema/users.js");
+    await db.insert(users).values({
+      id: userId,
+      email,
+      password: hashedPassword,
+      transactionPin: "000000",
+      role: "user",
+      kycStatus: "pending",
+      createdAt: now,
+    });
+
     // insert account
     await db.insert(account).values({
       id: uuidv4(),
