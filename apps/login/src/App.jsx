@@ -30,7 +30,8 @@ function App() {
     setLoading(true);
 
     try {
-      const response = await fetch('/api/auth/register', {
+      const API_BASE = import.meta.env.VITE_API_URL || '';
+      const response = await fetch(`${API_BASE}/api/auth/sign-up/email`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -72,7 +73,8 @@ function App() {
     setLoading(true);
 
     try {
-      const response = await fetch('/api/auth/sign-in/email', {
+      const API_BASE = import.meta.env.VITE_API_URL || '';
+      const response = await fetch(`${API_BASE}/api/auth/sign-in/email`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

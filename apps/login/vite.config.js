@@ -5,7 +5,13 @@ export default defineConfig({
   plugins: [react()],
 
   server: {
-    host: true
+    host: true,
+    proxy: {
+      '/api': {
+        target: process.env.VITE_API_URL || 'http://localhost:3000',
+        changeOrigin: true,
+      }
+    }
   },
 
   preview: {
