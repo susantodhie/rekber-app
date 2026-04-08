@@ -11,7 +11,7 @@ import { v4 as uuidv4 } from "uuid";
 const router = Router();
 
 /**
- * REGISTER
+ * REGISTER (CUSTOM)
  */
 const registerSchema = z.object({
   name: z.string().min(1),
@@ -34,7 +34,7 @@ router.post("/register", async (req, res) => {
 
     const { name, email, password } = parsed.data;
 
-    // check existing user
+    // cek user existing
     const existing = await db
       .select()
       .from(user)
@@ -52,7 +52,7 @@ router.post("/register", async (req, res) => {
     const now = new Date();
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    // insert user
+    // insert ke better-auth user table
     await db.insert(user).values({
       id: userId,
       name,
@@ -62,7 +62,7 @@ router.post("/register", async (req, res) => {
       updatedAt: now,
     });
 
-    // insert custom users table
+    // insert ke custom users table
     const { users } = await import("../db/schema/users.js");
     await db.insert(users).values({
       id: userId,
@@ -74,7 +74,7 @@ router.post("/register", async (req, res) => {
       createdAt: now,
     });
 
-    // insert account
+    // insert account (better-auth)
     await db.insert(account).values({
       id: uuidv4(),
       accountId: userId,
@@ -113,8 +113,9 @@ router.post("/register", async (req, res) => {
 });
 
 /**
- * BETTER AUTH HANDLER
+ * BETTER AUTH HANDLER (FIXED)
+ * ❗ PENTING: JANGAN pakai /api/auth lagi di sini
  */
-router.all("/api/auth/*splat", toNodeHandler(auth));
+router.all("/*", toNodeHandler(auth));
 
 export default router;
