@@ -89,7 +89,7 @@ app.get("/api/health", (req, res) => {
 
 // Auth routes (Better Auth + custom extensions)
 // Note: auth routes handle /api/auth/* internally
-app.use(authRoutes);
+app.use("/api/auth", authRoutes);
 
 // Resource routes
 app.use("/api/users", userRoutes);

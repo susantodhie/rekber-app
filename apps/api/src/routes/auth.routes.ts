@@ -19,7 +19,7 @@ const registerSchema = z.object({
   password: z.string().min(8),
 });
 
-router.post("/api/auth/register", async (req, res) => {
+router.post("/register", async (req, res) => {
   res.setHeader("Content-Type", "application/json");
 
   try {
