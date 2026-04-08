@@ -59,9 +59,7 @@ const RegisterPage = () => {
         throw new Error(data.message || "Registrasi gagal");
       }
 
-      if (authError) {
-        throw new Error(authError.message || 'Registrasi gagal.');
-      }
+
 
       setSuccess('Registrasi berhasil! Mengalihkan ke dashboard...');
       setTimeout(() => {
