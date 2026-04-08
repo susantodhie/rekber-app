@@ -2,14 +2,14 @@
 // Barrel export — all schema tables
 // ============================================================
 
-export * from "./auth";
-export * from "./users";
-export * from "./kyc";
-export * from "./escrow";
-export * from "./wallet";
-export * from "./bank-accounts";
-export * from "./withdrawals";
-export * from "./messages";
-export * from "./notifications";
-export * from "./disputes";
-export * from "./activity-log";
+export * from "./auth.js";
+export * from "./users.js";
+export * from "./kyc.js";
+export * from "./escrow.js";
+export * from "./wallet.js";
+export * from "./bank-accounts.js";
+export * from "./withdrawals.js";
+export * from "./messages.js";
+export * from "./notifications.js";
+export * from "./disputes.js";
+export * from "./activity-log.js";
