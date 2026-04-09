@@ -4,6 +4,7 @@ import { auth } from "../auth/index.js";
 import { z } from "zod";
 import { db } from "../db/index.js";
 import { user, account } from "../db/schema/auth.js";
+import { users } from "../db/schema/users.js";
 import { eq } from "drizzle-orm";
 import bcrypt from "bcrypt";
 import { v4 as uuidv4 } from "uuid";
@@ -20,8 +21,6 @@ const registerSchema = z.object({
 });
 
 router.post("/register", async (req, res) => {
-  res.setHeader("Content-Type", "application/json");
-
   try {
     const parsed = registerSchema.safeParse(req.body);
 
@@ -34,14 +33,28 @@ router.post("/register", async (req, res) => {
 
     const { name, email, password } = parsed.data;
 
-    // cek user existing
-    const existing = await db
+    // cek user existing di better-auth
+    const existingAuthUser = await db
       .select()
       .from(user)
       .where(eq(user.email, email))
       .limit(1);
 
-    if (existing && existing.length > 0) {
+    if (existingAuthUser.length > 0) {
+      return res.status(400).json({
+        success: false,
+        message: "Email already exists",
+      });
+    }
+
+    // cek juga di custom users table (double safety)
+    const existingCustomUser = await db
+      .select()
+      .from(users)
+      .where(eq(users.email, email))
+      .limit(1);
+
+    if (existingCustomUser.length > 0) {
       return res.status(400).json({
         success: false,
         message: "Email already exists",
@@ -50,7 +63,9 @@ router.post("/register", async (req, res) => {
 
     const userId = uuidv4();
     const now = new Date();
+
     const hashedPassword = await bcrypt.hash(password, 10);
+    const hashedPin = await bcrypt.hash("000000", 10);
 
     // insert ke better-auth user table
     await db.insert(user).values({
@@ -63,12 +78,11 @@ router.post("/register", async (req, res) => {
     });
 
     // insert ke custom users table
-    const { users } = await import("../db/schema/users.js");
     await db.insert(users).values({
       id: userId,
       email,
       password: hashedPassword,
-      transactionPin: "000000",
+      transactionPin: hashedPin,
       role: "user",
       kycStatus: "pending",
       createdAt: now,
@@ -113,8 +127,8 @@ router.post("/register", async (req, res) => {
 });
 
 /**
- * BETTER AUTH HANDLER (FIXED)
- * ❗ PENTING: JANGAN pakai /api/auth lagi di sini
+ * BETTER AUTH HANDLER (WAJIB FIX)
+ * ❗ JANGAN pakai /api/auth di sini
  */
 router.use("/", toNodeHandler(auth));
 
