@@ -130,6 +130,6 @@ router.post("/register", async (req, res) => {
  * BETTER AUTH HANDLER (WAJIB FIX)
  * ❗ JANGAN pakai /api/auth di sini
  */
-router.all("/*", toNodeHandler(auth));
+router.use(toNodeHandler(auth));
 
 export default router;
