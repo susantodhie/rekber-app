@@ -27,13 +27,20 @@ const __dirname = path.dirname(__filename);
 const app = express();
 const PORT = parseInt(process.env.PORT || "3000");
 
+// 🔥 WAJIB BUAT RAILWAY + COOKIE
+app.set("trust proxy", 1);
+
 // ============================================================
 // Global Middleware
 // ============================================================
 
+// 🔥 FIX CORS BIAR COOKIE KEKIRIM
 app.use(
   cors({
-    origin: true, // Allow all origins during development
+    origin: [
+      "https://hoppscotch.io",
+      "http://localhost:5173"
+    ],
     credentials: true,
     methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization"],
@@ -42,12 +49,17 @@ app.use(
 
 app.use(
   helmet({
-    crossOriginResourcePolicy: { policy: "cross-origin" }, // Allow serving uploaded files
+    crossOriginResourcePolicy: { policy: "cross-origin" },
   })
 );
 
 app.use(express.json({ limit: "10mb" }));
 app.use(express.urlencoded({ extended: true, limit: "10mb" }));
+
+// ============================================================
+// Debug DB
+// ============================================================
+
 app.get("/api/db-check", async (req, res) => {
   try {
     const result = await db.execute("SELECT 1");
@@ -57,7 +69,10 @@ app.get("/api/db-check", async (req, res) => {
   }
 });
 
-// Serve uploaded files statically
+// ============================================================
+// Static files
+// ============================================================
+
 const uploadDir = process.env.UPLOAD_DIR || "./uploads";
 app.use("/uploads", express.static(path.resolve(uploadDir)));
 
@@ -72,14 +87,14 @@ app.get("/", (req, res) => {
 app.get("/api", (req, res) => {
   res.json({
     success: true,
-    message: "API READY 🚀"
+    message: "API READY 🚀",
   });
 });
 
 app.get("/api/health", (req, res) => {
   res.json({
     success: true,
-    message: "API HEALTH OK 🚀"
+    message: "API HEALTH OK 🚀",
   });
 });
 
@@ -87,11 +102,7 @@ app.get("/api/health", (req, res) => {
 // API Routes
 // ============================================================
 
-// Auth routes (Better Auth + custom extensions)
-// Note: auth routes handle /api/auth/* internally
 app.use("/api/auth", authRoutes);
-
-// Resource routes
 app.use("/api/users", userRoutes);
 app.use("/api/kyc", kycRoutes);
 app.use("/api/escrow", escrowRoutes);
@@ -113,7 +124,7 @@ app.use((_req, res) => {
 });
 
 // ============================================================
-// Error handler (must be last)
+// Error handler
 // ============================================================
 
 app.use(errorHandler);
