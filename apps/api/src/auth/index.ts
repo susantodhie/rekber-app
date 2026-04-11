@@ -20,8 +20,13 @@ export const auth = betterAuth({
 
   // 🔥 WAJIB BIAR COOKIE KEKIRIM
   cookies: {
-    secure: true,
-    sameSite: "none",
+    sessionToken: {
+      options: {
+        httpOnly: true,
+        secure: true,
+        sameSite: "none",
+      },
+    },
   },
 
   // 🔥 TAMBAHIN HOPPSCOTCH

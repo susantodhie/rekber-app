@@ -18,7 +18,7 @@ import {
 } from './hooks/useEscrow';
 import { useMyProfile } from './hooks/useUser';
 
-const API_BASE = import.meta.env.VITE_API_URL || "http://localhost:3000";
+const API_BASE = "https://rekberinsaja-api-production.up.railway.app";
 
 const TransactionDetail = () => {
   const { id } = useParams();

@@ -1,6 +1,16 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
+import { useNavigate } from 'react-router-dom'
 
 function App() {
+  const navigate = useNavigate();
+
+  // Auto-redirect jika sudah login
+  useEffect(() => {
+    const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+    if (isLoggedIn) {
+      navigate('/dashboard', { replace: true });
+    }
+  }, [navigate]);
   const [activeTab, setActiveTab] = useState('masuk');
   const [formData, setFormData] = useState({ name: '', email: '', password: '' });
   const [showPassword, setShowPassword] = useState(false);
@@ -30,7 +40,7 @@ function App() {
     setLoading(true);
 
     try {
-      const response = await fetch(`${import.meta.env.VITE_API_URL}/api/auth/register`, {
+      const response = await fetch(`https://rekberinsaja-api-production.up.railway.app/api/auth/register`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -52,9 +62,14 @@ function App() {
         throw new Error(errorMsg);
       }
 
+      // Simpan status login
+      localStorage.setItem('isLoggedIn', 'true');
+      localStorage.setItem('userName', formData.name);
+      localStorage.setItem('userEmail', formData.email);
+
       setSuccess('Registrasi berhasil! Mengalihkan ke dashboard...');
       setTimeout(() => {
-        window.location.href = '/';
+        navigate('/dashboard', { replace: true });
       }, 2000);
     } catch (err) {
       setError(err.message);
@@ -71,7 +86,7 @@ function App() {
     setLoading(true);
 
     try {
-      const response = await fetch(`${import.meta.env.VITE_API_URL}/api/auth/sign-in/email`, {
+      const response = await fetch(`https://rekberinsaja-api-production.up.railway.app/api/auth/sign-in/email`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -92,9 +107,16 @@ function App() {
         throw new Error(errorMsg);
       }
 
+      // Simpan status login
+      localStorage.setItem('isLoggedIn', 'true');
+      localStorage.setItem('userEmail', formData.email);
+      if (data?.user?.name) {
+        localStorage.setItem('userName', data.user.name);
+      }
+
       setSuccess('Login berhasil! Mengalihkan...');
       setTimeout(() => {
-        window.location.href = '/';
+        navigate('/dashboard', { replace: true });
       }, 1500);
     } catch (err) {
       setError(err.message);
@@ -131,19 +153,17 @@ function App() {
         <div className="glass-panel rounded-xl shadow-2xl overflow-hidden outline outline-1 outline-outline-variant/20 p-8 w-full max-w-md bg-surface-container/90 relative z-20">
           {/* Auth Tabs */}
           <div className="flex mb-8 gap-4">
-            <button 
+            <button
               onClick={() => handleTabSwitch('masuk')}
-              className={`flex-1 pb-3 text-sm font-bold tracking-widest uppercase border-b-2 transition-all ${
-                activeTab === 'masuk' ? 'border-primary text-primary' : 'border-transparent text-on-surface-variant/40 hover:text-on-surface-variant'
-              }`}
+              className={`flex-1 pb-3 text-sm font-bold tracking-widest uppercase border-b-2 transition-all ${activeTab === 'masuk' ? 'border-primary text-primary' : 'border-transparent text-on-surface-variant/40 hover:text-on-surface-variant'
+                }`}
             >
               Masuk
             </button>
-            <button 
+            <button
               onClick={() => handleTabSwitch('daftar')}
-              className={`flex-1 pb-3 text-sm font-bold tracking-widest uppercase border-b-2 transition-all ${
-                activeTab === 'daftar' ? 'border-primary text-primary' : 'border-transparent text-on-surface-variant/40 hover:text-on-surface-variant'
-              }`}
+              className={`flex-1 pb-3 text-sm font-bold tracking-widest uppercase border-b-2 transition-all ${activeTab === 'daftar' ? 'border-primary text-primary' : 'border-transparent text-on-surface-variant/40 hover:text-on-surface-variant'
+                }`}
             >
               Daftar
             </button>
@@ -168,10 +188,10 @@ function App() {
                   <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
                     <span className="material-symbols-outlined text-outline-variant group-focus-within:text-secondary transition-colors">person</span>
                   </div>
-                  <input 
-                    className="w-full bg-surface-container-lowest border border-outline-variant/10 rounded-lg py-4 pl-12 pr-4 text-on-surface focus:outline-none focus:ring-2 focus:ring-secondary/20 focus:border-secondary transition-all placeholder:text-on-surface-variant/30" 
-                    placeholder="Nama Lengkap Anda" 
-                    type="text" 
+                  <input
+                    className="w-full bg-surface-container-lowest border border-outline-variant/10 rounded-lg py-4 pl-12 pr-4 text-on-surface focus:outline-none focus:ring-2 focus:ring-secondary/20 focus:border-secondary transition-all placeholder:text-on-surface-variant/30"
+                    placeholder="Nama Lengkap Anda"
+                    type="text"
                     name="name"
                     value={formData.name}
                     onChange={handleChange}
@@ -188,10 +208,10 @@ function App() {
                 <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
                   <span className="material-symbols-outlined text-outline-variant group-focus-within:text-secondary transition-colors">alternate_email</span>
                 </div>
-                <input 
-                  className="w-full bg-surface-container-lowest border border-outline-variant/10 rounded-lg py-4 pl-12 pr-4 text-on-surface focus:outline-none focus:ring-2 focus:ring-secondary/20 focus:border-secondary transition-all placeholder:text-on-surface-variant/30" 
-                  placeholder="nama@email.com" 
-                  type="email" 
+                <input
+                  className="w-full bg-surface-container-lowest border border-outline-variant/10 rounded-lg py-4 pl-12 pr-4 text-on-surface focus:outline-none focus:ring-2 focus:ring-secondary/20 focus:border-secondary transition-all placeholder:text-on-surface-variant/30"
+                  placeholder="nama@email.com"
+                  type="email"
                   name="email"
                   value={formData.email}
                   onChange={handleChange}
@@ -212,10 +232,10 @@ function App() {
                 <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
                   <span className="material-symbols-outlined text-outline-variant group-focus-within:text-secondary transition-colors">lock</span>
                 </div>
-                <input 
-                  className="w-full bg-surface-container-lowest border border-outline-variant/10 rounded-lg py-4 pl-12 pr-12 text-on-surface focus:outline-none focus:ring-2 focus:ring-secondary/20 focus:border-secondary transition-all placeholder:text-on-surface-variant/30" 
-                  placeholder="••••••••" 
-                  type={showPassword ? 'text' : 'password'} 
+                <input
+                  className="w-full bg-surface-container-lowest border border-outline-variant/10 rounded-lg py-4 pl-12 pr-12 text-on-surface focus:outline-none focus:ring-2 focus:ring-secondary/20 focus:border-secondary transition-all placeholder:text-on-surface-variant/30"
+                  placeholder="••••••••"
+                  type={showPassword ? 'text' : 'password'}
                   name="password"
                   value={formData.password}
                   onChange={handleChange}
@@ -250,10 +270,10 @@ function App() {
                     <img alt="Google" className="w-5 h-5 grayscale opacity-70 hover:grayscale-0 hover:opacity-100 transition-all" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCGxOtkkWi4eY6yShTXo83fbll8m2e4mV3Ulw_AfvtPnnCs4-gLrz9-jKfAMLP9sw_pbMes597-EYQ09g3K_bZO3OeLqqslMV9vFNNOryf7Glrq6PgR3ppucGJjYE0j0XCr1WKMFdAkDCDuEk96lasaR01or8ESVbk9uDml3UQDgwqVE-6aMBLYLbQv6i5N5y7bC5SajqSjHPzt8UJUqbZ8a-u5D9FXsIS954jX1q8T8GtjmZNefMCZOGZhapuKHZBSAdR8utD6Qxw" />
                   </button>
                   <button type="button" onClick={() => console.log('Apple login')} className="flex items-center justify-center py-3 bg-surface-container-high rounded-lg hover:bg-surface-container-highest border border-outline-variant/10 transition-colors">
-                    <span className="material-symbols-outlined text-on-surface-variant/70" style={{fontVariationSettings: "'FILL' 1"}}>ios</span>
+                    <span className="material-symbols-outlined text-on-surface-variant/70" style={{ fontVariationSettings: "'FILL' 1" }}>ios</span>
                   </button>
                   <button type="button" onClick={() => console.log('Social login')} className="flex items-center justify-center py-3 bg-surface-container-high rounded-lg hover:bg-surface-container-highest border border-outline-variant/10 transition-colors">
-                    <span className="material-symbols-outlined text-blue-400" style={{fontVariationSettings: "'FILL' 1"}}>social_leaderboard</span>
+                    <span className="material-symbols-outlined text-blue-400" style={{ fontVariationSettings: "'FILL' 1" }}>social_leaderboard</span>
                   </button>
                 </div>
               </>
@@ -264,12 +284,12 @@ function App() {
           <div className="mt-8 pt-6 border-t border-outline-variant/10 text-center relative z-30">
             {activeTab === 'masuk' ? (
               <p className="text-xs text-on-surface-variant/60 font-medium">
-                Belum punya akun? 
+                Belum punya akun?
                 <button onClick={() => handleTabSwitch('daftar')} className="text-secondary font-bold hover:underline transition-all decoration-secondary/30 underline-offset-4 ml-1">Daftar Sekarang</button>
               </p>
             ) : (
               <p className="text-xs text-on-surface-variant/60 font-medium">
-                Sudah punya akun? 
+                Sudah punya akun?
                 <button onClick={() => handleTabSwitch('masuk')} className="text-secondary font-bold hover:underline transition-all decoration-secondary/30 underline-offset-4 ml-1">Masuk</button>
               </p>
             )}

@@ -24,8 +24,9 @@ import { useMyProfile } from './hooks/useUser';
 /** Route guard — redirects to /login if no session */
 function ProtectedRoute({ children }) {
   const { data: session, isPending } = useSession();
+  const isLoggedInLocal = localStorage.getItem('isLoggedIn') === 'true';
 
-  if (isPending) {
+  if (isPending && !isLoggedInLocal) {
     return (
       <div className="flex h-screen items-center justify-center bg-[#0b1325]">
         <div className="flex flex-col items-center gap-4">
@@ -38,7 +39,7 @@ function ProtectedRoute({ children }) {
     );
   }
 
-  if (!session) {
+  if (!session && !isLoggedInLocal) {
     return <Navigate to="/login" replace />;
   }
 

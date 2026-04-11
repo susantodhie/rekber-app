@@ -14,10 +14,12 @@
     "db:studio": "npm run db:studio --workspace=apps/api",
     "db:generate": "npm run db:generate --workspace=apps/api",
     "docker:up": "docker compose up -d",
-    "docker:down": "docker compose down"
+    "docker:down": "docker compose down",
+    "dev": "npm run dev --workspace=apps/dashboard"
   },
   "dependencies": {
     "bcrypt": "^6.0.0",
+    "react-router-dom": "^7.14.0",
     "vite": "^8.0.5"
   },
   "devDependencies": {

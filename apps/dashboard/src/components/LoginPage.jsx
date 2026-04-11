@@ -28,7 +28,8 @@ export default function LoginPage() {
       if (result.error) {
         setError(result.error.message || 'Login gagal. Periksa email dan password Anda.');
       } else {
-        window.location.href = '/';
+        localStorage.setItem('isLoggedIn', 'true');
+        navigate('/', { replace: true });
       }
     } catch (err) {
       setError('Terjadi kesalahan. Silakan coba lagi.');

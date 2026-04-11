@@ -16,7 +16,7 @@ const AdminKYC = () => {
   const getImageUrl = (path) => {
     if (!path) return '';
     if (path.startsWith('http')) return path;
-    const apiBase = import.meta.env.VITE_API_URL || "http://localhost:3000";
+    const apiBase = "https://rekberinsaja-api-production.up.railway.app";
     return `${apiBase}${path}`;
   };
 
