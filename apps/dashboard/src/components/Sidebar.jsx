@@ -24,8 +24,16 @@ const Sidebar = () => {
   const isActive = (path) => location.pathname === path;
 
   const handleLogout = async () => {
-    await signOut();
-    navigate('/login', { replace: true });
+    try {
+      await fetch(`${import.meta.env.VITE_API_URL}/api/auth/sign-out`, {
+        method: "POST",
+        credentials: "include",
+      });
+
+      window.location.href = "/login";
+    } catch (error) {
+      console.error("Logout error:", error);
+    }
   };
 
   const handleNavClick = (path) => {
@@ -57,62 +65,60 @@ const Sidebar = () => {
             <span className="material-symbols-outlined">close</span>
           </button>
         </div>
-      <nav className="flex-1 space-y-2 p-6 overflow-y-auto">
-        {navItems.map((item) => (
-          <div
-            key={item.path}
-            onClick={() => handleNavClick(item.path)}
-            className={`flex items-center gap-4 px-4 py-3 transition-all duration-300 active:opacity-80 cursor-pointer ${
-              isActive(item.path)
+        <nav className="flex-1 space-y-2 p-6 overflow-y-auto">
+          {navItems.map((item) => (
+            <div
+              key={item.path}
+              onClick={() => handleNavClick(item.path)}
+              className={`flex items-center gap-4 px-4 py-3 transition-all duration-300 active:opacity-80 cursor-pointer ${isActive(item.path)
                 ? 'bg-[#222a3d] text-[#44e5c2] rounded-lg border-l-4 border-[#00c9a7] shadow-[inset_0_0_15px_rgba(68,229,194,0.1)]'
                 : 'text-[#bacac3] hover:text-white hover:bg-[#171f32] hover:translate-x-1'
-            }`}
-          >
-            <span className="material-symbols-outlined">{item.icon}</span>
-            <span className="font-['Inter'] uppercase tracking-widest text-[11px] font-bold">{item.label}</span>
-          </div>
-        ))}
-
-        {/* --- Admin Only Links --- */}
-        {profile?.role === 'admin' && (
-          <>
-            <div className="mt-6 mb-2 px-4">
-               <span className="text-[10px] text-on-surface-variant font-black uppercase tracking-widest text-error">Admin Tools</span>
+                }`}
+            >
+              <span className="material-symbols-outlined">{item.icon}</span>
+              <span className="font-['Inter'] uppercase tracking-widest text-[11px] font-bold">{item.label}</span>
             </div>
-            {adminNavItems.map((item) => (
-              <div
-                key={item.path}
-                onClick={() => handleNavClick(item.path)}
-                className={`flex items-center gap-4 px-4 py-3 transition-all duration-300 active:opacity-80 cursor-pointer ${
-                  isActive(item.path)
+          ))}
+
+          {/* --- Admin Only Links --- */}
+          {profile?.role === 'admin' && (
+            <>
+              <div className="mt-6 mb-2 px-4">
+                <span className="text-[10px] text-on-surface-variant font-black uppercase tracking-widest text-error">Admin Tools</span>
+              </div>
+              {adminNavItems.map((item) => (
+                <div
+                  key={item.path}
+                  onClick={() => handleNavClick(item.path)}
+                  className={`flex items-center gap-4 px-4 py-3 transition-all duration-300 active:opacity-80 cursor-pointer ${isActive(item.path)
                     ? 'bg-[#222a3d] text-error rounded-lg border-l-4 border-error shadow-[inset_0_0_15px_rgba(255,82,82,0.1)]'
                     : 'text-[#bacac3] hover:text-white hover:bg-[#171f32] hover:translate-x-1'
-                }`}
-              >
-                <span className="material-symbols-outlined text-error">{item.icon}</span>
-                <span className="font-['Inter'] uppercase tracking-widest text-[11px] font-bold text-error">{item.label}</span>
-              </div>
-            ))}
-          </>
-        )}
-      </nav>
-      <div className="mt-auto p-6 space-y-2">
-        <button
-          onClick={() => handleNavClick('/transactions/new')}
-          className="w-full bg-primary-container text-on-primary py-3 rounded-lg font-bold text-xs uppercase tracking-widest hover:brightness-110 transition-all mb-4"
-        >
-          Start New Escrow
-        </button>
-        <div onClick={() => handleNavClick('/profile')} className="flex items-center gap-4 text-[#bacac3] px-4 py-3 hover:text-white hover:bg-[#171f32] transition-all cursor-pointer">
-          <span className="material-symbols-outlined">person</span>
-          <span className="font-['Inter'] uppercase tracking-widest text-[11px] font-bold">Profile</span>
+                    }`}
+                >
+                  <span className="material-symbols-outlined text-error">{item.icon}</span>
+                  <span className="font-['Inter'] uppercase tracking-widest text-[11px] font-bold text-error">{item.label}</span>
+                </div>
+              ))}
+            </>
+          )}
+        </nav>
+        <div className="mt-auto p-6 space-y-2">
+          <button
+            onClick={() => handleNavClick('/transactions/new')}
+            className="w-full bg-primary-container text-on-primary py-3 rounded-lg font-bold text-xs uppercase tracking-widest hover:brightness-110 transition-all mb-4"
+          >
+            Start New Escrow
+          </button>
+          <div onClick={() => handleNavClick('/profile')} className="flex items-center gap-4 text-[#bacac3] px-4 py-3 hover:text-white hover:bg-[#171f32] transition-all cursor-pointer">
+            <span className="material-symbols-outlined">person</span>
+            <span className="font-['Inter'] uppercase tracking-widest text-[11px] font-bold">Profile</span>
+          </div>
+          <div onClick={handleLogout} className="flex items-center gap-4 text-[#bacac3] px-4 py-3 hover:text-white hover:bg-[#171f32] transition-all cursor-pointer">
+            <span className="material-symbols-outlined">logout</span>
+            <span className="font-['Inter'] uppercase tracking-widest text-[11px] font-bold">Logout</span>
+          </div>
         </div>
-        <div onClick={handleLogout} className="flex items-center gap-4 text-[#bacac3] px-4 py-3 hover:text-white hover:bg-[#171f32] transition-all cursor-pointer">
-          <span className="material-symbols-outlined">logout</span>
-          <span className="font-['Inter'] uppercase tracking-widest text-[11px] font-bold">Logout</span>
-        </div>
-      </div>
-    </aside>
+      </aside>
     </>
   );
 };
