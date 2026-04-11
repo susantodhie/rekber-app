@@ -11,12 +11,13 @@ export default function LoginPage() {
   const [showPassword, setShowPassword] = useState(false);
 
   // If already logged in, redirect to dashboard
-  const { data: session } = useSession();
+  const { data: session, isPending } = useSession();
   React.useEffect(() => {
-    if (session) {
+    const isLoggedInLocal = localStorage.getItem('isLoggedIn') === 'true';
+    if (session && !isPending && isLoggedInLocal) {
       navigate('/', { replace: true });
     }
-  }, [session, navigate]);
+  }, [session, isPending, navigate]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();

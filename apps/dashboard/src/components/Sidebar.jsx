@@ -25,11 +25,9 @@ const Sidebar = () => {
 
   const handleLogout = async () => {
     try {
-      await fetch(`${import.meta.env.VITE_API_URL}/api/auth/sign-out`, {
-        method: "POST",
-        credentials: "include",
-      });
-
+      await signOut();
+      localStorage.clear();
+      sessionStorage.clear();
       window.location.href = "/login";
     } catch (error) {
       console.error("Logout error:", error);

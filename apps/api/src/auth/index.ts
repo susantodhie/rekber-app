@@ -18,7 +18,15 @@ export const auth = betterAuth({
   secret: process.env.BETTER_AUTH_SECRET,
   baseURL: process.env.BETTER_AUTH_URL,
 
-
+  cookies: {
+    sessionToken: {
+      options: {
+        httpOnly: true,
+        secure: false,     // 🔥 localhost wajib false
+        sameSite: "lax",   // 🔥 localhost wajib lax
+      },
+    },
+  },
 
   // 🔥 TAMBAHIN HOPPSCOTCH
   trustedOrigins: [
