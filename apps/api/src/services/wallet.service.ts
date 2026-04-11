@@ -3,7 +3,7 @@ import { wallets, walletTransactions } from "../db/schema/wallet.js";
 import { withdrawals } from "../db/schema/withdrawals.js";
 import { bankAccounts } from "../db/schema/bank-accounts.js";
 import { users } from "../db/schema/users.js";
-import { eq, desc, count } from "drizzle-orm";
+import { eq, desc, count, sql } from "drizzle-orm";
 import type { CreateWithdrawalInput } from "../types/index.js";
 
 /**
@@ -23,150 +23,122 @@ export async function getWallet(userId: string) {
  * Top up
  */
 export async function topUpWallet(userId: string, amount: number, method?: string) {
-  let [wallet] = await db
-    .select()
-    .from(wallets)
-    .where(eq(wallets.userId, userId))
-    .limit(1);
+  return await db.transaction(async (tx) => {
+    let [wallet] = await tx.select().from(wallets).where(eq(wallets.userId, userId)).limit(1);
 
-  if (!wallet) {
-    const [newWallet] = await db
-      .insert(wallets)
-      .values({
-        userId,
-        balance: 0,
-        lockedBalance: 0,
-      })
+    if (!wallet) {
+      const [newWallet] = await tx.insert(wallets).values({
+        userId, balance: 0, lockedBalance: 0
+      }).returning();
+      wallet = newWallet;
+    }
+
+    const [updatedWallet] = await tx.update(wallets)
+      .set({ balance: sql`${wallets.balance} + ${amount}` })
+      .where(eq(wallets.userId, userId))
       .returning();
 
-    wallet = newWallet;
-  }
+    await tx.insert(walletTransactions).values({
+      userId,
+      amount,
+      type: "deposit",
+    });
 
-  const newBalance = wallet.balance + amount;
-
-  await db
-    .update(wallets)
-    .set({ balance: newBalance })
-    .where(eq(wallets.userId, userId));
-
-  await db.insert(walletTransactions).values({
-    userId,
-    amount,
-    type: "deposit",
+    return { success: true, balance: updatedWallet.balance };
   });
-
-  return { success: true, balance: newBalance };
 }
 
 /**
  * Withdraw
  */
 export async function requestWithdrawal(userId: string, input: CreateWithdrawalInput) {
-  const [wallet] = await db
-    .select()
-    .from(wallets)
-    .where(eq(wallets.userId, userId))
-    .limit(1);
+  return await db.transaction(async (tx) => {
+    const [wallet] = await tx.select().from(wallets).where(eq(wallets.userId, userId)).limit(1);
+    
+    if (!wallet) throw new Error("Wallet tidak ditemukan");
+    if (wallet.balance < input.amount) throw new Error("Saldo tidak cukup");
 
-  if (!wallet) throw new Error("Wallet tidak ditemukan");
+    const [updatedWallet] = await tx.update(wallets)
+      .set({ balance: sql`${wallets.balance} - ${input.amount}` })
+      .where(sql`${wallets.userId} = ${userId} AND ${wallets.balance} >= ${input.amount}`)
+      .returning();
 
-  if (wallet.balance < input.amount) {
-    throw new Error("Saldo tidak cukup");
-  }
+    if (!updatedWallet) throw new Error("Gagal memproses penarikan atau saldo tidak cukup");
 
-  const newBalance = wallet.balance - input.amount;
+    await tx.insert(walletTransactions).values({
+      userId,
+      amount: Number(input.amount),
+      type: "withdrawal",
+    });
 
-  await db
-    .update(wallets)
-    .set({ balance: newBalance })
-    .where(eq(wallets.userId, userId));
-
-  await db.insert(walletTransactions).values({
-    userId,
-    amount: Number(input.amount),
-    type: "withdrawal",
-  });
-
-  const [withdrawal] = await db
-    .insert(withdrawals)
-    .values({
+    const [withdrawal] = await tx.insert(withdrawals).values({
       userId,
       bankAccountId: input.bankAccountId,
       amount: Number(input.amount),
-    })
-    .returning();
+    }).returning();
 
-  return withdrawal;
+    return withdrawal;
+  });
 }
 
 /**
  * ESCROW: lock saldo
  */
 export async function deductBalance(userId: string, amount: number) {
-  const [wallet] = await db
-    .select()
-    .from(wallets)
-    .where(eq(wallets.userId, userId))
-    .limit(1);
+  return await db.transaction(async (tx) => {
+    const [wallet] = await tx.select().from(wallets).where(eq(wallets.userId, userId)).limit(1);
 
-  if (!wallet) throw new Error("Wallet tidak ditemukan");
+    if (!wallet) throw new Error("Wallet tidak ditemukan");
+    if (wallet.balance < amount) throw new Error("Saldo tidak cukup");
 
-  if (wallet.balance < amount) {
-    throw new Error("Saldo tidak cukup");
-  }
+    const [updated] = await tx.update(wallets)
+      .set({
+        balance: sql`${wallets.balance} - ${amount}`,
+        lockedBalance: sql`${wallets.lockedBalance} + ${amount}`,
+      })
+      .where(sql`${wallets.userId} = ${userId} AND ${wallets.balance} >= ${amount}`)
+      .returning();
 
-  await db
-    .update(wallets)
-    .set({
-      balance: wallet.balance - amount,
-      lockedBalance: wallet.lockedBalance + amount,
-    })
-    .where(eq(wallets.userId, userId));
+    if (!updated) throw new Error("Gagal mengunci saldo");
+  });
 }
 
 /**
  * ESCROW: release ke seller
  */
 export async function releaseBalance(userId: string, amount: number) {
-  const [wallet] = await db
-    .select()
-    .from(wallets)
-    .where(eq(wallets.userId, userId))
-    .limit(1);
+  return await db.transaction(async (tx) => {
+    const [updated] = await tx.update(wallets)
+      .set({
+        balance: sql`${wallets.balance} + ${amount}`,
+      })
+      .where(eq(wallets.userId, userId))
+      .returning();
 
-  if (!wallet) throw new Error("Wallet tidak ditemukan");
-
-  await db
-    .update(wallets)
-    .set({
-      balance: wallet.balance + amount,
-    })
-    .where(eq(wallets.userId, userId));
+    if (!updated) throw new Error("Wallet tidak ditemukan untuk direlease");
+  });
 }
 
 /**
  * ESCROW: refund
  */
 export async function refundBalance(userId: string, amount: number) {
-  const [wallet] = await db
-    .select()
-    .from(wallets)
-    .where(eq(wallets.userId, userId))
-    .limit(1);
+  return await db.transaction(async (tx) => {
+    const [wallet] = await tx.select().from(wallets).where(eq(wallets.userId, userId)).limit(1);
 
-  if (!wallet) throw new Error("Wallet tidak ditemukan");
+    if (!wallet) throw new Error("Wallet tidak ditemukan");
+    if (wallet.lockedBalance < amount) throw new Error("Locked saldo tidak cukup");
 
-  if (wallet.lockedBalance < amount) {
-    throw new Error("Locked tidak cukup");
-  }
-
-  await db
-    .update(wallets)
-    .set({
-      balance: wallet.balance + amount,
-      lockedBalance: wallet.lockedBalance - amount,
-    })
-    .where(eq(wallets.userId, userId));
+    const [updated] = await tx.update(wallets)
+      .set({
+        balance: sql`${wallets.balance} + ${amount}`,
+        lockedBalance: sql`${wallets.lockedBalance} - ${amount}`,
+      })
+      .where(sql`${wallets.userId} = ${userId} AND ${wallets.lockedBalance} >= ${amount}`)
+      .returning();
+      
+    if (!updated) throw new Error("Gagal melakukan refund");
+  });
 }
 
 /**
@@ -257,31 +229,26 @@ export async function adminApproveWithdrawal(withdrawalId: string, adminUserId: 
  * Admin: reject withdrawal (refund balance)
  */
 export async function adminRejectWithdrawal(withdrawalId: string, adminUserId: string) {
-  const [withdrawal] = await db
-    .select()
-    .from(withdrawals)
-    .where(eq(withdrawals.id, withdrawalId))
-    .limit(1);
+  return await db.transaction(async (tx) => {
+    const [withdrawal] = await tx.select().from(withdrawals).where(eq(withdrawals.id, withdrawalId)).limit(1);
 
-  if (!withdrawal) throw new Error("Withdrawal not found");
+    if (!withdrawal) throw new Error("Withdrawal not found");
+    if (withdrawal.status !== "pending") throw new Error("Withdrawal is not pending");
 
-  // Refund balance
-  const [wallet] = await db
-    .select()
-    .from(wallets)
-    .where(eq(wallets.userId, withdrawal.userId))
-    .limit(1);
+    // Refund using atomic update
+    await tx.update(wallets)
+      .set({
+        balance: sql`${wallets.balance} + ${withdrawal.amount}`,
+      })
+      .where(eq(wallets.userId, withdrawal.userId));
 
-  if (wallet) {
-    await db.update(wallets).set({
-      balance: wallet.balance + withdrawal.amount,
-    }).where(eq(wallets.userId, withdrawal.userId));
-  }
+    await tx.update(withdrawals)
+      .set({
+        status: "rejected",
+        processedAt: new Date(),
+      })
+      .where(eq(withdrawals.id, withdrawalId));
 
-  await db.update(withdrawals).set({
-    status: "rejected",
-    processedAt: new Date(),
-  }).where(eq(withdrawals.id, withdrawalId));
-
-  return { success: true };
+    return { success: true };
+  });
 }
