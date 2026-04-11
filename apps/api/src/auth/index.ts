@@ -18,16 +18,7 @@ export const auth = betterAuth({
   secret: process.env.BETTER_AUTH_SECRET,
   baseURL: process.env.BETTER_AUTH_URL,
 
-  // 🔥 WAJIB BIAR COOKIE KEKIRIM
-  cookies: {
-    sessionToken: {
-      options: {
-        httpOnly: true,
-        secure: true,
-        sameSite: "none",
-      },
-    },
-  },
+
 
   // 🔥 TAMBAHIN HOPPSCOTCH
   trustedOrigins: [
