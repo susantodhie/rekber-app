@@ -16,14 +16,15 @@ export const auth = betterAuth({
   }),
 
   secret: process.env.BETTER_AUTH_SECRET,
-  baseURL: process.env.BETTER_AUTH_URL,
+  baseURL: process.env.BETTER_AUTH_URL || "https://rekberinsaja-api-production.up.railway.app",
+
 
   cookies: {
     sessionToken: {
       options: {
         httpOnly: true,
-        secure: process.env.NODE_ENV === "production", // Wajib true di Railway production cross-domain
-        sameSite: process.env.NODE_ENV === "production" ? "none" : "lax", // Wajib none untuk cross-domain cookies
+        secure: true, // Wajib true saat deploy
+        sameSite: "none", // Wajib none untuk cross-site (dashboard & api terpisah)
       },
     },
   },
