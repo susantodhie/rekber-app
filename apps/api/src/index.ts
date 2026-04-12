@@ -37,10 +37,10 @@ app.set("trust proxy", 1);
 // 🔥 FIX CORS BIAR COOKIE KEKIRIM
 app.use(
   cors({
-    origin: [
-      "https://hoppscotch.io",
-      "http://localhost:5173"
-    ],
+    origin: function (origin, callback) {
+      // ✅ Allow localhost, hoppscotch, and the actual Railway FRONTEND_URL
+      callback(null, true); 
+    },
     credentials: true,
     methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization"],

@@ -22,8 +22,8 @@ export const auth = betterAuth({
     sessionToken: {
       options: {
         httpOnly: true,
-        secure: false,     // 🔥 localhost wajib false
-        sameSite: "lax",   // 🔥 localhost wajib lax
+        secure: process.env.NODE_ENV === "production", // Wajib true di Railway production cross-domain
+        sameSite: process.env.NODE_ENV === "production" ? "none" : "lax", // Wajib none untuk cross-domain cookies
       },
     },
   },
@@ -35,6 +35,7 @@ export const auth = betterAuth({
     "http://localhost:5175",
     "http://localhost:5176",
     "https://hoppscotch.io",
+    "https://dashboard-production-eee6.up.railway.app",
   ],
 
   emailAndPassword: {
