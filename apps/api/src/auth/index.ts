@@ -2,7 +2,6 @@ import { betterAuth } from "better-auth";
 import { drizzleAdapter } from "better-auth/adapters/drizzle";
 import { db } from "../db/index.js";
 import * as schema from "../db/schema/index.js";
-import { jwt } from "better-auth/plugins";
 import "dotenv/config";
 
 export const auth = betterAuth({
@@ -15,9 +14,6 @@ export const auth = betterAuth({
       verification: schema.verification,
     },
   }),
-
-  // 🔥 Aktifkan plugin JWT agar API mengembalikan token saat login (Bypass Cookie)
-  plugins: [jwt()],
 
   secret: process.env.BETTER_AUTH_SECRET,
   baseURL: process.env.BETTER_AUTH_URL || "https://rekberinsaja-api-production.up.railway.app",

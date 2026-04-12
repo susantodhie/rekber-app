@@ -10,16 +10,6 @@ const apiClient = axios.create({
   },
 });
 
-// Tambahkan pengirim JWT token yang aman (Bypass Cookie Cross-Domain)
-apiClient.interceptors.request.use((config) => {
-  const token = localStorage.getItem('sessionToken');
-  if (token && token !== 'undefined' && token.length > 20) {
-    config.headers.Authorization = `Bearer ${token}`;
-  }
-  return config;
-});
-
-
 // Response interceptor — unwrap { success, data, pagination } envelope
 apiClient.interceptors.response.use(
   (response) => response.data,
