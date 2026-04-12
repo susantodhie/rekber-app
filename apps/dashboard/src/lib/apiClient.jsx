@@ -10,6 +10,15 @@ const apiClient = axios.create({
   },
 });
 
+// Inject Bearer token for Cross-Domain setups (Incognito bypass)
+apiClient.interceptors.request.use((config) => {
+  const token = localStorage.getItem('sessionToken');
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`;
+  }
+  return config;
+});
+
 // Response interceptor — unwrap { success, data, pagination } envelope
 apiClient.interceptors.response.use(
   (response) => response.data,

@@ -61,20 +61,9 @@ const RegisterPage = () => {
 
 
 
-      // Otomatis Login user dengan BetterAuth setelah Register custom berhasil
-      const loginRes = await authClient.signIn.email({
-        email: formData.email,
-        password: formData.password
-      });
-
-      if (loginRes.error) {
-        throw new Error(loginRes.error.message || "Gagal masuk secara otomatis");
-      }
-
-      localStorage.setItem('isLoggedIn', 'true');
-      setSuccess('Registrasi berhasil! Mengalihkan ke dashboard...');
+      setSuccess('Registrasi berhasil! Mengalihkan ke Halaman Login...');
       setTimeout(() => {
-        navigate('/', { replace: true });
+        navigate('/login', { replace: true });
       }, 2000);
     } catch (err) {
       setError(err?.message || err?.error || err?.response?.data?.message || 'Terjadi kesalahan. Silakan coba lagi.');

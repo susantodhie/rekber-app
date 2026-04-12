@@ -30,6 +30,10 @@ export default function LoginPage() {
         setError(result.error.message || 'Login gagal. Periksa email dan password Anda.');
       } else {
         localStorage.setItem('isLoggedIn', 'true');
+        // Simpan sessionToken untuk bypass Cookie block di Incognito
+        if (result.data?.token) {
+          localStorage.setItem('sessionToken', result.data.token);
+        }
         navigate('/', { replace: true });
       }
     } catch (err) {
