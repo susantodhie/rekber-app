@@ -6,7 +6,7 @@ export * from "./auth.js";
 export * from "./users.js";
 export * from "./kyc.js";
 export * from "./escrow.js";
-export * from "./wallet.js";
+
 export * from "./bank-accounts.js";
 export * from "./withdrawals.js";
 export * from "./messages.js";

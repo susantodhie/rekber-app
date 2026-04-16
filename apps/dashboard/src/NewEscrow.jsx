@@ -6,7 +6,7 @@ import MobileBottomNav from './components/MobileBottomNav';
 import { useCreateEscrow } from './hooks/useEscrow';
 import { useKycStatus } from './hooks/useKyc';
 import { usePaymentConfig } from './hooks/usePayment';
-import { useWallet } from './hooks/useWallet';
+
 import { API_BASE_URL } from './lib/config';
 
 const CATEGORIES = [
@@ -28,10 +28,8 @@ const NewEscrow = () => {
   const createMutation = useCreateEscrow();
   const { data: kycStatus } = useKycStatus();
   const { data: payConfig, isLoading: configLoading } = usePaymentConfig();
-  const { data: wallet, isLoading: walletLoading } = useWallet();
   
   const isVerified = kycStatus?.status === 'verified';
-  const walletBalance = wallet ? parseFloat(wallet.balance) : 0;
 
   const [formData, setFormData] = useState({
     itemName: '',
@@ -62,8 +60,7 @@ const NewEscrow = () => {
     return numericAmount + adminFee;
   }, [numericAmount]);
 
-  const isWalletSufficient = walletBalance >= estimatedTotal && estimatedTotal > 0;
-  const balanceAfterPayment = walletBalance - estimatedTotal;
+
 
   const handleAmountChange = (e) => {
     setFormData(prev => ({
@@ -81,12 +78,7 @@ const NewEscrow = () => {
 
   const handleSelectPayment = (method) => {
     setPaymentMethod(method);
-    if (method === 'wallet') {
-      // Wallet payment is instant — auto-confirm
-      setPaymentStatus('paid');
-    } else {
-      setPaymentStatus('pending');
-    }
+    setPaymentStatus('pending');
   };
 
   const handleSubmit = async (e) => {
@@ -98,15 +90,7 @@ const NewEscrow = () => {
       return;
     }
 
-    if (paymentMethod !== 'wallet' && paymentStatus !== 'paid') {
-      setError('Silakan selesaikan pembayaran dan klik "Saya sudah bayar" terlebih dahulu.');
-      return;
-    }
 
-    if (paymentMethod === 'wallet' && !isWalletSufficient) {
-      setError('Saldo wallet tidak cukup untuk transaksi ini.');
-      return;
-    }
 
     if (numericAmount < 10000) {
       setError('Minimum transaksi Rp 10.000');
@@ -276,33 +260,12 @@ const NewEscrow = () => {
               <div className="space-y-4 pt-6 border-t border-outline-variant/10">
                 <h3 className="text-sm font-bold text-on-surface uppercase tracking-widest">Metode Pembayaran</h3>
                 
-                {configLoading || walletLoading ? (
+                {configLoading ? (
                   <p className="text-sm text-on-surface-variant">Memuat konfigurasi...</p>
                 ) : (
-                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
 
-                    {/* WALLET BALANCE */}
-                    <div 
-                      onClick={() => isWalletSufficient && handleSelectPayment('wallet')}
-                      className={`p-4 rounded-xl border flex flex-col items-center justify-center gap-2 transition-all relative overflow-hidden
-                        ${!isWalletSufficient && numericAmount > 0 ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'}
-                        ${paymentMethod === 'wallet' 
-                          ? 'bg-gradient-to-br from-[#44e5c2]/20 to-[#00d2fd]/10 border-[#44e5c2] text-[#44e5c2] shadow-lg shadow-[#44e5c2]/10' 
-                          : 'bg-surface-container-lowest border-outline-variant/10 text-on-surface-variant hover:border-primary/50'
-                        }`}
-                    >
-                      {paymentMethod === 'wallet' && (
-                        <span className="absolute top-2 right-2 material-symbols-outlined text-[#44e5c2] text-sm" style={{ fontVariationSettings: "'FILL' 1" }}>check_circle</span>
-                      )}
-                      <span className="material-symbols-outlined text-3xl">account_balance_wallet</span>
-                      <span className="font-bold text-sm">Wallet</span>
-                      <span className={`text-[10px] font-mono font-bold ${isWalletSufficient ? 'text-[#44e5c2]' : 'text-red-400'}`}>
-                        {formatCurrencyFull(walletBalance)}
-                      </span>
-                      {!isWalletSufficient && numericAmount > 0 && (
-                        <span className="text-[9px] text-red-400 font-bold">Saldo tidak cukup</span>
-                      )}
-                    </div>
+
 
                     {/* QRIS */}
                     <div 
@@ -340,31 +303,7 @@ const NewEscrow = () => {
                   </div>
                 )}
 
-                {/* WALLET — Instant Preview */}
-                {paymentMethod === 'wallet' && isWalletSufficient && (
-                  <div className="p-5 bg-gradient-to-br from-[#131b2d] to-[#1a2540] border border-[#44e5c2]/20 rounded-xl space-y-3">
-                    <div className="flex items-center gap-2 mb-2">
-                      <span className="material-symbols-outlined text-[#44e5c2] text-sm" style={{ fontVariationSettings: "'FILL' 1" }}>bolt</span>
-                      <span className="text-xs font-bold text-[#44e5c2] uppercase tracking-wider">Pembayaran Instan via Wallet</span>
-                    </div>
-                    <div className="flex justify-between text-sm">
-                      <span className="text-[#bacac3]">Saldo saat ini</span>
-                      <span className="font-mono font-bold text-[#dbe2fb]">{formatCurrencyFull(walletBalance)}</span>
-                    </div>
-                    <div className="flex justify-between text-sm">
-                      <span className="text-[#bacac3]">Estimasi pembayaran</span>
-                      <span className="font-mono font-bold text-red-400">- {formatCurrencyFull(estimatedTotal)}</span>
-                    </div>
-                    <div className="border-t border-[#3c4a45]/20 pt-2 flex justify-between text-sm">
-                      <span className="text-[#bacac3] font-bold">Sisa saldo</span>
-                      <span className={`font-mono font-bold ${balanceAfterPayment >= 0 ? 'text-[#44e5c2]' : 'text-red-400'}`}>{formatCurrencyFull(balanceAfterPayment)}</span>
-                    </div>
-                    <div className="mt-2 p-3 bg-[#44e5c2]/10 rounded-lg flex items-center gap-2">
-                      <span className="material-symbols-outlined text-[#44e5c2] text-sm" style={{ fontVariationSettings: "'FILL' 1" }}>check_circle</span>
-                      <span className="text-xs font-bold text-[#44e5c2]">Saldo akan dipotong otomatis saat transaksi dibuat</span>
-                    </div>
-                  </div>
-                )}
+
 
                 {/* DANA Payment Instructions */}
                 {paymentMethod === 'dana' && payConfig && (
@@ -401,13 +340,9 @@ const NewEscrow = () => {
 
                 {/* Payment confirmed badge */}
                 {paymentStatus === 'paid' && (
-                  <div className={`w-full py-4 rounded-xl font-bold uppercase tracking-wider text-sm flex items-center justify-center gap-2 mt-2 ${
-                    paymentMethod === 'wallet' 
-                      ? 'bg-[#44e5c2]/10 border border-[#44e5c2]/30 text-[#44e5c2]' 
-                      : 'bg-primary/10 border border-primary/30 text-primary'
-                  }`}>
+                  <div className="w-full py-4 rounded-xl font-bold uppercase tracking-wider text-sm flex items-center justify-center gap-2 mt-2 bg-primary/10 border border-primary/30 text-primary">
                     <span className="material-symbols-outlined" style={{ fontVariationSettings: "'FILL' 1" }}>check_circle</span>
-                    {paymentMethod === 'wallet' ? 'PEMBAYARAN VIA WALLET — OTOMATIS' : 'PEMBAYARAN DIKONFIRMASI'}
+                    PEMBAYARAN DIKONFIRMASI
                   </div>
                 )}
               </div>

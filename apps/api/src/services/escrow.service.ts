@@ -1,6 +1,5 @@
 import { db } from "../db/index.js";
 import { escrowTransactions, escrowStatusHistory } from "../db/schema/escrow.js";
-import { wallets, walletTransactions } from "../db/schema/wallet.js";
 import { conversations, conversationParticipants, messages } from "../db/schema/messages.js";
 import { users } from "../db/schema/users.js";
 import { eq, or, desc, and, count } from "drizzle-orm";
@@ -45,7 +44,7 @@ export async function createEscrow(userId: string, input: any) {
       amount: String(fees.amount),
       totalAmount: String(fees.totalAmount),
       status: "pending_payment",
-      paymentMethod: input.paymentMethod || "wallet",
+      paymentMethod: input.paymentMethod || "qris",
     })
     .returning();
 
@@ -64,7 +63,7 @@ export async function createEscrow(userId: string, input: any) {
 }
 
 /**
- * PAY ESCROW (wallet)
+ * PAY ESCROW (direct payment — dana ditahan sistem)
  */
 export async function payEscrow(escrowId: string, userId: string) {
   const [escrow] = await db
@@ -75,28 +74,7 @@ export async function payEscrow(escrowId: string, userId: string) {
 
   if (!escrow) throw new Error("Escrow tidak ditemukan");
 
-  const [wallet] = await db
-    .select()
-    .from(wallets)
-    .where(eq(wallets.userId, userId))
-    .limit(1);
-
-  if (!wallet) throw new Error("Wallet tidak ditemukan");
-
-  const amount = Number(escrow.totalAmount);
-
-  if (wallet.balance < amount) throw new Error("Saldo tidak cukup");
-
-  // POTONG + LOCK
-  await db
-    .update(wallets)
-    .set({
-      balance: wallet.balance - amount,
-      lockedBalance: wallet.lockedBalance + amount,
-    })
-    .where(eq(wallets.userId, userId));
-
-  // UPDATE STATUS
+  // UPDATE STATUS — pembayaran sudah dikonfirmasi
   await db
     .update(escrowTransactions)
     .set({
@@ -109,7 +87,7 @@ export async function payEscrow(escrowId: string, userId: string) {
 }
 
 /**
- * CONFIRM (release ke seller)
+ * CONFIRM (selesaikan transaksi)
  */
 export async function confirmEscrow(escrowId: string, userId: string) {
   const [escrow] = await db
@@ -119,38 +97,6 @@ export async function confirmEscrow(escrowId: string, userId: string) {
     .limit(1);
 
   if (!escrow) throw new Error("Escrow tidak ditemukan");
-
-  const amount = Number(escrow.amount);
-
-  // KURANGIN LOCKED BUYER
-  const [buyerWallet] = await db
-    .select()
-    .from(wallets)
-    .where(eq(wallets.userId, escrow.buyerId))
-    .limit(1);
-
-  if (buyerWallet) {
-    await db.update(wallets)
-      .set({
-        lockedBalance: buyerWallet.lockedBalance - Number(escrow.totalAmount),
-      })
-      .where(eq(wallets.userId, escrow.buyerId));
-  }
-
-  // TAMBAH KE SELLER
-  const [sellerWallet] = await db
-    .select()
-    .from(wallets)
-    .where(eq(wallets.userId, escrow.sellerId))
-    .limit(1);
-
-  if (sellerWallet) {
-    await db.update(wallets)
-      .set({
-        balance: sellerWallet.balance + amount,
-      })
-      .where(eq(wallets.userId, escrow.sellerId));
-  }
 
   await db
     .update(escrowTransactions)

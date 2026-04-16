@@ -6,11 +6,10 @@ const MobileBottomNav = () => {
   const location = useLocation();
 
   const navItems = [
-    { icon: 'home', label: 'Home', path: '/' },
-    { icon: 'swap_horiz', label: 'Escrow', path: '/transactions' },
-    { icon: 'account_balance_wallet', label: 'Wallet', path: '/wallet' },
-    { icon: 'chat', label: 'Chat', path: '/messages' },
-    { icon: 'person', label: 'Profile', path: '/profile' },
+    { icon: 'home', label: 'Beranda', path: '/' },
+    { icon: 'swap_horiz', label: 'Transaksi', path: '/transactions' },
+    { icon: 'chat', label: 'Pesan', path: '/messages' },
+    { icon: 'person', label: 'Akun', path: '/profile' },
   ];
 
   const isActive = (path) => {

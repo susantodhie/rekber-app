@@ -279,27 +279,22 @@ const TransactionDetail = () => {
               <div className="bg-[#131b2d] p-5 rounded-2xl border border-white/5">
                 <div className="flex items-center gap-3">
                   <div className={`w-10 h-10 rounded-xl flex items-center justify-center shrink-0 ${
-                    escrow.paymentMethod === 'wallet' ? 'bg-[#44e5c2]/20' : escrow.paymentMethod === 'qris' ? 'bg-blue-500/20' : 'bg-indigo-500/20'
+                    escrow.paymentMethod === 'qris' ? 'bg-blue-500/20' : 'bg-indigo-500/20'
                   }`}>
                     <span className={`material-symbols-outlined text-lg ${
-                      escrow.paymentMethod === 'wallet' ? 'text-[#44e5c2]' : escrow.paymentMethod === 'qris' ? 'text-blue-400' : 'text-indigo-400'
+                      escrow.paymentMethod === 'qris' ? 'text-blue-400' : 'text-indigo-400'
                     }`}>
-                      {escrow.paymentMethod === 'wallet' ? 'account_balance_wallet' : escrow.paymentMethod === 'qris' ? 'qr_code_scanner' : 'credit_card'}
+                      {escrow.paymentMethod === 'qris' ? 'qr_code_scanner' : 'credit_card'}
                     </span>
                   </div>
                   <div>
                     <p className="text-xs text-[#bacac3] uppercase tracking-wider font-bold">Metode Pembayaran</p>
                     <p className={`text-sm font-bold ${
-                      escrow.paymentMethod === 'wallet' ? 'text-[#44e5c2]' : escrow.paymentMethod === 'qris' ? 'text-blue-400' : 'text-indigo-400'
+                      escrow.paymentMethod === 'qris' ? 'text-blue-400' : 'text-indigo-400'
                     }`}>
-                      {escrow.paymentMethod === 'wallet' ? '💰 Wallet Balance' : escrow.paymentMethod === 'qris' ? '📱 QRIS' : '💳 DANA'}
+                      {escrow.paymentMethod === 'qris' ? '📱 QRIS' : '💳 DANA'}
                     </p>
                   </div>
-                  {escrow.paymentMethod === 'wallet' && escrow.paidAt && (
-                    <span className="ml-auto px-3 py-1 rounded-full text-[10px] font-bold bg-[#44e5c2]/20 text-[#44e5c2] uppercase tracking-wider">
-                      Auto-Paid
-                    </span>
-                  )}
                 </div>
               </div>
             )}

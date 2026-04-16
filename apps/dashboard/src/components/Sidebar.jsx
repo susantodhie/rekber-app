@@ -10,11 +10,10 @@ const Sidebar = () => {
   const { data: profile } = useMyProfile();
 
   const navItems = [
-    { icon: 'dashboard', label: 'Dashboard', path: '/' },
-    { icon: 'security', label: 'Escrow Deals', path: '/transactions' },
-    { icon: 'account_balance_wallet', label: 'Wallet', path: '/wallet' },
-    { icon: 'chat_bubble', label: 'Messages', path: '/messages' },
-    { icon: 'verified_user', label: 'KYC Center', path: '/kyc' },
+    { icon: 'dashboard', label: 'Beranda', path: '/' },
+    { icon: 'security', label: 'Transaksi Rekber', path: '/transactions' },
+    { icon: 'chat_bubble', label: 'Pesan', path: '/messages' },
+    { icon: 'verified_user', label: 'Verifikasi Akun', path: '/kyc' },
   ];
 
   const adminNavItems = [
@@ -57,8 +56,10 @@ const Sidebar = () => {
 
       <aside className={`fixed left-0 top-0 h-full w-[260px] z-[70] bg-[#131b2d] flex-col border-r border-[#3c4a45]/20 shadow-[4px_0_24px_rgba(0,0,0,0.2)] transition-transform duration-300 ease-in-out ${isOpen ? 'translate-x-0' : '-translate-x-full'} md:translate-x-0 flex`}>
         <div className="p-6 space-y-1 relative">
-          <h1 className="text-xl font-black text-[#00c9a7] cursor-pointer" onClick={() => handleNavClick('/')}>Rekberinsaja</h1>
-          <p className="text-[11px] font-bold uppercase tracking-widest text-on-surface-variant">The Digital Vault</p>
+          <h1 className="text-xl font-black text-[#00c9a7] cursor-pointer flex items-center gap-1" onClick={() => handleNavClick('/')}>
+            Rekberinsaja
+          </h1>
+          <p className="text-[10px] font-black uppercase tracking-widest bg-gradient-to-r from-[#00c9a7] to-[#44e5c2] bg-clip-text text-transparent mt-0.5 drop-shadow-sm">Aman Dulu, Baru Deal.</p>
           <button onClick={() => setIsOpen(false)} className="md:hidden absolute top-6 right-4 text-[#bacac3] hover:text-error transition-colors">
             <span className="material-symbols-outlined">close</span>
           </button>
@@ -105,15 +106,15 @@ const Sidebar = () => {
             onClick={() => handleNavClick('/transactions/new')}
             className="w-full bg-primary-container text-on-primary py-3 rounded-lg font-bold text-xs uppercase tracking-widest hover:brightness-110 transition-all mb-4"
           >
-            Start New Escrow
+            Mulai Transaksi Baru
           </button>
           <div onClick={() => handleNavClick('/profile')} className="flex items-center gap-4 text-[#bacac3] px-4 py-3 hover:text-white hover:bg-[#171f32] transition-all cursor-pointer">
             <span className="material-symbols-outlined">person</span>
-            <span className="font-['Inter'] uppercase tracking-widest text-[11px] font-bold">Profile</span>
+            <span className="font-['Inter'] uppercase tracking-widest text-[11px] font-bold">Akun Saya</span>
           </div>
           <div onClick={handleLogout} className="flex items-center gap-4 text-[#bacac3] px-4 py-3 hover:text-white hover:bg-[#171f32] transition-all cursor-pointer">
             <span className="material-symbols-outlined">logout</span>
-            <span className="font-['Inter'] uppercase tracking-widest text-[11px] font-bold">Logout</span>
+            <span className="font-['Inter'] uppercase tracking-widest text-[11px] font-bold">Keluar</span>
           </div>
         </div>
       </aside>

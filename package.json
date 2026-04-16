@@ -10,6 +10,7 @@
     "dev:dashboard": "npm run dev --workspace=apps/dashboard",
     "dev:login": "npm run dev --workspace=apps/login",
     "dev:create-escrow": "npm run dev --workspace=apps/create-escrow",
+    "dev:landing": "npm run dev --workspace=apps/landing",
     "db:push": "npm run db:push --workspace=apps/api",
     "db:studio": "npm run db:studio --workspace=apps/api",
     "db:generate": "npm run db:generate --workspace=apps/api",

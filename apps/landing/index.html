@@ -1,0 +1,696 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rekberinsaja.com - Platform Escrow Terpercaya</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background: radial-gradient(circle at top right, #0d2d2a, #080d16);
+            background-attachment: fixed;
+        }
+        .cyan-glow {
+            box-shadow: 0 0 25px rgba(20, 255, 236, 0.15);
+        }
+        .btn-glow:hover {
+            box-shadow: 0 0 30px rgba(20, 255, 236, 0.5);
+            transform: translateY(-2px);
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        .step-line {
+            background: linear-gradient(to right, #14ffec 50%, transparent 50%);
+            background-size: 20px 1px;
+        }
+    </style>
+</head>
+<body class="text-slate-300 min-h-screen">
+    <nav class="fixed top-0 w-full z-50 transition-all duration-300 border-b border-white/5 px-8 py-5">
+        <div class="max-w-7xl mx-auto flex items-center justify-between">
+            <div class="text-2xl font-extrabold tracking-tighter text-[#14ffec]">Rekberinsaja<span class="text-white">.com</span></div>
+            <button class="border border-[#14ffec] text-[#14ffec] px-6 py-2 rounded-lg text-xs font-black hover:bg-[#14ffec] hover:text-[#080d16] transition-all uppercase tracking-widest" onclick="window.location.href='http://localhost:5173/'">Masuk</button>
+        </div>
+    </nav>
+    <section class="relative pt-44 pb-24 px-6 overflow-hidden">
+        <div class="max-w-5xl mx-auto bg-[#1b222c]/40 p-10 md:p-20 rounded-[50px] border border-white/5 cyan-glow text-center relative z-10">
+            <span class="bg-[#14ffec]/10 text-[#14ffec] px-5 py-2 rounded-full text-[10px] font-bold uppercase tracking-[0.2em] mb-8 inline-block border border-[#14ffec]/20">Rekberinsaja.com</span>
+            <h1 class="text-5xl md:text-7xl font-extrabold text-white mb-8 leading-[1.1] tracking-tight">
+                Platform Rekber Aman & Transparan <br><span class="text-[#14ffec]">Tanpa Saldo</span>
+            </h1>
+            <p class="text-slate-400 text-lg md:text-xl mb-12 max-w-2xl mx-auto leading-relaxed">
+                Lindungi transaksi Anda dengan sistem escrow terpercaya. Dana ditahan aman hingga transaksi selesai, tanpa risiko penyalahgunaan saldo.
+            </p>
+            <div class="flex flex-col md:flex-row justify-center gap-5">
+                <button class="bg-[#14ffec] text-[#080d16] px-12 py-5 rounded-2xl font-black text-sm uppercase tracking-[0.15em] btn-glow transition-all" onclick="window.location.href='http://localhost:5173/?tab=daftar'">Mulai Transaksi</button>
+                <a href="#detail-cara-kerja" class="bg-white/5 text-white px-12 py-5 rounded-2xl font-black text-sm uppercase tracking-[0.15em] border border-white/10 hover:bg-white/10 transition-all flex items-center justify-center">Pelajari Alur</a>
+            </div>
+        </div>
+        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-[#14ffec]/5 blur-[150px] -z-0 rounded-full"></div>
+    </section>
+    <section id="cara-kerja" class="py-32 px-6 relative overflow-hidden">
+        <div class="max-w-6xl mx-auto relative z-10">
+            <!-- Section Header -->
+            <div class="text-center mb-20">
+                <h2 class="text-[#14ffec] font-mono tracking-[0.3em] mb-4 text-xs uppercase">Cara Kerja</h2>
+                <h3 class="text-3xl md:text-4xl font-extrabold text-white uppercase tracking-tight mb-4">Transaksi Aman dalam <span class="text-[#14ffec]">6 Langkah</span> Mudah</h3>
+                <p class="text-slate-500 text-sm max-w-lg mx-auto">Sistem escrow memastikan dana Anda tetap aman hingga transaksi selesai</p>
+            </div>
+
+            <!-- Steps Flow -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-6">
+
+                <!-- Step 01 -->
+                <div class="reveal-card opacity-0 translate-y-8 relative">
+                    <div class="glass-card p-7 rounded-[20px] group hover:border-[#14ffec]/40 hover:bg-[#14ffec]/5 hover:shadow-[0_0_30px_rgba(20,255,236,0.12)] transition-all duration-300 h-full">
+                        <div class="flex items-start gap-5">
+                            <div class="w-12 h-12 rounded-xl bg-[#14ffec]/10 border border-[#14ffec]/25 flex items-center justify-center shrink-0 group-hover:bg-[#14ffec]/20 group-hover:border-[#14ffec]/50 transition-all duration-300">
+                                <svg class="w-6 h-6 text-[#14ffec]" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 0 0-3.375-3.375h-1.5A1.125 1.125 0 0 1 13.5 7.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H8.25m3.75 9v6m3-3H9m1.5-12H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 0 0-9-9Z"/></svg>
+                            </div>
+                            <div>
+                                <div class="text-[#14ffec] font-mono text-[10px] font-bold tracking-[0.3em] mb-1">STEP 01</div>
+                                <h4 class="text-white text-sm font-extrabold uppercase tracking-wide mb-2">Buat Transaksi</h4>
+                                <p class="text-xs text-slate-500 leading-relaxed">Penjual membuat detail transaksi dan menentukan nominal</p>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Connector (hidden on mobile) -->
+                    <div class="hidden lg:block absolute top-1/2 -right-5 w-10 h-[2px] bg-gradient-to-r from-[#14ffec]/40 to-transparent"></div>
+                </div>
+
+                <!-- Step 02 -->
+                <div class="reveal-card opacity-0 translate-y-8 relative">
+                    <div class="glass-card p-7 rounded-[20px] group hover:border-[#14ffec]/40 hover:bg-[#14ffec]/5 hover:shadow-[0_0_30px_rgba(20,255,236,0.12)] transition-all duration-300 h-full">
+                        <div class="flex items-start gap-5">
+                            <div class="w-12 h-12 rounded-xl bg-[#14ffec]/10 border border-[#14ffec]/25 flex items-center justify-center shrink-0 group-hover:bg-[#14ffec]/20 group-hover:border-[#14ffec]/50 transition-all duration-300">
+                                <svg class="w-6 h-6 text-[#14ffec]" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 8.25h19.5M2.25 9h19.5m-16.5 5.25h6m-6 2.25h3m-3.75 3h15a2.25 2.25 0 0 0 2.25-2.25V6.75A2.25 2.25 0 0 0 19.5 4.5h-15a2.25 2.25 0 0 0-2.25 2.25v10.5A2.25 2.25 0 0 0 4.5 19.5Z"/></svg>
+                            </div>
+                            <div>
+                                <div class="text-[#14ffec] font-mono text-[10px] font-bold tracking-[0.3em] mb-1">STEP 02</div>
+                                <h4 class="text-white text-sm font-extrabold uppercase tracking-wide mb-2">Pembayaran</h4>
+                                <p class="text-xs text-slate-500 leading-relaxed">Pembeli melakukan pembayaran melalui gateway resmi</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="hidden lg:block absolute top-1/2 -right-5 w-10 h-[2px] bg-gradient-to-r from-[#14ffec]/40 to-transparent"></div>
+                </div>
+
+                <!-- Step 03 (Highlighted) -->
+                <div class="reveal-card opacity-0 translate-y-8 relative">
+                    <div class="glass-card p-7 rounded-[20px] border-[#14ffec]/30 bg-[#14ffec]/5 shadow-[0_0_25px_rgba(20,255,236,0.1)] group hover:shadow-[0_0_40px_rgba(20,255,236,0.2)] transition-all duration-300 h-full">
+                        <div class="flex items-start gap-5">
+                            <div class="w-12 h-12 rounded-xl bg-[#14ffec]/20 border border-[#14ffec]/40 flex items-center justify-center shrink-0 group-hover:bg-[#14ffec]/30 transition-all duration-300">
+                                <svg class="w-6 h-6 text-[#14ffec]" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 1 0-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 0 0 2.25-2.25v-6.75a2.25 2.25 0 0 0-2.25-2.25H6.75a2.25 2.25 0 0 0-2.25 2.25v6.75a2.25 2.25 0 0 0 2.25 2.25Z"/></svg>
+                            </div>
+                            <div>
+                                <div class="text-[#14ffec] font-mono text-[10px] font-bold tracking-[0.3em] mb-1">STEP 03</div>
+                                <h4 class="text-white text-sm font-black uppercase tracking-wide mb-2">Dana Ditahan</h4>
+                                <p class="text-xs text-slate-400 leading-relaxed">Dana diamankan sementara hingga transaksi selesai</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 04 -->
+                <div class="reveal-card opacity-0 translate-y-8 relative">
+                    <div class="glass-card p-7 rounded-[20px] group hover:border-[#14ffec]/40 hover:bg-[#14ffec]/5 hover:shadow-[0_0_30px_rgba(20,255,236,0.12)] transition-all duration-300 h-full">
+                        <div class="flex items-start gap-5">
+                            <div class="w-12 h-12 rounded-xl bg-[#14ffec]/10 border border-[#14ffec]/25 flex items-center justify-center shrink-0 group-hover:bg-[#14ffec]/20 group-hover:border-[#14ffec]/50 transition-all duration-300">
+                                <svg class="w-6 h-6 text-[#14ffec]" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 18.75a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m3 0h6m-9 0H3.375a1.125 1.125 0 0 1-1.125-1.125V14.25m17.25 4.5a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m3 0h1.125c.621 0 1.129-.504 1.09-1.124a17.902 17.902 0 0 0-3.213-9.193 2.056 2.056 0 0 0-1.58-.86H14.25M16.5 18.75h-2.25m0-11.177v-.958c0-.568-.422-1.048-.987-1.106a48.554 48.554 0 0 0-10.026 0 1.106 1.106 0 0 0-.987 1.106v7.635m12-6.677v6.677m0 4.5v-4.5m0 0h-12"/></svg>
+                            </div>
+                            <div>
+                                <div class="text-[#14ffec] font-mono text-[10px] font-bold tracking-[0.3em] mb-1">STEP 04</div>
+                                <h4 class="text-white text-sm font-extrabold uppercase tracking-wide mb-2">Pengiriman</h4>
+                                <p class="text-xs text-slate-500 leading-relaxed">Penjual mengirim barang atau menyelesaikan jasa</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="hidden lg:block absolute top-1/2 -right-5 w-10 h-[2px] bg-gradient-to-r from-[#14ffec]/40 to-transparent"></div>
+                </div>
+
+                <!-- Step 05 -->
+                <div class="reveal-card opacity-0 translate-y-8 relative">
+                    <div class="glass-card p-7 rounded-[20px] group hover:border-[#14ffec]/40 hover:bg-[#14ffec]/5 hover:shadow-[0_0_30px_rgba(20,255,236,0.12)] transition-all duration-300 h-full">
+                        <div class="flex items-start gap-5">
+                            <div class="w-12 h-12 rounded-xl bg-[#14ffec]/10 border border-[#14ffec]/25 flex items-center justify-center shrink-0 group-hover:bg-[#14ffec]/20 group-hover:border-[#14ffec]/50 transition-all duration-300">
+                                <svg class="w-6 h-6 text-[#14ffec]" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/></svg>
+                            </div>
+                            <div>
+                                <div class="text-[#14ffec] font-mono text-[10px] font-bold tracking-[0.3em] mb-1">STEP 05</div>
+                                <h4 class="text-white text-sm font-extrabold uppercase tracking-wide mb-2">Konfirmasi</h4>
+                                <p class="text-xs text-slate-500 leading-relaxed">Pembeli menyetujui bahwa transaksi telah selesai</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="hidden lg:block absolute top-1/2 -right-5 w-10 h-[2px] bg-gradient-to-r from-[#14ffec]/40 to-transparent"></div>
+                </div>
+
+                <!-- Step 06 -->
+                <div class="reveal-card opacity-0 translate-y-8 relative">
+                    <div class="glass-card p-7 rounded-[20px] border-green-500/20 bg-green-500/5 group hover:border-green-400/40 hover:bg-green-500/10 hover:shadow-[0_0_30px_rgba(34,197,94,0.12)] transition-all duration-300 h-full">
+                        <div class="flex items-start gap-5">
+                            <div class="w-12 h-12 rounded-xl bg-green-500/10 border border-green-500/25 flex items-center justify-center shrink-0 group-hover:bg-green-500/20 group-hover:border-green-400/50 transition-all duration-300">
+                                <svg class="w-6 h-6 text-green-400" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6v12m-3-2.818.879.659c1.171.879 3.07.879 4.242 0 1.172-.879 1.172-2.303 0-3.182C13.536 12.219 12.768 12 12 12c-.725 0-1.45-.22-2.003-.659-1.106-.879-1.106-2.303 0-3.182s2.9-.879 4.006 0l.415.33M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/></svg>
+                            </div>
+                            <div>
+                                <div class="text-green-400 font-mono text-[10px] font-bold tracking-[0.3em] mb-1">STEP 06</div>
+                                <h4 class="text-green-400 text-sm font-black uppercase tracking-wide mb-2">Dana Dicairkan</h4>
+                                <p class="text-xs text-slate-500 leading-relaxed">Dana otomatis diteruskan ke penjual</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div class="absolute top-1/2 left-0 w-[400px] h-[400px] bg-[#14ffec]/5 blur-[150px] rounded-full -z-0"></div>
+    </section>
+    <section id="kenapa-kami" class="py-32 px-6 bg-black/20 relative overflow-hidden">
+        <div class="max-w-7xl mx-auto relative z-10">
+            <div class="text-center mb-16">
+                <h2 class="text-[#14ffec] font-mono tracking-[0.3em] mb-4 text-xs uppercase">Keunggulan</h2>
+                <h3 class="text-3xl md:text-4xl font-extrabold text-white uppercase tracking-tight">Kenapa Harus Pilih <span class="text-[#14ffec]">Rekberinsaja.com?</span></h3>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <!-- Card 1: Transparan -->
+                <div class="reveal-card glass-card p-8 rounded-[24px] text-center group hover:border-[#14ffec]/40 hover:bg-[#14ffec]/5 hover:scale-[1.03] hover:shadow-[0_0_35px_rgba(20,255,236,0.15)] transition-all duration-300 cursor-default opacity-0 translate-y-8">
+                    <div class="w-14 h-14 mx-auto mb-6 rounded-2xl bg-[#14ffec]/10 border border-[#14ffec]/20 flex items-center justify-center group-hover:bg-[#14ffec]/20 group-hover:border-[#14ffec]/40 transition-all duration-300">
+                        <svg class="w-7 h-7 text-[#14ffec]" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M2.036 12.322a1.012 1.012 0 0 1 0-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178Z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"/></svg>
+                    </div>
+                    <h4 class="text-white text-sm font-extrabold uppercase tracking-widest mb-3">Transparan</h4>
+                    <p class="text-xs text-slate-500 leading-relaxed">Semua transaksi dapat dipantau secara real-time oleh penjual dan pembeli tanpa celah.</p>
+                </div>
+
+                <!-- Card 2: Gateway Resmi -->
+                <div class="reveal-card glass-card p-8 rounded-[24px] text-center group hover:border-[#14ffec]/40 hover:bg-[#14ffec]/5 hover:scale-[1.03] hover:shadow-[0_0_35px_rgba(20,255,236,0.15)] transition-all duration-300 cursor-default opacity-0 translate-y-8">
+                    <div class="w-14 h-14 mx-auto mb-6 rounded-2xl bg-[#14ffec]/10 border border-[#14ffec]/20 flex items-center justify-center group-hover:bg-[#14ffec]/20 group-hover:border-[#14ffec]/40 transition-all duration-300">
+                        <svg class="w-7 h-7 text-[#14ffec]" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75m-3-7.036A11.959 11.959 0 0 1 3.598 6 11.99 11.99 0 0 0 3 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285Z"/></svg>
+                    </div>
+                    <h4 class="text-white text-sm font-extrabold uppercase tracking-widest mb-3">Gateway Resmi</h4>
+                    <p class="text-xs text-slate-500 leading-relaxed">Pembayaran diproses melalui payment gateway terpercaya untuk menjamin keamanan transaksi.</p>
+                </div>
+
+                <!-- Card 3: Tracking Real-Time -->
+                <div class="reveal-card glass-card p-8 rounded-[24px] text-center group hover:border-[#14ffec]/40 hover:bg-[#14ffec]/5 hover:scale-[1.03] hover:shadow-[0_0_35px_rgba(20,255,236,0.15)] transition-all duration-300 cursor-default opacity-0 translate-y-8">
+                    <div class="w-14 h-14 mx-auto mb-6 rounded-2xl bg-[#14ffec]/10 border border-[#14ffec]/20 flex items-center justify-center group-hover:bg-[#14ffec]/20 group-hover:border-[#14ffec]/40 transition-all duration-300">
+                        <svg class="w-7 h-7 text-[#14ffec]" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 0 1 3 19.875v-6.75ZM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 0 1-1.125-1.125V8.625ZM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 0 1-1.125-1.125V4.125Z"/></svg>
+                    </div>
+                    <h4 class="text-white text-sm font-extrabold uppercase tracking-widest mb-3">Tracking Real-Time</h4>
+                    <p class="text-xs text-slate-500 leading-relaxed">Pantau status transaksi dan posisi dana dengan akurat kapan saja.</p>
+                </div>
+
+                <!-- Card 4: Efisien & Cepat -->
+                <div class="reveal-card glass-card p-8 rounded-[24px] text-center group hover:border-[#14ffec]/40 hover:bg-[#14ffec]/5 hover:scale-[1.03] hover:shadow-[0_0_35px_rgba(20,255,236,0.15)] transition-all duration-300 cursor-default opacity-0 translate-y-8">
+                    <div class="w-14 h-14 mx-auto mb-6 rounded-2xl bg-[#14ffec]/10 border border-[#14ffec]/20 flex items-center justify-center group-hover:bg-[#14ffec]/20 group-hover:border-[#14ffec]/40 transition-all duration-300">
+                        <svg class="w-7 h-7 text-[#14ffec]" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="m3.75 13.5 10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75Z"/></svg>
+                    </div>
+                    <h4 class="text-white text-sm font-extrabold uppercase tracking-widest mb-3">Efisien & Cepat</h4>
+                    <p class="text-xs text-slate-500 leading-relaxed">Proses transaksi dan pencairan dana berjalan otomatis tanpa ribet.</p>
+                </div>
+            </div>
+            <p class="text-center text-[10px] text-slate-700 font-medium uppercase tracking-widest mt-12">Dirancang untuk keamanan maksimal tanpa sistem penyimpanan saldo</p>
+        </div>
+        <div class="absolute bottom-0 left-1/2 -translate-x-1/2 w-[600px] h-[300px] bg-[#14ffec]/5 blur-[120px] rounded-full -z-0"></div>
+    </section>
+    <section id="biaya" class="py-32 px-6 relative overflow-hidden">
+        <div class="max-w-5xl mx-auto text-center relative z-10">
+            <!-- Section Header -->
+            <div class="mb-16">
+                <h2 class="reveal-card opacity-0 translate-y-8 text-[#14ffec] font-mono tracking-[0.3em] mb-4 text-xs uppercase">Fee Kompetitif</h2>
+                <h3 class="reveal-card opacity-0 translate-y-8 text-3xl md:text-4xl font-extrabold text-white mb-4 uppercase tracking-tight">Biaya Layanan <span class="text-[#14ffec]">Transparan</span></h3>
+                <p class="reveal-card opacity-0 translate-y-8 text-slate-500 text-sm max-w-md mx-auto">Biaya transparan tanpa potongan tersembunyi</p>
+            </div>
+
+            <!-- Pricing Cards -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-5 items-stretch">
+
+                <!-- Card 1 -->
+                <div class="reveal-card opacity-0 translate-y-8">
+                    <div class="glass-card p-10 rounded-[28px] group hover:border-[#14ffec]/40 hover:bg-[#14ffec]/5 hover:scale-105 hover:shadow-[0_0_40px_rgba(20,255,236,0.15)] transition-all duration-300 cursor-default relative overflow-hidden">
+                        <div class="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-white/10 to-transparent group-hover:via-[#14ffec]/40 transition-all duration-300"></div>
+                        <div class="w-12 h-12 mx-auto mb-6 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center group-hover:bg-[#14ffec]/10 group-hover:border-[#14ffec]/30 transition-all duration-300">
+                            <svg class="w-6 h-6 text-slate-500 group-hover:text-[#14ffec] transition-colors duration-300" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 18.75a60.07 60.07 0 0 1 15.797 2.101c.727.198 1.453-.342 1.453-1.096V18.75M3.75 4.5v.75A.75.75 0 0 1 3 6h-.75m0 0v-.375c0-.621.504-1.125 1.125-1.125H20.25M2.25 6v9m18-10.5v.75c0 .414.336.75.75.75h.75m-1.5-1.5h.375c.621 0 1.125.504 1.125 1.125v9.75c0 .621-.504 1.125-1.125 1.125h-.375m1.5-1.5H21a.75.75 0 0 0-.75.75v.75m0 0H3.75m0 0h-.375a1.125 1.125 0 0 1-1.125-1.125V15m1.5 1.5v-.75A.75.75 0 0 0 3 15h-.75M15 10.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Zm3 0h.008v.008H18V10.5Zm-12 0h.008v.008H6V10.5Z"/></svg>
+                        </div>
+                        <div class="text-slate-600 text-[10px] font-bold uppercase tracking-[0.2em] mb-3">Transaksi &lt; 250RB</div>
+                        <div class="text-4xl font-extrabold text-white mb-3 tracking-tight">Rp<span class="text-[#14ffec]">5</span>rb</div>
+                        <p class="text-[11px] text-slate-600 leading-relaxed">Flat fee untuk transaksi kecil</p>
+                    </div>
+                </div>
+
+                <!-- Card 2 (Highlighted / Terpopuler) -->
+                <div class="reveal-card opacity-0 translate-y-8">
+                    <div class="glass-card p-10 rounded-[28px] border-[#14ffec]/30 bg-[#14ffec]/5 shadow-[0_0_40px_rgba(20,255,236,0.12)] group hover:shadow-[0_0_60px_rgba(20,255,236,0.25)] hover:scale-105 hover:border-[#14ffec]/50 transition-all duration-300 cursor-default relative overflow-hidden">
+                        <!-- Top Glow Line -->
+                        <div class="absolute top-0 left-0 w-full h-[2px] bg-gradient-to-r from-transparent via-[#14ffec]/60 to-transparent"></div>
+                        <!-- Badge (inside card) -->
+                        <div class="flex justify-center mb-5">
+                            <div class="bg-gradient-to-r from-[#14ffec] to-[#0ea5e9] text-[#080d16] text-[9px] font-black px-5 py-1.5 rounded-full uppercase tracking-[0.15em] shadow-[0_0_15px_rgba(20,255,236,0.4)]">Terpopuler</div>
+                        </div>
+                        <div class="w-12 h-12 mx-auto mb-6 rounded-2xl bg-[#14ffec]/15 border border-[#14ffec]/30 flex items-center justify-center group-hover:bg-[#14ffec]/25 group-hover:shadow-[0_0_20px_rgba(20,255,236,0.2)] transition-all duration-300">
+                            <svg class="w-6 h-6 text-[#14ffec]" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9.813 15.904 9 18.75l-.813-2.846a4.5 4.5 0 0 0-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 0 0 3.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 0 0 3.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 0 0-3.09 3.09ZM18.259 8.715 18 9.75l-.259-1.035a3.375 3.375 0 0 0-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 0 0 2.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 0 0 2.455 2.456L21.75 6l-1.036.259a3.375 3.375 0 0 0-2.455 2.456ZM16.894 20.567 16.5 21.75l-.394-1.183a2.25 2.25 0 0 0-1.423-1.423L13.5 18.75l1.183-.394a2.25 2.25 0 0 0 1.423-1.423l.394-1.183.394 1.183a2.25 2.25 0 0 0 1.423 1.423l1.183.394-1.183.394a2.25 2.25 0 0 0-1.423 1.423Z"/></svg>
+                        </div>
+                        <div class="text-[#14ffec] text-[10px] font-bold uppercase tracking-[0.2em] mb-3">250RB – 1JT</div>
+                        <div class="text-4xl font-extrabold text-white mb-3 tracking-tight">Rp<span class="text-[#14ffec]">10</span>rb</div>
+                        <p class="text-[11px] text-slate-400 leading-relaxed">Paling banyak digunakan</p>
+                    </div>
+                </div>
+
+                <!-- Card 3 -->
+                <div class="reveal-card opacity-0 translate-y-8">
+                    <div class="glass-card p-10 rounded-[28px] group hover:border-[#14ffec]/40 hover:bg-[#14ffec]/5 hover:scale-105 hover:shadow-[0_0_40px_rgba(20,255,236,0.15)] transition-all duration-300 cursor-default relative overflow-hidden">
+                        <div class="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-white/10 to-transparent group-hover:via-[#14ffec]/40 transition-all duration-300"></div>
+                        <div class="w-12 h-12 mx-auto mb-6 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center group-hover:bg-[#14ffec]/10 group-hover:border-[#14ffec]/30 transition-all duration-300">
+                            <svg class="w-6 h-6 text-slate-500 group-hover:text-[#14ffec] transition-colors duration-300" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6v12m-3-2.818.879.659c1.171.879 3.07.879 4.242 0 1.172-.879 1.172-2.303 0-3.182C13.536 12.219 12.768 12 12 12c-.725 0-1.45-.22-2.003-.659-1.106-.879-1.106-2.303 0-3.182s2.9-.879 4.006 0l.415.33M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/></svg>
+                        </div>
+                        <div class="text-slate-600 text-[10px] font-bold uppercase tracking-[0.2em] mb-3">Transaksi &gt; 1JT</div>
+                        <div class="text-4xl font-extrabold text-white mb-1 tracking-tight">1,5<span class="text-[#14ffec]">%</span></div>
+                        <div class="text-xs text-slate-500 font-bold mb-3">(Max Rp25.000)</div>
+                        <p class="text-[11px] text-slate-600 leading-relaxed">Persentase dengan batas maksimal</p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <!-- Background Glow -->
+        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[400px] bg-[#14ffec]/5 blur-[150px] rounded-full -z-0"></div>
+    </section>
+    <section id="detail-cara-kerja" class="py-32 px-6 bg-black/40 relative overflow-hidden">
+        <div class="max-w-6xl mx-auto relative z-10">
+            <!-- Section Header -->
+            <div class="text-center mb-20">
+                <h2 class="text-[#14ffec] font-mono tracking-[0.3em] mb-4 text-xs uppercase">Perlindungan</h2>
+                <h3 class="text-3xl md:text-4xl font-extrabold text-white uppercase tracking-tight mb-4">Sistem Perlindungan Transaksi <span class="text-[#14ffec]">Berlapis</span></h3>
+                <p class="text-slate-500 text-sm max-w-xl mx-auto">Kami memastikan setiap transaksi aman melalui proses verifikasi dan pengamanan berlapis</p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-20 items-center">
+                <!-- Left: Protection Steps -->
+                <div class="space-y-6">
+                    <!-- Step 1 -->
+                    <div class="reveal-card opacity-0 translate-y-8 glass-card p-6 rounded-[20px] group hover:border-[#14ffec]/30 hover:bg-[#14ffec]/5 hover:shadow-[0_0_25px_rgba(20,255,236,0.1)] transition-all duration-300">
+                        <div class="flex items-start gap-5">
+                            <div class="w-12 h-12 rounded-xl bg-[#14ffec]/10 border border-[#14ffec]/25 flex items-center justify-center shrink-0 group-hover:bg-[#14ffec]/20 group-hover:border-[#14ffec]/50 group-hover:shadow-[0_0_15px_rgba(20,255,236,0.2)] transition-all duration-300">
+                                <svg class="w-6 h-6 text-[#14ffec]" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 1 0-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 0 0 2.25-2.25v-6.75a2.25 2.25 0 0 0-2.25-2.25H6.75a2.25 2.25 0 0 0-2.25 2.25v6.75a2.25 2.25 0 0 0 2.25 2.25Z"/></svg>
+                            </div>
+                            <div class="flex-1">
+                                <div class="flex items-center justify-between mb-2">
+                                    <h4 class="text-white font-extrabold text-sm uppercase tracking-wide">Inisiasi Transaksi Aman</h4>
+                                    <span class="text-[9px] font-bold bg-[#14ffec]/10 text-[#14ffec] px-3 py-1 rounded-full border border-[#14ffec]/20 uppercase tracking-wider shrink-0 ml-3">🔐 Terenkripsi</span>
+                                </div>
+                                <p class="text-xs text-slate-500 leading-relaxed">Penjual atau pembeli membuat transaksi dan sistem menghasilkan link unik <span class="text-[#14ffec] font-semibold">terenkripsi</span>.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Step 2 -->
+                    <div class="reveal-card opacity-0 translate-y-8 glass-card p-6 rounded-[20px] group hover:border-[#14ffec]/30 hover:bg-[#14ffec]/5 hover:shadow-[0_0_25px_rgba(20,255,236,0.1)] transition-all duration-300">
+                        <div class="flex items-start gap-5">
+                            <div class="w-12 h-12 rounded-xl bg-[#14ffec]/10 border border-[#14ffec]/25 flex items-center justify-center shrink-0 group-hover:bg-[#14ffec]/20 group-hover:border-[#14ffec]/50 group-hover:shadow-[0_0_15px_rgba(20,255,236,0.2)] transition-all duration-300">
+                                <svg class="w-6 h-6 text-[#14ffec]" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75m-3-7.036A11.959 11.959 0 0 1 3.598 6 11.99 11.99 0 0 0 3 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285Z"/></svg>
+                            </div>
+                            <div class="flex-1">
+                                <div class="flex items-center justify-between mb-2">
+                                    <h4 class="text-white font-extrabold text-sm uppercase tracking-wide">Verifikasi Pembayaran</h4>
+                                    <span class="text-[9px] font-bold bg-green-500/10 text-green-400 px-3 py-1 rounded-full border border-green-500/20 uppercase tracking-wider shrink-0 ml-3">✔ Terverifikasi</span>
+                                </div>
+                                <p class="text-xs text-slate-500 leading-relaxed">Dana di<span class="text-[#14ffec] font-semibold">verifikasi</span> melalui payment gateway resmi sebelum diproses lebih lanjut.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Step 3 -->
+                    <div class="reveal-card opacity-0 translate-y-8 glass-card p-6 rounded-[20px] group hover:border-[#14ffec]/30 hover:bg-[#14ffec]/5 hover:shadow-[0_0_25px_rgba(20,255,236,0.1)] transition-all duration-300">
+                        <div class="flex items-start gap-5">
+                            <div class="w-12 h-12 rounded-xl bg-[#14ffec]/10 border border-[#14ffec]/25 flex items-center justify-center shrink-0 group-hover:bg-[#14ffec]/20 group-hover:border-[#14ffec]/50 group-hover:shadow-[0_0_15px_rgba(20,255,236,0.2)] transition-all duration-300">
+                                <svg class="w-6 h-6 text-[#14ffec]" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3v17.25m0 0c-1.472 0-2.882.265-4.185.75M12 20.25c1.472 0 2.882.265 4.185.75M18.75 4.97A48.416 48.416 0 0 0 12 4.5c-2.291 0-4.545.16-6.75.47m13.5 0c1.01.143 2.01.317 3 .52m-3-.52 2.62 10.726c.122.499-.106 1.028-.589 1.202a5.988 5.988 0 0 1-2.031.352 5.988 5.988 0 0 1-2.031-.352c-.483-.174-.711-.703-.59-1.202L18.75 4.971Zm-16.5.52c.99-.203 1.99-.377 3-.52m0 0 2.62 10.726c.122.499-.106 1.028-.589 1.202a5.989 5.989 0 0 1-2.031.352 5.989 5.989 0 0 1-2.031-.352c-.483-.174-.711-.703-.59-1.202L5.25 4.971Z"/></svg>
+                            </div>
+                            <div class="flex-1">
+                                <div class="flex items-center justify-between mb-2">
+                                    <h4 class="text-white font-extrabold text-sm uppercase tracking-wide">Perlindungan & Mediasi</h4>
+                                    <span class="text-[9px] font-bold bg-amber-500/10 text-amber-400 px-3 py-1 rounded-full border border-amber-500/20 uppercase tracking-wider shrink-0 ml-3">⚖️ Dilindungi</span>
+                                </div>
+                                <p class="text-xs text-slate-500 leading-relaxed">Jika terjadi masalah, dana akan ditahan sementara dan tim kami membantu proses penyelesaian secara <span class="text-[#14ffec] font-semibold">aman</span> dan adil.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right: Enhanced Phone Mockup -->
+                <div class="reveal-card opacity-0 translate-y-8 relative flex justify-center">
+                    <div class="w-72 h-[520px] bg-slate-900 rounded-[3rem] border-[8px] border-slate-800 relative shadow-2xl overflow-hidden shadow-[0_0_60px_rgba(20,255,236,0.1)]">
+                        <!-- Notch -->
+                        <div class="absolute top-0 left-1/2 -translate-x-1/2 w-28 h-5 bg-slate-800 rounded-b-2xl z-10"></div>
+                        <div class="p-6 pt-10 space-y-5">
+                            <!-- Status Header -->
+                            <div class="text-center glass-card p-4 rounded-2xl border-[#14ffec]/20">
+                                <p class="text-[9px] text-slate-500 uppercase font-bold tracking-widest mb-1">Status Transaksi</p>
+                                <p class="text-sm font-black text-[#14ffec] uppercase tracking-wider">🔒 Dana Dikunci</p>
+                            </div>
+                            <!-- Amount -->
+                            <div class="bg-white/5 rounded-2xl p-4 border border-white/5">
+                                <p class="text-[9px] text-slate-500 mb-1 uppercase tracking-wider">Nominal</p>
+                                <p class="text-xl font-extrabold text-white">Rp 1.250.000</p>
+                                <div class="flex items-center gap-2 mt-2">
+                                    <div class="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse"></div>
+                                    <p class="text-[9px] text-green-400 font-bold uppercase">Pembayaran Terverifikasi</p>
+                                </div>
+                            </div>
+                            <!-- Progress Steps -->
+                            <div class="space-y-2.5">
+                                <div class="h-9 bg-[#14ffec]/10 border border-[#14ffec]/20 rounded-xl flex items-center px-4 gap-2">
+                                    <svg class="w-3.5 h-3.5 text-[#14ffec]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5"/></svg>
+                                    <span class="text-[10px] text-[#14ffec] font-bold uppercase">Identitas Terverifikasi</span>
+                                </div>
+                                <div class="h-9 bg-[#14ffec]/10 border border-[#14ffec]/20 rounded-xl flex items-center px-4 gap-2">
+                                    <svg class="w-3.5 h-3.5 text-[#14ffec]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5"/></svg>
+                                    <span class="text-[10px] text-[#14ffec] font-bold uppercase">Resi Terkirim</span>
+                                </div>
+                                <div class="h-9 bg-white/5 border border-white/10 rounded-xl flex items-center px-4 gap-2">
+                                    <div class="w-3.5 h-3.5 rounded-full border-2 border-slate-600"></div>
+                                    <span class="text-[10px] text-slate-500 font-bold uppercase">Menunggu Konfirmasi</span>
+                                </div>
+                            </div>
+                            <!-- CTA Button -->
+                            <div class="h-11 bg-[#14ffec] rounded-xl flex items-center justify-center gap-2 shadow-[0_0_20px_rgba(20,255,236,0.3)]">
+                                <span class="text-[11px] text-[#080d16] font-black uppercase tracking-wider">Konfirmasi Selesai</span>
+                                <svg class="w-4 h-4 text-[#080d16]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3"/></svg>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Glow Effects -->
+                    <div class="absolute -top-10 -right-10 w-48 h-48 bg-[#14ffec]/15 blur-[80px] rounded-full"></div>
+                    <div class="absolute -bottom-10 -left-10 w-36 h-36 bg-[#14ffec]/10 blur-[60px] rounded-full"></div>
+                </div>
+            </div>
+
+            <!-- Bottom Subtext -->
+            <p class="text-center text-[10px] text-slate-700 font-medium uppercase tracking-widest mt-20">Sistem dirancang tanpa penyimpanan saldo untuk meminimalisir risiko penyalahgunaan dana</p>
+        </div>
+        <div class="absolute top-1/2 right-0 w-[400px] h-[400px] bg-[#14ffec]/5 blur-[150px] rounded-full -z-0"></div>
+    </section>
+    <!-- Trust / Social Proof Section -->
+    <section id="trust" class="py-32 px-6">
+        <div class="max-w-6xl mx-auto text-center">
+            <h2 class="text-[#14ffec] font-mono tracking-[0.3em] mb-4 text-xs uppercase">Bukti Kepercayaan</h2>
+            <h3 class="text-4xl font-extrabold text-white mb-4 uppercase tracking-tight">Dipercaya untuk Transaksi Aman</h3>
+            <p class="text-slate-500 text-sm mb-16 max-w-xl mx-auto">Platform escrow yang telah membantu ribuan pengguna bertransaksi dengan tenang</p>
+
+            <!-- Stats Grid -->
+            <div class="grid grid-cols-2 lg:grid-cols-4 gap-5 mb-8">
+                <div class="glass-card p-8 rounded-[24px] group hover:border-[#14ffec]/30 hover:bg-[#14ffec]/5 transition-all duration-300 hover:shadow-[0_0_25px_rgba(20,255,236,0.12)] cursor-default">
+                    <div class="text-4xl font-extrabold text-white mb-2 group-hover:text-[#14ffec] transition-colors">1000+</div>
+                    <p class="text-xs text-slate-500 font-bold uppercase tracking-widest">Transaksi Berhasil</p>
+                </div>
+                <div class="glass-card p-8 rounded-[24px] group hover:border-[#14ffec]/30 hover:bg-[#14ffec]/5 transition-all duration-300 hover:shadow-[0_0_25px_rgba(20,255,236,0.12)] cursor-default">
+                    <div class="text-4xl font-extrabold text-white mb-2 group-hover:text-[#14ffec] transition-colors">500+</div>
+                    <p class="text-xs text-slate-500 font-bold uppercase tracking-widest">Pengguna Aktif</p>
+                </div>
+                <div class="glass-card p-8 rounded-[24px] group hover:border-[#14ffec]/30 hover:bg-[#14ffec]/5 transition-all duration-300 hover:shadow-[0_0_25px_rgba(20,255,236,0.12)] cursor-default">
+                    <div class="text-4xl font-extrabold text-white mb-2 group-hover:text-[#14ffec] transition-colors">99%</div>
+                    <p class="text-xs text-slate-500 font-bold uppercase tracking-widest">Transaksi Sukses</p>
+                </div>
+                <div class="glass-card p-8 rounded-[24px] group hover:border-[#14ffec]/30 hover:bg-[#14ffec]/5 transition-all duration-300 hover:shadow-[0_0_25px_rgba(20,255,236,0.12)] cursor-default">
+                    <div class="text-4xl font-extrabold text-[#14ffec] mb-2">0%</div>
+                    <p class="text-xs text-slate-500 font-bold uppercase tracking-widest">Penyalahgunaan Dana</p>
+                </div>
+            </div>
+            <p class="text-[10px] text-slate-700 font-medium uppercase tracking-widest mb-20">Data ditampilkan sebagai representasi penggunaan platform</p>
+
+            <!-- Partner Logos -->
+            <div class="space-y-10">
+                <!-- Payment Gateway -->
+                <div>
+                    <p class="text-[10px] text-slate-600 font-bold uppercase tracking-[0.3em] mb-6">Payment Gateway</p>
+                    <div class="flex justify-center items-center gap-8 flex-wrap">
+                        <div class="glass-card px-8 py-4 rounded-xl flex items-center gap-3 group hover:border-[#14ffec]/20 transition-all duration-300">
+                            <div class="w-8 h-8 rounded-lg bg-[#14ffec]/10 flex items-center justify-center text-[#14ffec] text-xs font-black">M</div>
+                            <span class="text-slate-500 text-xs font-bold uppercase tracking-wider group-hover:text-slate-300 transition-colors">Midtrans</span>
+                        </div>
+                        <div class="glass-card px-8 py-4 rounded-xl flex items-center gap-3 group hover:border-[#14ffec]/20 transition-all duration-300">
+                            <div class="w-8 h-8 rounded-lg bg-[#14ffec]/10 flex items-center justify-center text-[#14ffec] text-xs font-black">X</div>
+                            <span class="text-slate-500 text-xs font-bold uppercase tracking-wider group-hover:text-slate-300 transition-colors">Xendit</span>
+                        </div>
+                    </div>
+                </div>
+                <!-- Bank -->
+                <div>
+                    <p class="text-[10px] text-slate-600 font-bold uppercase tracking-[0.3em] mb-6">Supported Banks</p>
+                    <div class="flex justify-center items-center gap-6 flex-wrap">
+                        <div class="glass-card px-6 py-3 rounded-xl group hover:border-[#14ffec]/20 transition-all duration-300">
+                            <span class="text-slate-500 text-[11px] font-bold uppercase tracking-wider group-hover:text-slate-300 transition-colors">BCA</span>
+                        </div>
+                        <div class="glass-card px-6 py-3 rounded-xl group hover:border-[#14ffec]/20 transition-all duration-300">
+                            <span class="text-slate-500 text-[11px] font-bold uppercase tracking-wider group-hover:text-slate-300 transition-colors">BNI</span>
+                        </div>
+                        <div class="glass-card px-6 py-3 rounded-xl group hover:border-[#14ffec]/20 transition-all duration-300">
+                            <span class="text-slate-500 text-[11px] font-bold uppercase tracking-wider group-hover:text-slate-300 transition-colors">BRI</span>
+                        </div>
+                        <div class="glass-card px-6 py-3 rounded-xl group hover:border-[#14ffec]/20 transition-all duration-300">
+                            <span class="text-slate-500 text-[11px] font-bold uppercase tracking-wider group-hover:text-slate-300 transition-colors">Mandiri</span>
+                        </div>
+                        <div class="glass-card px-6 py-3 rounded-xl group hover:border-[#14ffec]/20 transition-all duration-300">
+                            <span class="text-slate-500 text-[11px] font-bold uppercase tracking-wider group-hover:text-slate-300 transition-colors">QRIS</span>
+                        </div>
+                    </div>
+                </div>
+                <!-- Security Badge -->
+                <div>
+                    <p class="text-[10px] text-slate-600 font-bold uppercase tracking-[0.3em] mb-6">Security</p>
+                    <div class="flex justify-center items-center gap-8 flex-wrap">
+                        <div class="glass-card px-8 py-4 rounded-xl flex items-center gap-3 group hover:border-[#14ffec]/20 transition-all duration-300">
+                            <div class="w-8 h-8 rounded-lg bg-green-500/10 flex items-center justify-center text-green-400 text-lg">🔒</div>
+                            <span class="text-slate-500 text-xs font-bold uppercase tracking-wider group-hover:text-slate-300 transition-colors">SSL Encrypted</span>
+                        </div>
+                        <div class="glass-card px-8 py-4 rounded-xl flex items-center gap-3 group hover:border-[#14ffec]/20 transition-all duration-300">
+                            <div class="w-8 h-8 rounded-lg bg-green-500/10 flex items-center justify-center text-green-400 text-lg">🛡️</div>
+                            <span class="text-slate-500 text-xs font-bold uppercase tracking-wider group-hover:text-slate-300 transition-colors">Verified Platform</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Closing CTA Section -->
+    <section class="relative py-32 px-6 overflow-hidden">
+        <!-- Background Effects -->
+        <div class="absolute inset-0 bg-gradient-to-b from-transparent via-[#0d2d2a]/40 to-[#080d16]"></div>
+        <div class="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-[#14ffec]/20 to-transparent"></div>
+        <div class="absolute bottom-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-[#14ffec]/10 to-transparent"></div>
+        <!-- Grid Pattern -->
+        <div class="absolute inset-0 opacity-[0.02]" style="background-image: linear-gradient(rgba(20,255,236,0.3) 1px, transparent 1px), linear-gradient(90deg, rgba(20,255,236,0.3) 1px, transparent 1px); background-size: 60px 60px;"></div>
+
+        <div class="max-w-4xl mx-auto text-center relative z-10">
+            <!-- Badge -->
+            <div class="reveal-card opacity-0 translate-y-8">
+                <span class="bg-[#14ffec]/10 text-[#14ffec] px-5 py-2 rounded-full text-[10px] font-bold uppercase tracking-[0.2em] mb-10 inline-block border border-[#14ffec]/20">Mulai Sekarang</span>
+            </div>
+
+            <!-- Title -->
+            <h2 class="reveal-card opacity-0 translate-y-8 text-3xl md:text-5xl font-extrabold text-white mb-6 leading-[1.15] tracking-tight uppercase">
+                Siap Mulai Transaksi Aman <br><span class="text-[#14ffec]">Tanpa Risiko?</span>
+            </h2>
+
+            <!-- Subtitle -->
+            <p class="reveal-card opacity-0 translate-y-8 text-slate-400 text-base md:text-lg leading-relaxed max-w-2xl mx-auto mb-12">
+                Gunakan Rekberinsaja.com sekarang dan lindungi setiap transaksi Anda dengan sistem escrow terpercaya
+            </p>
+
+            <!-- Bullet Points -->
+            <div class="reveal-card opacity-0 translate-y-8 flex flex-wrap justify-center gap-x-8 gap-y-4 mb-14">
+                <div class="flex items-center gap-2.5">
+                    <div class="w-5 h-5 rounded-full bg-[#14ffec]/15 flex items-center justify-center">
+                        <svg class="w-3 h-3 text-[#14ffec]" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5"/></svg>
+                    </div>
+                    <span class="text-sm text-slate-400 font-medium">Tanpa penyimpanan saldo</span>
+                </div>
+                <div class="flex items-center gap-2.5">
+                    <div class="w-5 h-5 rounded-full bg-[#14ffec]/15 flex items-center justify-center">
+                        <svg class="w-3 h-3 text-[#14ffec]" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5"/></svg>
+                    </div>
+                    <span class="text-sm text-slate-400 font-medium">Gateway resmi</span>
+                </div>
+                <div class="flex items-center gap-2.5">
+                    <div class="w-5 h-5 rounded-full bg-[#14ffec]/15 flex items-center justify-center">
+                        <svg class="w-3 h-3 text-[#14ffec]" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5"/></svg>
+                    </div>
+                    <span class="text-sm text-slate-400 font-medium">Dana aman hingga selesai</span>
+                </div>
+                <div class="flex items-center gap-2.5">
+                    <div class="w-5 h-5 rounded-full bg-[#14ffec]/15 flex items-center justify-center">
+                        <svg class="w-3 h-3 text-[#14ffec]" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5"/></svg>
+                    </div>
+                    <span class="text-sm text-slate-400 font-medium">Transparan & real-time</span>
+                </div>
+            </div>
+
+            <!-- CTA Buttons -->
+            <div class="reveal-card opacity-0 translate-y-8 flex flex-col sm:flex-row justify-center gap-5 mb-10">
+                <button class="bg-gradient-to-r from-[#14ffec] to-[#0ea5e9] text-[#080d16] px-12 py-5 rounded-2xl font-black text-sm uppercase tracking-[0.15em] shadow-[0_0_30px_rgba(20,255,236,0.3)] hover:shadow-[0_0_50px_rgba(20,255,236,0.5)] hover:-translate-y-1 transition-all duration-300" onclick="window.location.href='http://localhost:5173/?tab=daftar'">
+                    Buat Transaksi Sekarang
+                </button>
+                <a href="#cara-kerja" class="bg-white/5 text-white px-12 py-5 rounded-2xl font-black text-sm uppercase tracking-[0.15em] border border-white/10 hover:bg-white/10 hover:border-white/20 transition-all duration-300 flex items-center justify-center gap-2">
+                    Pelajari Cara Kerja
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5"/></svg>
+                </a>
+            </div>
+
+            <!-- Subtext -->
+            <p class="reveal-card opacity-0 translate-y-8 text-[11px] text-slate-600 font-medium mb-8">Aman digunakan oleh berbagai jenis transaksi online</p>
+
+            <!-- Trust Indicator -->
+            <div class="reveal-card opacity-0 translate-y-8 inline-flex items-center gap-3 bg-white/5 border border-white/10 rounded-full px-6 py-3">
+                <svg class="w-4 h-4 text-[#14ffec]" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75m-3-7.036A11.959 11.959 0 0 1 3.598 6 11.99 11.99 0 0 0 3 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285Z"/></svg>
+                <span class="text-[10px] text-slate-500 font-bold uppercase tracking-widest">Didukung sistem pembayaran terpercaya</span>
+            </div>
+        </div>
+
+        <!-- Glow Effects -->
+        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[500px] bg-[#14ffec]/5 blur-[150px] rounded-full -z-0"></div>
+        <div class="absolute bottom-0 right-0 w-[300px] h-[300px] bg-[#0ea5e9]/5 blur-[100px] rounded-full -z-0"></div>
+    </section>
+
+    <footer class="py-20 px-8 border-t border-white/5 bg-[#05080d]">
+        <div class="max-w-7xl mx-auto">
+            <!-- Footer Grid -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-16">
+                <!-- Kolom 1: Logo & Deskripsi -->
+                <div class="sm:col-span-2 lg:col-span-1">
+                    <div class="text-2xl font-extrabold tracking-tighter text-[#14ffec] mb-4">Rekberinsaja<span class="text-white">.com</span></div>
+                    <p class="text-sm text-slate-500 leading-relaxed mb-6">Platform escrow untuk transaksi aman, transparan, dan terpercaya tanpa penyimpanan saldo.</p>
+                    <div class="flex items-center gap-2 text-[10px] text-slate-700 font-bold uppercase tracking-widest mb-4">
+                        <span>🔒</span> Secured Platform
+                    </div>
+                    <p class="text-[11px] text-slate-600 leading-relaxed mb-2">Jl. Soreang – Ciwidey, Soreang, Kabupaten Bandung, Jawa Barat, Indonesia</p>
+                    <p class="text-[10px] text-slate-700 font-medium">&copy; 2026 Rekberinsaja.com. All rights reserved.</p>
+                </div>
+
+                <!-- Kolom 2: Navigasi -->
+                <div>
+                    <h4 class="text-white text-xs font-black uppercase tracking-[0.2em] mb-6 pb-2 border-b border-[#14ffec]/30 inline-block">Navigasi</h4>
+                    <ul class="space-y-4">
+                        <li><a href="#cara-kerja" class="text-sm text-slate-500 hover:text-[#14ffec] transition-colors duration-200">Cara Kerja</a></li>
+                        <li><a href="#biaya" class="text-sm text-slate-500 hover:text-[#14ffec] transition-colors duration-200">Biaya</a></li>
+                        <li><a href="#detail-cara-kerja" class="text-sm text-slate-500 hover:text-[#14ffec] transition-colors duration-200">Panduan</a></li>
+                    </ul>
+                </div>
+
+                <!-- Kolom 3: Legal -->
+                <div>
+                    <h4 class="text-white text-xs font-black uppercase tracking-[0.2em] mb-6 pb-2 border-b border-[#14ffec]/30 inline-block">Legal</h4>
+                    <ul class="space-y-4">
+                        <li><a href="/tentang-kami.html" class="text-sm text-slate-500 hover:text-[#14ffec] transition-colors duration-200">Tentang Kami</a></li>
+                        <li><a href="/syarat-ketentuan.html" class="text-sm text-slate-500 hover:text-[#14ffec] transition-colors duration-200">Syarat & Ketentuan</a></li>
+                        <li><a href="/kebijakan-privasi.html" class="text-sm text-slate-500 hover:text-[#14ffec] transition-colors duration-200">Kebijakan Privasi</a></li>
+                    </ul>
+                </div>
+
+                <!-- Kolom 4: Kontak -->
+                <div>
+                    <h4 class="text-white text-xs font-black uppercase tracking-[0.2em] mb-6 pb-2 border-b border-[#14ffec]/30 inline-block">Kontak</h4>
+                    <ul class="space-y-4">
+                        <li>
+                            <a href="mailto:support@rekberinsaja.com" class="flex items-center gap-3 text-sm text-slate-500 hover:text-[#14ffec] transition-colors duration-200 group">
+                                <span class="w-8 h-8 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center text-xs group-hover:border-[#14ffec]/30 group-hover:bg-[#14ffec]/5 transition-all">✉</span>
+                                support@rekberinsaja.com
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/faq.html" class="flex items-center gap-3 text-sm text-slate-500 hover:text-[#14ffec] transition-colors duration-200 group">
+                                <span class="w-8 h-8 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center text-xs group-hover:border-[#14ffec]/30 group-hover:bg-[#14ffec]/5 transition-all">❓</span>
+                                FAQ
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+
+
+        </div>
+    </footer>
+    <script>
+        // Navbar effect on scroll
+        window.addEventListener('scroll', function() {
+            const nav = document.querySelector('nav');
+            if (window.scrollY > 50) {
+                nav.classList.add('bg-[#080d16]/90', 'backdrop-blur-xl', 'py-4', 'shadow-2xl');
+            } else {
+                nav.classList.remove('bg-[#080d16]/90', 'backdrop-blur-xl', 'py-4', 'shadow-2xl');
+            }
+        });
+
+
+        // Scroll reveal animation for cards
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry, index) => {
+                if (entry.isIntersecting) {
+                    setTimeout(() => {
+                        entry.target.style.transition = 'opacity 0.6s ease-out, transform 0.6s ease-out';
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }, index * 120);
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.15 });
+
+        document.querySelectorAll('.reveal-card').forEach(card => {
+            observer.observe(card);
+        });
+
+        // ─── Tawk.to Live Chat Widget (Landing Page Only) ───────────────────────
+        // Replace XXXXXXXX with your actual Tawk.to Property ID from:
+        // Tawk.to Dashboard → Administration → Chat Widget → Direct Chat Link
+        (function initTawk() {
+            var TAWK_PROPERTY_ID = 'XXXXXXXX'; // <-- Replace with your Property ID
+            var TAWK_WIDGET_ID   = 'default';   // Keep as 'default' or use your widget ID
+
+            // Prevent duplicate loads
+            if (document.getElementById('tawk-script')) return;
+
+            // Tawk.to configuration
+            window.Tawk_API  = window.Tawk_API  || {};
+            window.Tawk_LoadStart = new Date();
+
+            var s = document.createElement('script');
+            s.id    = 'tawk-script';
+            s.async = true;
+            s.charset = 'UTF-8';
+            s.setAttribute('crossorigin', '*');
+            s.src = 'https://embed.tawk.to/' + TAWK_PROPERTY_ID + '/' + TAWK_WIDGET_ID;
+            document.body.appendChild(s);
+
+            // Cleanup: remove widget when page is closed / navigated away
+            function removeTawk() {
+                // Remove script tag
+                var scriptEl = document.getElementById('tawk-script');
+                if (scriptEl) scriptEl.remove();
+
+                // Remove Tawk iframe container
+                var tawkIframe = document.getElementById('tawkchat-container');
+                if (tawkIframe) tawkIframe.remove();
+
+                // Also remove any Tawk-injected elements by class
+                var tawkEls = document.querySelectorAll('[class*="tawk"]');
+                tawkEls.forEach(function(el) { el.remove(); });
+
+                // Clean up global Tawk objects
+                try {
+                    delete window.Tawk_API;
+                    delete window.Tawk_LoadStart;
+                } catch(e) {}
+            }
+
+            // Clean up on page unload (tab close, refresh, or navigation)
+            window.addEventListener('beforeunload', removeTawk, { once: true });
+        })();
+        // ────────────────────────────────────────────────────────────────────────
+    </script>
+</body>
+</html>

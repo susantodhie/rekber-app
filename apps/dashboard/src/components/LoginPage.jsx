@@ -55,7 +55,7 @@ export default function LoginPage() {
           <div className="glass-card ghost-border rounded-3xl p-8 md:p-10 shadow-2xl relative z-10">
             <div className="text-center mb-10">
               <h1 className="text-3xl font-black tracking-tighter text-primary font-headline mb-1 uppercase">Rekberinsaja.com</h1>
-              <p className="text-[10px] uppercase tracking-[0.3em] text-on-surface-variant font-mono">The Digital Vault</p>
+              <p className="text-[10px] font-black uppercase tracking-widest bg-gradient-to-r from-[#00c9a7] to-[#44e5c2] bg-clip-text text-transparent drop-shadow-sm">Aman Dulu, Baru Deal.</p>
             </div>
 
             <div className="flex mb-8 bg-surface-container-lowest/50 p-1 rounded-xl ghost-border">

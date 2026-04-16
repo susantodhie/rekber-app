@@ -11,7 +11,13 @@ function App() {
       navigate('/dashboard', { replace: true });
     }
   }, [navigate]);
-  const [activeTab, setActiveTab] = useState('masuk');
+  const [activeTab, setActiveTab] = useState(() => {
+    // Cek query param ?tab=daftar dari landing page
+    const params = new URLSearchParams(window.location.search);
+    const tab = params.get('tab');
+    return tab === 'daftar' ? 'daftar' : 'masuk';
+  });
+
   const [formData, setFormData] = useState({ name: '', email: '', password: '' });
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);

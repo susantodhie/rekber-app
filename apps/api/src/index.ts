@@ -12,7 +12,7 @@ import authRoutes from "./routes/auth.routes.js";
 import userRoutes from "./routes/user.routes.js";
 import kycRoutes from "./routes/kyc.routes.js";
 import escrowRoutes from "./routes/escrow.routes.js";
-import walletRoutes from "./routes/wallet.routes.js";
+
 import messageRoutes from "./routes/message.routes.js";
 import notificationRoutes from "./routes/notification.routes.js";
 import { adminRoutes } from "./routes/admin.routes.js";
@@ -106,7 +106,7 @@ app.use("/api/auth", authRoutes);
 app.use("/api/users", userRoutes);
 app.use("/api/kyc", kycRoutes);
 app.use("/api/escrow", escrowRoutes);
-app.use("/api/wallet", walletRoutes);
+
 app.use("/api/conversations", messageRoutes);
 app.use("/api/notifications", notificationRoutes);
 app.use("/api/admin", adminRoutes);

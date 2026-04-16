@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tentang Kami - Rekberinsaja.com</title>
+    <meta name="description" content="Rekberinsaja adalah platform escrow terpercaya yang mengamankan transaksi online antara penjual dan pembeli di Indonesia.">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background: radial-gradient(circle at top right, #0d2d2a, #080d16);
+            background-attachment: fixed;
+        }
+        .cyan-glow {
+            box-shadow: 0 0 25px rgba(20, 255, 236, 0.15);
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .fade-in {
+            animation: fadeInUp 0.8s ease-out forwards;
+            opacity: 0;
+        }
+        .fade-in-delay-1 { animation-delay: 0.15s; }
+        .fade-in-delay-2 { animation-delay: 0.3s; }
+        .fade-in-delay-3 { animation-delay: 0.45s; }
+        .fade-in-delay-4 { animation-delay: 0.6s; }
+        .fade-in-delay-5 { animation-delay: 0.75s; }
+    </style>
+</head>
+<body class="text-slate-300 min-h-screen">
+    <!-- Navigation -->
+    <nav class="fixed top-0 w-full z-50 transition-all duration-300 border-b border-white/5 px-8 py-5">
+        <div class="max-w-7xl mx-auto flex items-center justify-between">
+            <a href="/" class="text-2xl font-extrabold tracking-tighter text-[#14ffec]">Rekberinsaja<span class="text-white">.com</span></a>
+            <div class="hidden md:flex space-x-10 text-[11px] font-bold uppercase tracking-[0.2em]">
+                <a href="/#cara-kerja" class="hover:text-[#14ffec] transition">Cara Kerja</a>
+                <a href="/#biaya" class="hover:text-[#14ffec] transition">Biaya</a>
+                <a href="/tentang-kami.html" class="text-[#14ffec] transition">Tentang Kami</a>
+            </div>
+            <button class="border border-[#14ffec] text-[#14ffec] px-6 py-2 rounded-lg text-xs font-black hover:bg-[#14ffec] hover:text-[#080d16] transition-all uppercase tracking-widest" onclick="window.location.href='http://localhost:5173/'">Masuk</button>
+        </div>
+    </nav>
+
+    <!-- Hero -->
+    <section class="relative pt-40 pb-20 px-6 overflow-hidden">
+        <div class="max-w-3xl mx-auto text-center relative z-10">
+            <span class="fade-in bg-[#14ffec]/10 text-[#14ffec] px-5 py-2 rounded-full text-[10px] font-bold uppercase tracking-[0.2em] mb-8 inline-block border border-[#14ffec]/20">Tentang Kami</span>
+            <h1 class="fade-in fade-in-delay-1 text-4xl md:text-6xl font-extrabold text-white mb-8 leading-[1.1] tracking-tight">
+                Tentang <span class="text-[#14ffec]">Rekberinsaja</span>
+            </h1>
+            <p class="fade-in fade-in-delay-2 text-slate-400 text-lg md:text-xl leading-relaxed max-w-2xl mx-auto">
+                Rekberinsaja adalah platform escrow yang membantu mengamankan transaksi online antara penjual dan pembeli. Kami memastikan setiap transaksi berjalan transparan, aman, dan profesional tanpa risiko penyalahgunaan dana.
+            </p>
+        </div>
+        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-[#14ffec]/5 blur-[150px] -z-0 rounded-full"></div>
+    </section>
+
+    <!-- Paragraf Tambahan -->
+    <section class="py-16 px-6">
+        <div class="max-w-3xl mx-auto">
+            <div class="fade-in fade-in-delay-3 glass-card p-10 md:p-14 rounded-[30px] cyan-glow text-center">
+                <p class="text-slate-400 text-base md:text-lg leading-relaxed">
+                    Dengan sistem tanpa penyimpanan saldo dan integrasi payment gateway terpercaya, kami menghadirkan solusi rekber modern yang praktis dan aman digunakan oleh siapa saja.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Visi & Misi -->
+    <section class="py-24 px-6 bg-black/20">
+        <div class="max-w-5xl mx-auto">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
+                <!-- Visi -->
+                <div class="fade-in fade-in-delay-4 glass-card p-10 rounded-[30px] relative overflow-hidden">
+                    <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-[#14ffec] to-transparent"></div>
+                    <div class="text-[#14ffec] font-mono text-[10px] font-bold uppercase tracking-[0.3em] mb-4">Visi</div>
+                    <h3 class="text-2xl font-extrabold text-white mb-6 uppercase tracking-tight">Visi Kami</h3>
+                    <p class="text-slate-400 text-sm leading-relaxed">
+                        Menjadi platform escrow terpercaya di Indonesia untuk semua jenis transaksi digital.
+                    </p>
+                </div>
+
+                <!-- Misi -->
+                <div class="fade-in fade-in-delay-5 glass-card p-10 rounded-[30px] relative overflow-hidden">
+                    <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-[#14ffec] to-transparent"></div>
+                    <div class="text-[#14ffec] font-mono text-[10px] font-bold uppercase tracking-[0.3em] mb-4">Misi</div>
+                    <h3 class="text-2xl font-extrabold text-white mb-6 uppercase tracking-tight">Misi Kami</h3>
+                    <ul class="space-y-5">
+                        <li class="flex items-start gap-4">
+                            <div class="w-8 h-8 rounded-full bg-[#14ffec]/10 border border-[#14ffec]/30 flex items-center justify-center text-[#14ffec] font-bold text-xs shrink-0 mt-0.5">1</div>
+                            <p class="text-slate-400 text-sm leading-relaxed">Meningkatkan keamanan transaksi online</p>
+                        </li>
+                        <li class="flex items-start gap-4">
+                            <div class="w-8 h-8 rounded-full bg-[#14ffec]/10 border border-[#14ffec]/30 flex items-center justify-center text-[#14ffec] font-bold text-xs shrink-0 mt-0.5">2</div>
+                            <p class="text-slate-400 text-sm leading-relaxed">Memberikan transparansi penuh</p>
+                        </li>
+                        <li class="flex items-start gap-4">
+                            <div class="w-8 h-8 rounded-full bg-[#14ffec]/10 border border-[#14ffec]/30 flex items-center justify-center text-[#14ffec] font-bold text-xs shrink-0 mt-0.5">3</div>
+                            <p class="text-slate-400 text-sm leading-relaxed">Meminimalisir risiko penipuan</p>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="py-24 px-6">
+        <div class="max-w-3xl mx-auto text-center">
+            <h3 class="text-2xl font-extrabold text-white mb-6 uppercase tracking-tight">Siap Bertransaksi Aman?</h3>
+            <p class="text-slate-500 text-sm mb-10">Mulai lindungi setiap transaksi Anda bersama Rekberinsaja</p>
+            <div class="flex flex-col sm:flex-row justify-center gap-4">
+                <button class="bg-[#14ffec] text-[#080d16] px-10 py-4 rounded-2xl font-black text-sm uppercase tracking-[0.15em] hover:shadow-[0_0_30px_rgba(20,255,236,0.5)] hover:-translate-y-0.5 transition-all" onclick="window.location.href='http://localhost:5173/?tab=daftar'">Mulai Sekarang</button>
+                <a href="/" class="bg-white/5 text-white px-10 py-4 rounded-2xl font-black text-sm uppercase tracking-[0.15em] border border-white/10 hover:bg-white/10 transition-all text-center">Kembali ke Beranda</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-20 px-8 border-t border-white/5 bg-[#05080d]">
+        <div class="max-w-7xl mx-auto">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-16">
+                <div class="sm:col-span-2 lg:col-span-1">
+                    <a href="/" class="text-2xl font-extrabold tracking-tighter text-[#14ffec] mb-4 inline-block">Rekberinsaja<span class="text-white">.com</span></a>
+                    <p class="text-sm text-slate-500 leading-relaxed mb-6">Platform escrow untuk transaksi aman, transparan, dan terpercaya tanpa penyimpanan saldo.</p>
+                    <div class="flex items-center gap-2 text-[10px] text-slate-700 font-bold uppercase tracking-widest mb-4">
+                        <span>🔒</span> Secured Platform
+                    </div>
+                    <p class="text-[11px] text-slate-600 leading-relaxed mb-2">Jl. Soreang – Ciwidey, Soreang, Kabupaten Bandung, Jawa Barat, Indonesia</p>
+                    <p class="text-[10px] text-slate-700 font-medium">&copy; 2026 Rekberinsaja.com. All rights reserved.</p>
+                </div>
+                <div>
+                    <h4 class="text-white text-xs font-black uppercase tracking-[0.2em] mb-6 pb-2 border-b border-[#14ffec]/30 inline-block">Navigasi</h4>
+                    <ul class="space-y-4">
+                        <li><a href="/#cara-kerja" class="text-sm text-slate-500 hover:text-[#14ffec] transition-colors duration-200">Cara Kerja</a></li>
+                        <li><a href="/#biaya" class="text-sm text-slate-500 hover:text-[#14ffec] transition-colors duration-200">Biaya</a></li>
+                        <li><a href="/#detail-cara-kerja" class="text-sm text-slate-500 hover:text-[#14ffec] transition-colors duration-200">Panduan</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-white text-xs font-black uppercase tracking-[0.2em] mb-6 pb-2 border-b border-[#14ffec]/30 inline-block">Legal</h4>
+                    <ul class="space-y-4">
+                        <li><a href="/tentang-kami.html" class="text-sm text-slate-500 hover:text-[#14ffec] transition-colors duration-200">Tentang Kami</a></li>
+                        <li><a href="/syarat-ketentuan.html" class="text-sm text-slate-500 hover:text-[#14ffec] transition-colors duration-200">Syarat & Ketentuan</a></li>
+                        <li><a href="/kebijakan-privasi.html" class="text-sm text-slate-500 hover:text-[#14ffec] transition-colors duration-200">Kebijakan Privasi</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-white text-xs font-black uppercase tracking-[0.2em] mb-6 pb-2 border-b border-[#14ffec]/30 inline-block">Kontak</h4>
+                    <ul class="space-y-4">
+                        <li>
+                            <a href="mailto:support@rekberinsaja.com" class="flex items-center gap-3 text-sm text-slate-500 hover:text-[#14ffec] transition-colors duration-200 group">
+                                <span class="w-8 h-8 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center text-xs group-hover:border-[#14ffec]/30 group-hover:bg-[#14ffec]/5 transition-all">✉</span>
+                                support@rekberinsaja.com
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/faq.html" class="flex items-center gap-3 text-sm text-slate-500 hover:text-[#14ffec] transition-colors duration-200 group">
+                                <span class="w-8 h-8 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center text-xs group-hover:border-[#14ffec]/30 group-hover:bg-[#14ffec]/5 transition-all">❓</span>
+                                FAQ
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Navbar effect on scroll
+        window.addEventListener('scroll', function() {
+            const nav = document.querySelector('nav');
+            if (window.scrollY > 50) {
+                nav.classList.add('bg-[#080d16]/90', 'backdrop-blur-xl', 'py-4', 'shadow-2xl');
+            } else {
+                nav.classList.remove('bg-[#080d16]/90', 'backdrop-blur-xl', 'py-4', 'shadow-2xl');
+            }
+        });
+    </script>
+</body>
+</html>

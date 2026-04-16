@@ -12,7 +12,7 @@ import Profile from './Profile';
 import EditProfile from './EditProfile';
 import KYCCenter from './KYCCenter';
 import AdminKYC from './AdminKYC';
-import WalletPage from './WalletPage';
+
 
 // Auth pages
 import LoginPage from './components/LoginPage';
@@ -94,7 +94,7 @@ export default function App() {
         <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
         <Route path="/profile/edit" element={<ProtectedRoute><EditProfile /></ProtectedRoute>} />
         <Route path="/kyc" element={<ProtectedRoute><KYCCenter /></ProtectedRoute>} />
-        <Route path="/wallet" element={<ProtectedRoute><WalletPage /></ProtectedRoute>} />
+
         <Route path="/admin/login" element={<AdminLoginPage />} />
         <Route path="/admin/kyc" element={<AdminProtectedRoute><AdminKYC /></AdminProtectedRoute>} />
 

@@ -1,39 +1,32 @@
 import React from 'react';
-import { useWallet } from '../hooks/useWallet';
 import { useMyStats } from '../hooks/useUser';
 
-const formatCurrency = (amount) => {
-  if (amount == null) return 'Rp 0';
-  return new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0, maximumFractionDigits: 0 }).format(amount);
-};
-
 const BentoSummary = () => {
-  const { data: wallet, isLoading: walletLoading } = useWallet();
   const { data: stats, isLoading: statsLoading } = useMyStats();
 
-  const balance = wallet?.balance ?? 0;
   const activeTransactions = stats?.activeTransactions ?? 0;
   const completedTransactions = stats?.completedTransactions ?? 0;
+  const totalTransactions = activeTransactions + completedTransactions;
   const successRate = stats?.successRate ?? 100;
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-      {/* Total Saldo Card */}
+      {/* Total Transaksi Card */}
       <div className="bg-surface-container-high glass rounded-xl p-6 relative overflow-hidden group">
         <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
-          <span className="material-symbols-outlined text-6xl">payments</span>
+          <span className="material-symbols-outlined text-6xl">receipt_long</span>
         </div>
-        <p className="text-xs font-bold text-on-surface-variant uppercase tracking-widest mb-2">Total Saldo</p>
-        <h2 className="mono-text text-3xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
-          {walletLoading ? (
-            <span className="inline-block w-40 h-8 bg-surface-container-highest/50 rounded animate-pulse" />
+        <p className="text-xs font-bold text-on-surface-variant uppercase tracking-widest mb-2">Total Transaksi</p>
+        <h2 className="mono-text text-4xl font-bold text-on-surface">
+          {statsLoading ? (
+            <span className="inline-block w-12 h-10 bg-surface-container-highest/50 rounded animate-pulse" />
           ) : (
-            formatCurrency(balance)
+            totalTransactions
           )}
         </h2>
         <div className="mt-4 flex items-center gap-2 text-[10px] text-primary">
-          <span className="material-symbols-outlined text-xs">trending_up</span>
-          <span>Saldo Aktif</span>
+          <span className="material-symbols-outlined text-xs">swap_horiz</span>
+          <span>Semua Transaksi</span>
         </div>
       </div>
 
