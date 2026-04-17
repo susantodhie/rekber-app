@@ -10,7 +10,6 @@ export default defineConfig({
         kebijakanPrivasi: resolve(__dirname, 'kebijakan-privasi.html'),
         syaratKetentuan: resolve(__dirname, 'syarat-ketentuan.html'),
         faq: resolve(__dirname, 'faq.html'),
-        login: resolve(__dirname, 'login.html'),
       },
     },
   },
