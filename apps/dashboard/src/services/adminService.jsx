@@ -25,3 +25,7 @@ export const processWithdrawal = (id, approve) =>
 /** GET /api/admin/activity-log — paginated */
 export const getActivityLog = (params = {}) =>
   apiClient.get("/admin/activity-log", { params });
+
+/** GET /api/admin/transactions — paginated */
+export const listTransactions = (params = {}) =>
+  apiClient.get("/admin/transactions", { params });

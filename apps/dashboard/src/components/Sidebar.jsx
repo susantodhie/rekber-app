@@ -17,6 +17,9 @@ const Sidebar = () => {
   ];
 
   const adminNavItems = [
+    { icon: 'monitoring', label: 'Admin Dashboard', path: '/admin' },
+    { icon: 'analytics', label: 'All Transactions', path: '/admin/transactions' },
+    { icon: 'payments', label: 'Withdrawals', path: '/admin/withdrawals' },
     { icon: 'admin_panel_settings', label: 'Admin KYC', path: '/admin/kyc' },
   ];
 

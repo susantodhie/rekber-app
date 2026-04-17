@@ -214,3 +214,67 @@ export async function getPendingKyc() {
     .where(eq(kycSubmissions.status, "pending"))
     .orderBy(desc(kycSubmissions.submittedAt));
 }
+
+/**
+ * MENDAPATKAN LIST TRANSAKSI (Admin)
+ */
+export async function getAllTransactions(page = 1, pageSize = 20) {
+  const offset = (page - 1) * pageSize;
+  
+  const results = await db
+    .select()
+    .from(escrowTransactions)
+    .orderBy(desc(escrowTransactions.createdAt))
+    .limit(pageSize)
+    .offset(offset);
+
+  const [total] = await db.select({ count: count() }).from(escrowTransactions);
+  
+  return {
+    data: results,
+    pagination: {
+      total: total.count,
+      page,
+      pageSize,
+      totalPages: Math.ceil(total.count / pageSize),
+    }
+  };
+}
+
+/**
+ * MENDAPATKAN SEMUA WITHDRAWALS & PENDING WITHDRAWALS (Admin)
+ */
+export async function getWithdrawals(status?: "pending" | "completed" | "rejected") {
+  let query = db.select().from(withdrawals).$dynamic();
+  
+  if (status) {
+    query = query.where(eq(withdrawals.status, status));
+  }
+  
+  return query.orderBy(desc(withdrawals.createdAt));
+}
+
+/**
+ * LIST DISPUTES (Admin)
+ */
+export async function listDisputes(page = 1, pageSize = 20) {
+  const offset = (page - 1) * pageSize;
+  const results = await db
+    .select()
+    .from(disputes)
+    .orderBy(desc(disputes.createdAt))
+    .limit(pageSize)
+    .offset(offset);
+
+  const [total] = await db.select({ count: count() }).from(disputes);
+  
+  return {
+    data: results,
+    pagination: {
+      total: total.count,
+      page,
+      pageSize,
+      totalPages: Math.ceil(total.count / pageSize),
+    }
+  };
+}

@@ -5,15 +5,34 @@ import {
   resolveDispute,
   processWithdrawal,
   getActivityLog,
-  getPendingKyc
+  getPendingKyc,
+  getAllTransactions,
+  getWithdrawals,
+  listDisputes
 } from "../services/admin.service.js";
 
 const router = express.Router();
 
-// contoh route
-router.get("/stats", async (req, res) => {
+// GET /api/admin/dashboard (Dipanggil oleh useAdminDashboard)
+router.get("/dashboard", async (req, res) => {
   const data = await getAdminStats();
-  res.json(data);
+  res.json({ data });
+});
+
+// GET /api/admin/transactions
+router.get("/transactions", async (req, res) => {
+  const page = parseInt(req.query.page as string) || 1;
+  const pageSize = parseInt(req.query.pageSize as string) || 20;
+  const result = await getAllTransactions(page, pageSize);
+  res.json(result);
+});
+
+// GET /api/admin/disputes
+router.get("/disputes", async (req, res) => {
+  const page = parseInt(req.query.page as string) || 1;
+  const pageSize = parseInt(req.query.pageSize as string) || 20;
+  const result = await listDisputes(page, pageSize);
+  res.json(result);
 });
 
 router.post("/dispute/open", async (req, res) => {
@@ -22,21 +41,36 @@ router.post("/dispute/open", async (req, res) => {
   res.json(result);
 });
 
-router.post("/dispute/resolve", async (req, res) => {
-  const { disputeId, adminUserId, input } = req.body;
-  const result = await resolveDispute(disputeId, adminUserId, input);
+// POST /api/admin/disputes/:id/resolve
+router.post("/disputes/:id/resolve", async (req, res) => {
+  const disputeId = req.params.id;
+  const { adminUserId, ...input } = req.body; // Frontend sends data in body
+  // Get admin user from auth middleware
+  const adminId = req.user?.userId;
+  const result = await resolveDispute(disputeId, adminId, input);
   res.json(result);
 });
 
-router.post("/withdrawal/process", async (req, res) => {
-  const { withdrawalId, adminUserId, approve } = req.body;
-  const result = await processWithdrawal(withdrawalId, adminUserId, approve);
+// GET /api/admin/withdrawals
+router.get("/withdrawals", async (req, res) => {
+  const data = await getWithdrawals();
+  res.json({ data });
+});
+
+// POST /api/admin/withdrawals/:id/process
+router.post("/withdrawals/:id/process", async (req, res) => {
+  const withdrawalId = req.params.id;
+  const { approve } = req.body;
+  const adminId = req.user?.userId; // Ensure req.user exists from auth
+  const result = await processWithdrawal(withdrawalId, adminId, approve);
   res.json(result);
 });
 
-router.get("/activity", async (req, res) => {
-  const data = await getActivityLog();
-  res.json(data);
+router.get("/activity-log", async (req, res) => {
+  const page = parseInt(req.query.page as string) || 1;
+  const pageSize = parseInt(req.query.pageSize as string) || 20;
+  const data = await getActivityLog(page, pageSize);
+  res.json({ data });
 });
 
 router.get("/kyc/pending", async (req, res) => {
@@ -44,5 +78,4 @@ router.get("/kyc/pending", async (req, res) => {
   res.json(data);
 });
 
-// 🔥 INI YANG WAJIB BANGET
 export const adminRoutes = router;

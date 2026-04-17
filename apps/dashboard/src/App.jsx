@@ -12,6 +12,9 @@ import Profile from './Profile';
 import EditProfile from './EditProfile';
 import KYCCenter from './KYCCenter';
 import AdminKYC from './AdminKYC';
+import AdminDashboard from './AdminDashboard';
+import AdminTransactions from './AdminTransactions';
+import AdminWithdrawals from './AdminWithdrawals';
 
 
 // Auth pages
@@ -96,6 +99,9 @@ export default function App() {
         <Route path="/kyc" element={<ProtectedRoute><KYCCenter /></ProtectedRoute>} />
 
         <Route path="/admin/login" element={<AdminLoginPage />} />
+        <Route path="/admin" element={<AdminProtectedRoute><AdminDashboard /></AdminProtectedRoute>} />
+        <Route path="/admin/transactions" element={<AdminProtectedRoute><AdminTransactions /></AdminProtectedRoute>} />
+        <Route path="/admin/withdrawals" element={<AdminProtectedRoute><AdminWithdrawals /></AdminProtectedRoute>} />
         <Route path="/admin/kyc" element={<AdminProtectedRoute><AdminKYC /></AdminProtectedRoute>} />
 
         {/* Fallback */}

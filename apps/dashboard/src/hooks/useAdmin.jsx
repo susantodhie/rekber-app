@@ -10,6 +10,7 @@ export const adminKeys = {
   disputes: (params) => [...adminKeys.all, "disputes", params],
   withdrawals: () => [...adminKeys.all, "withdrawals"],
   activityLog: (params) => [...adminKeys.all, "activity-log", params],
+  transactions: (params) => [...adminKeys.all, "transactions", params],
 };
 
 // ============================================================
@@ -52,6 +53,18 @@ export function useActivityLog(params = {}) {
     queryKey: adminKeys.activityLog(params),
     queryFn: () => adminService.getActivityLog(params),
     select: (res) => res.data,
+  });
+}
+
+/** Fetch all transactions (Admin view) */
+export function useAdminTransactions(params = {}) {
+  return useQuery({
+    queryKey: adminKeys.transactions(params),
+    queryFn: () => adminService.listTransactions(params),
+    select: (res) => ({
+      transactions: res.data,
+      pagination: res.pagination,
+    }),
   });
 }
 
