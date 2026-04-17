@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Masuk - Rekberinsaja</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&family=Space+Grotesk:wght@700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background-color: #080d16;
+            color: white;
+            font-family: 'Inter', sans-serif;
+            overflow: hidden;
+        }
+        .bg-mesh {
+            background-image: 
+                radial-gradient(at 0% 0%, rgba(20, 255, 236, 0.1) 0px, transparent 50%),
+                radial-gradient(at 100% 100%, rgba(14, 165, 233, 0.15) 0px, transparent 50%);
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.02);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+    </style>
+</head>
+<body class="bg-mesh min-h-screen flex items-center justify-center relative">
+    
+    <!-- Background Decor -->
+    <div class="absolute top-1/4 left-1/4 w-96 h-96 bg-[#14ffec]/20 blur-[120px] rounded-full pointer-events-none"></div>
+    <div class="absolute bottom-1/4 right-1/4 w-96 h-96 bg-[#0ea5e9]/20 blur-[120px] rounded-full pointer-events-none"></div>
+
+    <div class="relative z-10 glass-card rounded-3xl p-12 max-w-md w-full mx-4 text-center shadow-2xl border border-[#14ffec]/20">
+        <!-- Logo -->
+        <a href="index.html" class="inline-block mb-10 group opacity-50 hover:opacity-100 transition-opacity">
+            <h1 class="text-3xl font-black tracking-tighter text-[#14ffec] font-['Space_Grotesk'] mb-1 uppercase">Rekberinsaja.com</h1>
+            <p class="text-[10px] uppercase tracking-[0.3em] font-mono text-slate-400">Aman Dulu, Baru Deal.</p>
+        </a>
+
+        <!-- Coming Soon Content -->
+        <div class="py-10">
+            <div class="inline-flex items-center justify-center w-16 h-16 rounded-full bg-[#14ffec]/10 border border-[#14ffec]/30 mb-6">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="#14ffec" class="w-8 h-8">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M11.42 15.17L17.25 21A2.652 2.652 0 0021 17.25l-5.877-5.877M11.42 15.17l2.492-3.053c.24-.294.487-.582.724-.871l-1.04-1.041m-2.176 4.965l-3.053 2.492c-.289.237-.577.484-.871.724l-1.041-1.04M15 12c.074-.536.143-1.08.204-1.63M12 15c-.534.062-1.077.132-1.616.207m1.616-9.198a1 1 0 011.026.06L15 8m-3-1.991A1 1 0 0011.026 8L12 9.42M14.07 4A2.002 2.002 0 0118 7.931M3 6.069A2.004 2.004 0 016.929 4" />
+                </svg>
+            </div>
+            
+            <h2 class="text-2xl font-bold text-white mb-3">Coming Soon</h2>
+            <p class="text-slate-400 text-sm leading-relaxed max-w-[280px] mx-auto">
+                Aplikasi Dashboard & Transaksi sedang dalam tahap penyempurnaan akhir. Silakan kunjungi kembali nanti.
+            </p>
+        </div>
+
+        <!-- Back Button -->
+        <button onclick="window.location.href='index.html'" class="w-full mt-6 bg-transparent border border-slate-700 text-slate-300 py-4 rounded-xl font-bold text-sm tracking-widest uppercase hover:bg-white/5 hover:text-white transition-all">
+            Kembali ke Beranda
+        </button>
+    </div>
+
+</body>
+</html>
