@@ -4,7 +4,7 @@ import { conversations, conversationParticipants, messages } from "../db/schema/
 import { users } from "../db/schema/users.js";
 import { eq, or, desc, and, count } from "drizzle-orm";
 import { generateTxCode } from "../lib/id-generator.js";
-import { calculateFees } from "../lib/fee-calculator.js";
+import { calculateFees, validateAmount } from "../lib/fee-calculator.js";
 import type { CreateEscrowInput } from "../types/index.js";
 
 /**
@@ -27,7 +27,12 @@ export async function createEscrow(userId: string, input: any) {
   const buyerId = input.role === "buyer" ? userId : counterparty.userId;
   const sellerId = input.role === "seller" ? userId : counterparty.userId;
 
-  const fees = calculateFees(input.amount);
+  const numericAmount = Number(input.amount);
+  
+  // Validasi max limit 3 juta
+  validateAmount(numericAmount);
+
+  const fees = calculateFees(numericAmount, input.paymentMethod);
   const txCode = generateTxCode(input.category);
 
   // CREATE ESCROW

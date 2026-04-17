@@ -45,29 +45,61 @@ const NewEscrow = () => {
   const [error, setError] = useState('');
 
   const formatCurrency = (val) => {
-    const raw = val.replace(/\D/g, '');
+    const raw = String(val).replace(/\D/g, '');
     if (!raw) return '';
     return new Intl.NumberFormat('id-ID').format(raw);
   };
 
   const numericAmount = useMemo(() => {
-    return parseInt(formData.amount.replace(/\D/g, ''), 10) || 0;
+    return parseInt(String(formData.amount).replace(/\D/g, ''), 10) || 0;
   }, [formData.amount]);
 
-  // Simple fee calculation for preview (2.5% admin fee)
-  const estimatedTotal = useMemo(() => {
-    const adminFee = Math.round(numericAmount * 0.025);
-    return numericAmount + adminFee;
-  }, [numericAmount]);
+  const calculateFeesLocal = (amount, method) => {
+    let rekberFee = 0;
+    if (amount < 250000) {
+      rekberFee = 5000;
+    } else if (amount >= 250000 && amount <= 1000000) {
+      rekberFee = 10000;
+    } else {
+      rekberFee = Math.min(Math.round(amount * 0.015), 25000);
+    }
 
+    let adminFee = 0;
+    if (method) {
+      const m = method.toLowerCase();
+      if (m === 'qris') {
+        adminFee = Math.round(amount * 0.007);
+      } else if (['dana', 'ovo', 'shopeepay', 'ewallet'].includes(m)) {
+        adminFee = Math.round(amount * 0.015);
+      } else {
+        adminFee = 5000;
+      }
+    }
 
+    return {
+      nominal: amount,
+      rekberFee,
+      adminFee,
+      total: amount + rekberFee + adminFee
+    };
+  };
+
+  const feesPreview = useMemo(() => {
+    return calculateFeesLocal(numericAmount, paymentMethod);
+  }, [numericAmount, paymentMethod]);
 
   const handleAmountChange = (e) => {
-    setFormData(prev => ({
-      ...prev,
-      amount: formatCurrency(e.target.value)
-    }));
-    // Reset payment when amount changes
+    setError('');
+    const raw = e.target.value.replace(/\D/g, '');
+    const val = parseInt(raw, 10) || 0;
+    
+    if (val > 3000000) {
+      setError("Maaf kak, maksimal transaksi hanya Rp3.000.000 🙏");
+      setFormData(prev => ({ ...prev, amount: formatCurrency('3000000') }));
+    } else {
+      setFormData(prev => ({ ...prev, amount: formatCurrency(e.target.value) }));
+    }
+
     setPaymentMethod('');
     setPaymentStatus('pending');
   };
@@ -236,11 +268,7 @@ const NewEscrow = () => {
                     className="w-full bg-surface-container-lowest border border-outline-variant/10 rounded-xl pl-12 pr-4 py-4 text-xl font-mono font-bold focus:ring-2 focus:ring-secondary/50 focus:border-secondary outline-none transition-all"
                   />
                 </div>
-                {numericAmount > 0 && (
-                  <p className="text-[10px] text-on-surface-variant px-1">
-                    Estimasi total (termasuk biaya): <span className="font-bold text-secondary">{formatCurrencyFull(estimatedTotal)}</span>
-                  </p>
-                )}
+
               </div>
 
               {/* Description */}
@@ -311,7 +339,7 @@ const NewEscrow = () => {
                     <p className="text-sm text-on-surface-variant font-bold">Transfer ke DANA</p>
                     <p className="text-2xl font-mono font-black tracking-widest text-secondary">{payConfig.dana_number}</p>
                     {numericAmount > 0 && (
-                      <p className="text-sm text-on-surface-variant">Total: <span className="font-bold text-secondary">{formatCurrencyFull(estimatedTotal)}</span></p>
+                      <p className="text-sm text-on-surface-variant">Total: <span className="font-bold text-secondary">{formatCurrencyFull(feesPreview.total)}</span></p>
                     )}
                   </div>
                 )}
@@ -322,7 +350,7 @@ const NewEscrow = () => {
                     <p className="text-sm text-on-surface-variant font-bold">Scan QRIS berikut</p>
                     <img src={`${API_BASE_URL}${payConfig.qris_image_url}`} alt="QRIS" className="w-64 max-w-full rounded-2xl shadow-xl border border-primary/20" />
                     {numericAmount > 0 && (
-                      <p className="text-sm text-on-surface-variant">Total: <span className="font-bold text-primary">{formatCurrencyFull(estimatedTotal)}</span></p>
+                      <p className="text-sm text-on-surface-variant">Total: <span className="font-bold text-primary">{formatCurrencyFull(feesPreview.total)}</span></p>
                     )}
                   </div>
                 )}
@@ -346,6 +374,31 @@ const NewEscrow = () => {
                   </div>
                 )}
               </div>
+
+              {/* ============== SUMMARY OUTPUT ============== */}
+              {numericAmount > 0 && (
+                <div className="bg-surface-container-lowest border border-outline-variant/10 rounded-xl p-6 space-y-3 font-mono text-sm">
+                  <div className="flex justify-between items-center text-on-surface-variant">
+                    <span>Nominal:</span>
+                    <span className="font-bold text-white">{formatCurrencyFull(feesPreview.nominal)}</span>
+                  </div>
+                  <div className="flex justify-between items-center text-on-surface-variant">
+                    <span>Fee Rekber:</span>
+                    <span className="font-bold text-white">{formatCurrencyFull(feesPreview.rekberFee)}</span>
+                  </div>
+                  <div className="flex justify-between items-center text-on-surface-variant">
+                    <span>Biaya Admin:</span>
+                    <span className="font-bold text-white">{formatCurrencyFull(feesPreview.adminFee)}</span>
+                  </div>
+                  <div className="pt-3 mt-3 border-t border-outline-variant/10 flex justify-between items-center">
+                    <span className="font-black text-white tracking-widest uppercase">Total Bayar:</span>
+                    <span className="font-black text-primary text-base">{formatCurrencyFull(feesPreview.total)}</span>
+                  </div>
+                  <p className="text-[10px] text-on-surface-variant/70 italic mt-4 font-body text-center">
+                    Catatan: Biaya admin pembayaran mengikuti metode yang dipilih dan ditanggung oleh pembeli
+                  </p>
+                </div>
+              )}
 
               <button
                 type="submit"
