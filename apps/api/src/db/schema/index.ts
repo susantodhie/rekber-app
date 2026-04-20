@@ -13,3 +13,4 @@ export * from "./messages.js";
 export * from "./notifications.js";
 export * from "./disputes.js";
 export * from "./activity-log.js";
+export * from "./reviews.js";

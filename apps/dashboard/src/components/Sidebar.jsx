@@ -14,13 +14,15 @@ const Sidebar = () => {
     { icon: 'security', label: 'Transaksi Rekber', path: '/transactions' },
     { icon: 'chat_bubble', label: 'Pesan', path: '/messages' },
     { icon: 'verified_user', label: 'Verifikasi Akun', path: '/kyc' },
+    { icon: 'star', label: 'Ulasan Transaksi', path: '/reviews' },
   ];
 
   const adminNavItems = [
-    { icon: 'monitoring', label: 'Admin Dashboard', path: '/admin' },
-    { icon: 'analytics', label: 'All Transactions', path: '/admin/transactions' },
-    { icon: 'payments', label: 'Withdrawals', path: '/admin/withdrawals' },
-    { icon: 'admin_panel_settings', label: 'Admin KYC', path: '/admin/kyc' },
+    { icon: 'monitoring', label: 'Dashboard Admin', path: '/admin' },
+    { icon: 'analytics', label: 'Semua Transaksi', path: '/admin/transactions' },
+    { icon: 'payments', label: 'Penarikan Dana', path: '/admin/withdrawals' },
+    { icon: 'admin_panel_settings', label: 'Manajemen KYC', path: '/admin/kyc' },
+    { icon: 'star', label: 'Monitoring Ulasan', path: '/admin/reviews' },
   ];
 
   const isActive = (path) => location.pathname === path;
@@ -30,7 +32,7 @@ const Sidebar = () => {
       await signOut();
       localStorage.clear();
       sessionStorage.clear();
-      window.location.href = "/login";
+      window.location.replace("/login");
     } catch (error) {
       console.error("Logout error:", error);
     }

@@ -5,6 +5,7 @@ import MobileBottomNav from './components/MobileBottomNav';
 import TransactionAppBar from './components/TransactionAppBar';
 import TransactionCard from './components/TransactionCard';
 import ChatPanel from './components/ChatPanel';
+import ReviewPopup from './components/ReviewPopup';
 import { useSession } from './lib/authClient';
 import { 
   useEscrowDetail, 
@@ -17,6 +18,7 @@ import {
   useAdminJoinChat
 } from './hooks/useEscrow';
 import { useMyProfile } from './hooks/useUser';
+import { useCreateReview } from './hooks/useReview';
 
 const API_BASE = "https://rekberinsaja-api-production.up.railway.app";
 
@@ -40,6 +42,9 @@ const TransactionDetail = () => {
   const [showApproveModal, setShowApproveModal] = useState(false);
   const [showRejectModal, setShowRejectModal] = useState(false);
   const [rejectReason, setRejectReason] = useState('');
+  const [showReviewPopup, setShowReviewPopup] = useState(false);
+  
+  const createReviewCmd = useCreateReview();
 
   const userId = session?.user?.id;
   const isAdmin = profile?.role === 'admin';
@@ -95,6 +100,18 @@ const TransactionDetail = () => {
       onSuccess: () => {
         setShowRejectModal(false);
         setRejectReason('');
+      }
+    });
+  };
+
+  const handleReviewSubmit = (data) => {
+    createReviewCmd.mutate({ escrowId: id, ...data }, {
+      onSuccess: () => {
+        setShowReviewPopup(false);
+        alert("Terima kasih atas ulasan Anda!");
+      },
+      onError: (err) => {
+        alert(err.response?.data?.error || err.message || "Gagal mengirim ulasan.");
       }
     });
   };
@@ -186,6 +203,21 @@ const TransactionDetail = () => {
                   <p className="text-xs text-green-300 mb-4">Barang/Jasa telah diterima sesuai verifikasi. Dana akan dilepas ke penjual.</p>
                   <button onClick={() => completeChatCmd.mutate(id)} disabled={completeChatCmd.isPending} className="bg-green-500 text-white px-6 py-2 rounded-lg font-bold text-sm hover:brightness-110 transition-all active:scale-95 disabled:opacity-50">
                     {completeChatCmd.isPending ? "Memproses..." : "Selesaikan Transaksi"}
+                  </button>
+                </div>
+              )}
+
+              {/* REVIEW BUTTON (When Success/Completed) */}
+              {(escrow.status === 'success' || escrow.status === 'completed') && (isBuyer || isSeller) && (
+                <div className="bg-gradient-to-r from-[#00c9a7]/10 to-[#44e5c2]/10 p-4 rounded-xl border border-[#44e5c2]/30 mb-4 flex items-center justify-between">
+                  <div>
+                    <h3 className="text-sm font-bold text-[#44e5c2] flex items-center gap-2">
+                       <span className="material-symbols-outlined text-sm">stars</span> Transaksi Sukses
+                    </h3>
+                    <p className="text-xs text-[#bacac3] mt-1">Bagaimana pengalaman transaksi Anda?</p>
+                  </div>
+                  <button onClick={() => setShowReviewPopup(true)} className="bg-gradient-to-r from-[#00c9a7] to-[#44e5c2] text-white px-5 py-2 rounded-lg font-bold text-sm hover:brightness-110 transition-all active:scale-95 shadow-lg shadow-[#00c9a7]/20">
+                    Beri Ulasan
                   </button>
                 </div>
               )}
@@ -406,6 +438,13 @@ const TransactionDetail = () => {
           </div>
         </div>
       )}
+
+      <ReviewPopup 
+        isOpen={showReviewPopup}
+        onClose={() => setShowReviewPopup(false)}
+        onSubmit={handleReviewSubmit}
+        isPending={createReviewCmd.isPending}
+      />
     </div>
   );
 };

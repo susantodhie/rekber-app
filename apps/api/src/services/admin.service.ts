@@ -5,7 +5,8 @@ import { wallets } from "../db/schema/wallet.js";
 import { withdrawals } from "../db/schema/withdrawals.js";
 import { activityLogs } from "../db/schema/activity-log.js";
 import { kycSubmissions } from "../db/schema/kyc.js";
-import { eq, desc, count } from "drizzle-orm";
+import { users } from "../db/schema/users.js";
+import { eq, desc, count, gte, sql } from "drizzle-orm";
 
 /**
  * OPEN DISPUTE
@@ -139,11 +140,43 @@ export async function getAdminStats() {
     .select({ count: count() })
     .from(escrowTransactions);
 
+  const { sum } = await import("drizzle-orm");
+  const [totalEscrowSum] = await db
+    .select({ totalAmount: sum(escrowTransactions.totalAmount) })
+    .from(escrowTransactions)
+    .where(eq(escrowTransactions.status, "pending_payment"));
+    
+  const [totalWithdrawSum] = await db
+    .select({ totalAmount: sum(withdrawals.amount) })
+    .from(withdrawals)
+    .where(eq(withdrawals.status, "completed"));
+
+  const [totalUsers] = await db
+    .select({ count: count() })
+    .from(users);
+
+  const startOfDay = new Date();
+  startOfDay.setHours(0, 0, 0, 0);
+
+  const [todayTx] = await db
+    .select({ count: count() })
+    .from(escrowTransactions)
+    .where(gte(escrowTransactions.createdAt, startOfDay));
+
+  const [totalVolume] = await db
+    .select({ totalAmount: sum(escrowTransactions.totalAmount) })
+    .from(escrowTransactions);
+
   return {
     pendingKycCount: pendingKyc?.count || 0,
     openDisputeCount: openDisputes?.count || 0,
     pendingWithdrawalCount: pendingWithdrawals?.count || 0,
     totalEscrowCount: totalEscrows?.count || 0,
+    totalEscrowAmount: totalEscrowSum?.totalAmount ? Number(totalEscrowSum.totalAmount) : 0,
+    totalWithdrawalAmount: totalWithdrawSum?.totalAmount ? Number(totalWithdrawSum.totalAmount) : 0,
+    totalUsersCount: totalUsers?.count || 0,
+    todayTransactionsCount: todayTx?.count || 0,
+    totalTransactionVolume: totalVolume?.totalAmount ? Number(totalVolume.totalAmount) : 0,
   };
 }
 

@@ -18,6 +18,37 @@ export const auth = betterAuth({
   secret: process.env.BETTER_AUTH_SECRET,
   baseURL: process.env.BETTER_AUTH_URL || "https://rekberinsaja-api-production.up.railway.app",
 
+  databaseHooks: {
+    user: {
+      create: {
+        after: async (user) => {
+          try {
+            const { eq } = await import("drizzle-orm");
+            const bcrypt = await import("bcrypt");
+            
+            const existing = await db.select().from(schema.users).where(eq(schema.users.email, user.email)).limit(1);
+            if (existing.length === 0) {
+              const hashedPassword = await bcrypt.hash(user.id, 10);
+              const hashedPin = await bcrypt.hash("000000", 10);
+              
+              await db.insert(schema.users).values({
+                id: crypto.randomUUID(),
+                email: user.email,
+                password: hashedPassword,
+                transactionPin: hashedPin,
+                role: "user",
+                kycStatus: "pending",
+                createdAt: user.createdAt || new Date(),
+              });
+            }
+          } catch (e) {
+            console.error("Error syncing Google user to custom users table:", e);
+          }
+        }
+      }
+    }
+  },
+
 
   cookies: {
     sessionToken: {

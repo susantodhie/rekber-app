@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useAdminTransactions } from './hooks/useAdmin';
 import { useNavigate } from 'react-router-dom';
-import Header from './components/Header';
+import TopAppBar from './components/TopAppBar';
 import Sidebar from './components/Sidebar';
 
 export default function AdminTransactions() {
@@ -16,7 +16,7 @@ export default function AdminTransactions() {
     <div className="bg-surface font-body text-on-surface selection:bg-primary selection:text-on-primary min-h-screen flex flex-col md:flex-row">
       <Sidebar />
       <div className="flex-1 flex flex-col md:ml-[260px] min-h-screen">
-        <Header title="All Transactions" subtitle="Monitoring Center" hideWallet />
+        <TopAppBar />
 
         <main className="flex-1 p-6 md:p-8 overflow-y-auto w-full max-w-6xl mx-auto">
           <div className="glass-card ghost-border rounded-3xl p-6 md:p-8 shadow-2xl">

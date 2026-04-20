@@ -63,6 +63,29 @@ export default function LoginPage() {
               <button onClick={() => navigate('/register')} className="flex-1 py-2.5 text-sm font-bold text-slate-500 hover:text-on-surface transition-all rounded-lg">Daftar</button>
             </div>
 
+            <button
+              type="button"
+              onClick={async () => {
+                await signIn.social({
+                  provider: 'google',
+                  callbackURL: window.location.origin + '/',
+                });
+              }}
+              className="w-full mb-6 flex items-center justify-center gap-3 py-3 px-4 rounded-xl ghost-border bg-surface hover:bg-surface-container transition-colors shadow-sm text-sm font-bold text-on-surface group"
+            >
+              <img src="https://www.svgrepo.com/show/475656/google-color.svg" alt="Google" className="w-5 h-5 group-hover:scale-110 transition-transform" />
+              Masuk dengan Google
+            </button>
+
+            <div className="relative mb-6">
+              <div className="absolute inset-0 flex items-center">
+                <div className="w-full border-t border-surface-container ghost-border"></div>
+              </div>
+              <div className="relative flex justify-center text-[10px]">
+                <span className="bg-[#121c2d] px-4 text-on-surface-variant font-bold tracking-widest uppercase">atau dengan email</span>
+              </div>
+            </div>
+
             {error && (
               <div className="mb-4 p-3 bg-error/10 border border-error/20 rounded-lg text-error text-xs font-medium">
                 {error}

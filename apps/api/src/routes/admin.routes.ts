@@ -46,7 +46,7 @@ router.post("/disputes/:id/resolve", async (req, res) => {
   const disputeId = req.params.id;
   const { adminUserId, ...input } = req.body; // Frontend sends data in body
   // Get admin user from auth middleware
-  const adminId = req.user?.userId;
+  const adminId = req.user!.id;
   const result = await resolveDispute(disputeId, adminId, input);
   res.json(result);
 });
@@ -61,7 +61,7 @@ router.get("/withdrawals", async (req, res) => {
 router.post("/withdrawals/:id/process", async (req, res) => {
   const withdrawalId = req.params.id;
   const { approve } = req.body;
-  const adminId = req.user?.userId; // Ensure req.user exists from auth
+  const adminId = req.user!.id; // Ensure req.user exists from auth
   const result = await processWithdrawal(withdrawalId, adminId, approve);
   res.json(result);
 });

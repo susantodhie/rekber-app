@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import apiClient from '../lib/apiClient';
-import { useSession, authClient } from '../lib/authClient';
+import { useSession, authClient, signIn } from '../lib/authClient';
 
 const RegisterPage = () => {
   const navigate = useNavigate();
@@ -107,6 +107,29 @@ const RegisterPage = () => {
             <div className="flex mb-8 bg-surface-container-lowest/50 p-1 rounded-xl ghost-border">
               <button onClick={() => navigate('/login')} className="flex-1 py-2.5 text-sm font-bold text-slate-500 hover:text-on-surface transition-all rounded-lg">Masuk</button>
               <button className="flex-1 py-2.5 text-sm font-bold bg-primary-container text-on-primary-container shadow-lg shadow-primary/20 rounded-lg">Daftar</button>
+            </div>
+
+            <button
+              type="button"
+              onClick={async () => {
+                await signIn.social({
+                  provider: 'google',
+                  callbackURL: window.location.origin + '/',
+                });
+              }}
+              className="w-full mb-6 flex items-center justify-center gap-3 py-3 px-4 rounded-xl ghost-border bg-surface hover:bg-surface-container transition-colors shadow-sm text-sm font-bold text-on-surface group"
+            >
+              <img src="https://www.svgrepo.com/show/475656/google-color.svg" alt="Google" className="w-5 h-5 group-hover:scale-110 transition-transform" />
+              Daftar dengan Google
+            </button>
+
+            <div className="relative mb-6">
+              <div className="absolute inset-0 flex items-center">
+                <div className="w-full border-t border-surface-container ghost-border"></div>
+              </div>
+              <div className="relative flex justify-center text-[10px]">
+                <span className="bg-[#121c2d] px-4 text-on-surface-variant font-bold tracking-widest uppercase">atau dengan email</span>
+              </div>
             </div>
 
             {error && (

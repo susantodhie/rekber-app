@@ -12,7 +12,7 @@ const router = Router();
  */
 router.get("/me", requireAuth, async (req, res, next) => {
   try {
-    const user = await userService.getUser(req.user!.id);
+    const user = await userService.getUserByEmail(req.user!.email);
 
     if (!user) {
       return res.status(404).json({ success: false, error: "User not found" });
@@ -23,6 +23,9 @@ router.get("/me", requireAuth, async (req, res, next) => {
       data: {
         id: user.id,
         email: user.email,
+        role: user.role,
+        kycStatus: user.kycStatus,
+        createdAt: user.createdAt
       },
     });
   } catch (error) {

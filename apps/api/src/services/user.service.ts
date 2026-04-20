@@ -38,6 +38,19 @@ export async function getUser(userId: string) {
 }
 
 /**
+ * Get user by Email
+ */
+export async function getUserByEmail(email: string) {
+  const [user] = await db
+    .select()
+    .from(users)
+    .where(eq(users.email, email))
+    .limit(1);
+
+  return user || null;
+}
+
+/**
  * Update user
  */
 export async function updateUser(userId: string, data: { email?: string }) {

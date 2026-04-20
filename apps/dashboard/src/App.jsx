@@ -15,6 +15,7 @@ import AdminKYC from './AdminKYC';
 import AdminDashboard from './AdminDashboard';
 import AdminTransactions from './AdminTransactions';
 import AdminWithdrawals from './AdminWithdrawals';
+import ReviewsPage from './ReviewsPage';
 
 
 // Auth pages
@@ -97,12 +98,14 @@ export default function App() {
         <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
         <Route path="/profile/edit" element={<ProtectedRoute><EditProfile /></ProtectedRoute>} />
         <Route path="/kyc" element={<ProtectedRoute><KYCCenter /></ProtectedRoute>} />
+        <Route path="/reviews" element={<ProtectedRoute><ReviewsPage /></ProtectedRoute>} />
 
         <Route path="/admin/login" element={<AdminLoginPage />} />
         <Route path="/admin" element={<AdminProtectedRoute><AdminDashboard /></AdminProtectedRoute>} />
         <Route path="/admin/transactions" element={<AdminProtectedRoute><AdminTransactions /></AdminProtectedRoute>} />
         <Route path="/admin/withdrawals" element={<AdminProtectedRoute><AdminWithdrawals /></AdminProtectedRoute>} />
         <Route path="/admin/kyc" element={<AdminProtectedRoute><AdminKYC /></AdminProtectedRoute>} />
+        <Route path="/admin/reviews" element={<AdminProtectedRoute><ReviewsPage /></AdminProtectedRoute>} />
 
         {/* Fallback */}
         <Route path="*" element={<Navigate to="/" replace />} />
